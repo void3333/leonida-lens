@@ -13,7 +13,9 @@ the image sits inside that space, so old pins and place names keep working:
 
 "px" is the pixel in the image; the point is either a name from
 leonida-places.json ("lugar") or explicit map units ("x","y"). Two points are
-the minimum; three or more spread across the map give a better fit.
+the minimum; three or more spread across the map give a better fit. With four or
+more the poster is also bent slightly so every point lands on its place (fan-map
+units are not uniform); see "Deformação suave" below.
 Without calibration the image is fitted into the 0..1024 square.
 
 Output: <data>/map_official/{z}/{x}_{y}.webp  +  config.js
@@ -119,8 +121,8 @@ def _fit_axis(pairs):
     return a, (su - a * sp) / n
 
 
-def bounds_for(width, height, calibration, places):
-    """Returns ((x0, y0, x1, y1) in map units, worst residual in units or None)."""
+def _control_points(calibration, places):
+    """[(px_x, px_y, unit_x, unit_y), ...] from the calibration file."""
     pts = []
     for i, p in enumerate((calibration or {}).get("pontos", []), 1):
         try:
@@ -137,7 +139,13 @@ def bounds_for(width, height, calibration, places):
                 x, y = float(p["x"]), float(p["y"])
             except (KeyError, TypeError, ValueError):
                 raise MapError(f"Ponto {i} da calibração precisa de 'lugar' ou de 'x' e 'y'.")
-        pts.append((u, v, x, y))
+        pts.append((u, v, float(x), float(y)))
+    return pts
+
+
+def bounds_for(width, height, calibration, places):
+    """Returns ((x0, y0, x1, y1) in map units, worst residual in units or None)."""
+    pts = _control_points(calibration, places)
     if not pts:
         s = 1024 / max(width, height)  # fit inside the square, centred
         x0, y0 = (1024 - width * s) / 2, (1024 - height * s) / 2
@@ -152,6 +160,102 @@ def bounds_for(width, height, calibration, places):
     return (bx, by, ax * width + bx, ay * height + by), worst
 
 
+# ---- Deformação suave ----------------------------------------------------------------------
+# O mapa de fãs (onde ficam os pinos) não tem a mesma escala em todo lugar, então o ajuste reto
+# deixa erro de até ~25 unidades. Com 4+ pontos o pôster é levemente deformado para que cada
+# ponto de calibração caia no seu lugar. A correção é uma soma de "bolhas" gaussianas (raio
+# "raio_deformacao", em unidades) em volta dos pontos: longe deles vale o ajuste reto.
+# "suavidade" > 0 troca exatidão por uma deformação mais calma; "deformar": false desliga.
+
+def _solve(a, b):
+    """Gaussian elimination with partial pivoting; a is n x n, b is n x m (lists, copied)."""
+    n = len(a); a = [row[:] + rb[:] for row, rb in zip(a, b)]; m = len(b[0])
+    for c in range(n):
+        piv = max(range(c, n), key=lambda r: abs(a[r][c]))
+        if abs(a[piv][c]) < 1e-12:
+            raise MapError("Pontos de calibração repetidos demais para deformar o mapa.")
+        a[c], a[piv] = a[piv], a[c]
+        for r in range(n):
+            if r != c and a[r][c]:
+                f = a[r][c] / a[c][c]
+                a[r] = [x - f * y for x, y in zip(a[r], a[c])]
+    return [[a[r][n + j] / a[r][r] for j in range(m)] for r in range(n)]
+
+
+class Warp:
+    """Map units -> image pixel: the straight fit ``base`` plus gaussian corrections at the control points."""
+
+    def __init__(self, pts, base, radius=50.0, smooth=0.0):
+        self.base, self.k = base, -1 / (2 * radius * radius)
+        self.c = [(x, y) for *_, x, y in pts]
+        res = [[u - bu, v - bv] for (u, v, x, y) in pts for bu, bv in [base(x, y)]]
+        gram = [[self._g(a, b) + (smooth if i == j else 0.0) for j, b in enumerate(self.c)]
+                for i, a in enumerate(self.c)]
+        self.w = _solve(gram, res)
+
+    def _g(self, a, b):
+        return math.exp(self.k * ((a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2))
+
+    def __call__(self, x, y):
+        u, v = self.base(x, y)
+        for (du, dv), c in zip(self.w, self.c):
+            g = self._g((x, y), c)
+            if g > 1e-9:
+                u += du * g; v += dv * g
+        return u, v
+
+
+def warp_for(width, height, calibration, places):
+    """(Warp or None, worst residual in units after warping). None when there is nothing to bend."""
+    cal = calibration or {}
+    pts = _control_points(cal, places)
+    if len(pts) < 4 or cal.get("deformar") is False:
+        return None, None
+    (x0, y0, x1, y1), _ = bounds_for(width, height, cal, places)
+    kx, ky = width / (x1 - x0), height / (y1 - y0)
+    base = lambda x, y: ((x - x0) * kx, (y - y0) * ky)
+    radius = float(cal.get("raio_deformacao", 50))
+    smooth = float(cal.get("suavidade", 0.02))
+    for _ in range(6):   # relax until the field has no folds
+        w = Warp(pts, base, radius, smooth)
+        if not _folds(w, x0, y0, x1, y1):
+            break
+        smooth = smooth * 3 + 0.05
+    else:
+        return None, None
+    worst = max(math.hypot((a - u) / kx, (b - v) / ky) for u, v, x, y in pts for a, b in [w(x, y)])
+    return w, worst
+
+
+def _folds(w, x0, y0, x1, y1, n=48):
+    g = [[w(x0 + (x1 - x0) * i / n, y0 + (y1 - y0) * j / n) for i in range(n + 1)] for j in range(n + 1)]
+    for j in range(n):
+        for i in range(n):
+            a, b, c = g[j][i], g[j][i + 1], g[j + 1][i]
+            if (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]) <= 0:
+                return True
+    return False
+
+
+def warp_image(im, w, bounds, bg, cell=64):
+    """Resamples the poster so that pixel (i, j) shows map unit bounds-space (i, j) through the warp."""
+    from PIL import Image
+    W, H = im.size
+    x0, y0, x1, y1 = bounds
+    ux = lambda i: x0 + (x1 - x0) * i / W
+    uy = lambda j: y0 + (y1 - y0) * j / H
+    xs = list(range(0, W, cell)) + [W]; ys = list(range(0, H, cell)) + [H]
+    grid = {(i, j): w(ux(i), uy(j)) for j in ys for i in xs}
+    mesh = []
+    for ja, jb in zip(ys, ys[1:]):
+        for ia, ib in zip(xs, xs[1:]):
+            q = grid[(ia, ja)] + grid[(ia, jb)] + grid[(ib, jb)] + grid[(ib, ja)]
+            mesh.append(((ia, ja, ib, jb), q))
+    framed = Image.new("RGB", (W + 2, H + 2), bg); framed.paste(im, (1, 1))   # outside -> sea colour
+    mesh = [(box, tuple(c + 1 for c in q)) for box, q in mesh]
+    return framed.transform((W, H), Image.MESH, mesh, Image.BICUBIC, fillcolor=bg)
+
+
 def native_zoom(width, x0, x1):
     ppu = width / (x1 - x0)  # image pixels per map unit
     z = math.log2(max(ppu, 1e-6))
@@ -162,7 +266,7 @@ def native_zoom(width, x0, x1):
 
 def signature(src, calibration_text):
     st = src.stat()
-    h = hashlib.sha256(f"{src.name}|{st.st_size}|{st.st_mtime_ns}|v1".encode())
+    h = hashlib.sha256(f"{src.name}|{st.st_size}|{st.st_mtime_ns}|v2".encode())
     h.update((calibration_text or "").encode("utf-8"))
     return h.hexdigest()[:16]
 
@@ -187,9 +291,16 @@ def build(src, out_dir, web_dir, calibration_text=None, progress=None):
     with Image.open(src) as im0:
         im = im0.convert("RGB")
     W, H = im.size
-    (x0, y0, x1, y1), worst = bounds_for(W, H, calibration, _places(web_dir))
+    places = _places(web_dir)
+    (x0, y0, x1, y1), worst = bounds_for(W, H, calibration, places)
     zmax = native_zoom(W, x0, x1)
     bg = im.getpixel((2, 2))  # corner colour (normally sea) fills partial tiles
+    warp, warped_worst = warp_for(W, H, calibration, places)
+    if warp:
+        if progress:
+            progress("deformando o pôster para os pontos de calibração")
+        im = warp_image(im, warp, (x0, y0, x1, y1), bg)
+        worst = warped_worst
     tmp = out_dir.with_name(out_dir.name + ".building")
     shutil.rmtree(tmp, ignore_errors=True)
     tmp.mkdir(parents=True)
@@ -222,7 +333,8 @@ def build(src, out_dir, web_dir, calibration_text=None, progress=None):
             progress(f"zoom {z}/{zmax}: {count} tiles")
     cfg = {"bounds": [round(v, 3) for v in (x0, y0, x1, y1)], "maxNative": zmax,
            "bg": "#%02x%02x%02x" % bg[:3], "sig": signature(src, calibration_text),
-           "calibrated": bool(calibration and calibration.get("pontos")), "tiles": count}
+           "calibrated": bool(calibration and calibration.get("pontos")), "warped": bool(warp),
+           "tiles": count}
     (tmp / "config.js").write_text("window.LFN_MAP_IMG=" + json.dumps(cfg) + ";\n", "utf-8")
     old = out_dir.with_name(out_dir.name + ".old")
     shutil.rmtree(old, ignore_errors=True)

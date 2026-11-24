@@ -40,6 +40,21 @@ class OfficialMap(unittest.TestCase):
         with self.assertRaises(mo.MapError):
             mo.bounds_for(1200, 1600, {"pontos": [{"lugar": "Vice City", "px": [1, 1]}]}, places)
 
+    def test_warp_hits_points_and_fades_away(self):
+        # straight fit units = 0.1*px + 200, with two points pulled off by a few units
+        pts = [(100, 200, 0), (1000, 300, 0), (500, 1400, 0), (600, 800, 4), (900, 1200, -3)]
+        cal = {"suavidade": 0, "pontos": [{"x": 0.1 * u + 200 + dx, "y": 0.1 * v + 150, "px": [u, v]}
+                                          for u, v, dx in pts]}
+        w, worst = mo.warp_for(1200, 1600, cal, {})
+        self.assertIsNotNone(w)
+        self.assertLess(worst, 1e-6)
+        (x0, y0, x1, y1), straight = mo.bounds_for(1200, 1600, cal, {})
+        self.assertGreater(straight, 1)
+        far = w(x0 - 500, y0 - 500)                        # far from every point -> straight fit
+        self.assertAlmostEqual(far[0], (-500) * 1200 / (x1 - x0), 3)
+        self.assertIsNone(mo.warp_for(1200, 1600, {"pontos": cal["pontos"][:3]}, {})[0])
+        self.assertIsNone(mo.warp_for(1200, 1600, dict(cal, deformar=False), {})[0])
+
     def test_build_and_skip(self):
         cal = json.dumps({"pontos": [{"x": 300, "y": 300, "px": [0, 0]}, {"x": 450, "y": 500, "px": [1200, 1600]}]})
         (self.tmp / mo.CALIBRATION).write_text(cal, "utf-8")
@@ -55,6 +70,15 @@ class OfficialMap(unittest.TestCase):
         self.assertTrue((out / "config.js").read_text("utf-8").startswith("window.LFN_MAP_IMG={"))
         self.assertIsNone(mo.ensure(out, ROOT / "web", self.tmp, log=lambda m: None))  # unchanged -> no rebuild
         self.assertIsNone(mo.ensure(self.tmp / "x", ROOT / "web", self.tmp / "empty", log=lambda m: None))
+        self.assertFalse(cfg["warped"])
+
+    def test_build_warped(self):
+        cal = {"pontos": [{"x": 300 + u / 8 + d, "y": 300 + v / 8, "px": [u, v]}
+                          for u, v, d in ((0, 0, 0), (1200, 0, 0), (0, 1600, 0), (1200, 1600, 0), (600, 800, 5))]}
+        cfg, worst = mo.build(self.src, self.tmp / "w", ROOT / "web", json.dumps(cal))
+        self.assertTrue(cfg["warped"])
+        self.assertLess(worst, 1.0)
+        self.assertEqual(len(list((self.tmp / "w").rglob("*.webp"))), cfg["tiles"])
 
 
 if __name__ == "__main__":
