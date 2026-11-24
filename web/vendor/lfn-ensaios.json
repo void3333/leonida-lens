@@ -1,0 +1,3065 @@
+{
+  "version": 2,
+  "essays": [
+    {
+      "key": "calcadas-que-lembram",
+      "title": "Calçadas que Lembram",
+      "genre": "Documental de rua",
+      "manifesto": "Uma investigação sobre o que a rua guarda quando ninguém está olhando. Não procuro acontecimentos, procuro intervalos: o segundo antes de alguém atravessar, o gesto que se repete sem testemunha. A cidade é feita mais de esperas do que de chegadas.",
+      "rules": [
+        "Só a pé: o carro fica estacionado durante a sessão",
+        "Nada de zoom: chegue perto com o personagem",
+        "Uma foto por esquina, nunca duas"
+      ],
+      "slots": [
+        {
+          "title": "A espera coletiva",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Gente parada no mesmo lugar, cada uma esperando uma coisa diferente. A rua junta destinos que nunca se conhecem."
+        },
+        {
+          "title": "Costas que vão embora",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Fotografar alguém de costas é aceitar que nunca saberei para onde vai. Talvez seja o retrato mais honesto."
+        },
+        {
+          "title": "Uma porta entreaberta",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Nem convite nem recusa. Uma porta pela metade guarda a parte da casa que a rua nunca vai ver."
+        },
+        {
+          "title": "Sombra maior que o dono",
+          "location": "",
+          "game_time": "17:40",
+          "weather": "Pôr do sol",
+          "phrase": "No fim da tarde as pessoas viram gigantes no asfalto. A sombra anda na frente, como quem conhece o caminho."
+        },
+        {
+          "title": "O banco ocupado por ninguém",
+          "location": "Hamlet",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Um banco vazio no meio da calçada ainda conserva o formato de quem sentou ali a vida inteira."
+        },
+        {
+          "title": "Gestos de quem trabalha",
+          "location": "",
+          "game_time": "09:00",
+          "weather": "",
+          "phrase": "Mãos ocupadas contam mais do que rostos. O trabalho repetido vira uma dança que ninguém aplaude."
+        },
+        {
+          "title": "Reflexo em vitrine",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Na vitrine, a rua se sobrepõe ao que está à venda. Por um instante, o passante também parece exposto."
+        },
+        {
+          "title": "Atravessar sem olhar",
+          "location": "Capri",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Quem atravessa sem olhar confia demais ou já desistiu de confiar. A faixa de pedestres não sabe a diferença."
+        },
+        {
+          "title": "Duas pessoas, mesma calçada",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Lado a lado e em mundos diferentes. A proximidade, na cidade, raramente significa companhia."
+        },
+        {
+          "title": "Fios cortando o céu",
+          "location": "Port Gellhorn",
+          "game_time": "",
+          "weather": "Nublado",
+          "phrase": "Os fios desenham uma partitura sobre a rua. Cada casa ligada à outra por uma linha que ninguém repara."
+        },
+        {
+          "title": "A primeira luz na esquina",
+          "location": "",
+          "game_time": "06:15",
+          "weather": "",
+          "phrase": "Antes do barulho, a rua parece um palco sem atores. Gosto de chegar quando ela ainda não decidiu quem será hoje."
+        },
+        {
+          "title": "Pressa e calma no mesmo quadro",
+          "location": "Vice City",
+          "game_time": "12:30",
+          "weather": "",
+          "phrase": "Alguém corre, alguém fica. A mesma calçada comporta dois tempos que nunca se encontram."
+        },
+        {
+          "title": "Chão molhado depois",
+          "location": "",
+          "game_time": "",
+          "weather": "Garoa",
+          "phrase": "A calçada molhada devolve a cidade de cabeça para baixo. Por alguns minutos, todo passo pisa num reflexo."
+        },
+        {
+          "title": "Quem olha para cima",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Na rua quase ninguém levanta os olhos. Quando alguém levanta, fotografo, e depois olho junto."
+        },
+        {
+          "title": "O carro que nunca sai",
+          "location": "Ambrosia",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Estacionado há tanto tempo que virou parte da calçada. A poeira sobre ele é uma espécie de endereço."
+        },
+        {
+          "title": "Uma janela acesa de dia",
+          "location": "",
+          "game_time": "14:00",
+          "weather": "Ensolarado",
+          "phrase": "Lâmpada ligada em pleno sol: descuido, hábito ou alguém que não quer ficar no escuro, nem por dentro."
+        },
+        {
+          "title": "O ponto de ônibus como sala",
+          "location": "Watson Bay",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Sob uma cobertura pequena, desconhecidos fingem que não dividem o mesmo abrigo. Uma sala de estar sem paredes."
+        },
+        {
+          "title": "Linha reta, gente torta",
+          "location": "Watson Bay",
+          "game_time": "",
+          "weather": "",
+          "phrase": "A arquitetura insiste na geometria; as pessoas, não. O enquadramento existe para mostrar esse desacordo."
+        },
+        {
+          "title": "Calor que entorta o ar",
+          "location": "",
+          "game_time": "13:20",
+          "weather": "Calor úmido",
+          "phrase": "O asfalto ondula e a rua parece prestes a derreter. Até os passos ficam mais lentos, mais pesados."
+        },
+        {
+          "title": "A última pessoa na rua",
+          "location": "Vice City",
+          "game_time": "23:50",
+          "weather": "",
+          "phrase": "Quando a calçada esvazia, sobra sempre alguém. Quero saber o que mantém essa pessoa ali enquanto o resto vai dormir."
+        }
+      ]
+    },
+    {
+      "key": "arquivo-de-coisas-deixadas",
+      "title": "Arquivo de Coisas Deixadas",
+      "genre": "Forense / cena de evidência",
+      "manifesto": "Um arquivo de vestígios: o que fica quando alguém já não está. Fotografo objetos e marcas como provas de uma história que não conheço e não pretendo resolver. A ausência também deixa impressões digitais.",
+      "rules": [
+        "Nunca mostre pessoas: só o que elas deixaram",
+        "Enquadre de cima ou de frente, como um perito",
+        "Fotografe a cena como encontrou, sem arrumar nada"
+      ],
+      "slots": [
+        {
+          "title": "Marcas que ninguém assina",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Pneus no asfalto, pegadas na areia, arranhões na parede. Toda marca é uma frase cujo autor sumiu."
+        },
+        {
+          "title": "Um objeto fora de lugar",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Quando algo está onde não deveria, a cena inteira vira pergunta. Fotografo a pergunta, não a resposta."
+        },
+        {
+          "title": "O que a chuva não levou",
+          "location": "",
+          "game_time": "",
+          "weather": "Chuva",
+          "phrase": "A chuva lava quase tudo. O que resiste a ela merece ser registrado como prova de teimosia."
+        },
+        {
+          "title": "Pegadas indo, nenhuma voltando",
+          "location": "Vice Beach",
+          "game_time": "06:30",
+          "weather": "",
+          "phrase": "Na areia da manhã, as pegadas seguem numa só direção. A maré ainda não decidiu se vai guardá-las."
+        },
+        {
+          "title": "Cadeira virada para o nada",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Alguém escolheu essa direção para sentar. Agora só resta o ângulo, apontando para uma vista que já não está lá."
+        },
+        {
+          "title": "Uma luz esquecida acesa",
+          "location": "",
+          "game_time": "03:00",
+          "weather": "",
+          "phrase": "Ninguém desligou antes de sair. A lâmpada continua cumprindo uma ordem que perdeu o sentido."
+        },
+        {
+          "title": "Restos de uma refeição",
+          "location": "Hamlet",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Pratos, copos, embalagens: a mesa conta quantos eram e quanto tempo ficaram. O resto é suposição."
+        },
+        {
+          "title": "Portas abertas, ninguém dentro",
+          "location": "Waning Sands",
+          "game_time": "",
+          "weather": "Vento forte",
+          "phrase": "Um veículo de portas abertas sugere pressa ou desistência. O vento entra e sai como se procurasse alguém."
+        },
+        {
+          "title": "Uma fila de objetos iguais",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Repetição organizada parece método. Quando um item falta na sequência, a ausência vira a evidência principal."
+        },
+        {
+          "title": "O lugar onde algo estava",
+          "location": "Port Gellhorn",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma marca mais clara no chão, um retângulo sem poeira. Fotografo o contorno do que foi retirado."
+        },
+        {
+          "title": "Lixo como diário",
+          "location": "Vice City",
+          "game_time": "07:00",
+          "weather": "",
+          "phrase": "Antes da coleta, a calçada é um diário aberto da noite anterior. Cada saco conta uma versão diferente."
+        },
+        {
+          "title": "Pertences sem viajante",
+          "location": "Key Lento",
+          "game_time": "18:00",
+          "weather": "",
+          "phrase": "Toalha, chinelo, uma bolsa. Nenhum dono à vista; a areia guarda o lugar como quem guarda um segredo."
+        },
+        {
+          "title": "Uma curva gravada no asfalto",
+          "location": "Ambrosia",
+          "game_time": "",
+          "weather": "",
+          "phrase": "A borracha deixou uma assinatura no chão. Pela curva, adivinho a velocidade e a decisão de última hora."
+        },
+        {
+          "title": "Arrombada pelo tempo",
+          "location": "Ambrosia",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Não foi força, foi descuido acumulado. A madeira cedeu aos poucos, como quem desiste devagar."
+        },
+        {
+          "title": "Papel esquecido",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Panfleto, recibo, página solta. Todo papel no chão é um recado que caiu no meio do caminho."
+        },
+        {
+          "title": "A prova vista na poça",
+          "location": "",
+          "game_time": "",
+          "weather": "Garoa",
+          "phrase": "Fotografo o objeto pela poça ao lado dele. A prova aparece invertida, como se o chão também testemunhasse."
+        },
+        {
+          "title": "Cinzas de uma noite fria",
+          "location": "Waning Sands",
+          "game_time": "08:00",
+          "weather": "",
+          "phrase": "Pedras em círculo e carvão apagado. Alguém se aqueceu aqui e levou embora todas as conversas."
+        },
+        {
+          "title": "Coisas presas e esquecidas",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Correntes, cadeados, amarras. O que foi preso para não sumir acabou esquecido no lugar exato."
+        },
+        {
+          "title": "Vestígio na contraluz",
+          "location": "",
+          "game_time": "16:50",
+          "weather": "Pôr do sol",
+          "phrase": "Com o sol baixo, arranhões e poeira saltam da superfície. A luz rasante é a lupa de quem investiga sem pressa."
+        },
+        {
+          "title": "O fim do rastro",
+          "location": "Gloriana Key",
+          "game_time": "",
+          "weather": "Nublado",
+          "phrase": "Toda sequência de marcas termina em algum ponto. Fotografo o último sinal, onde a história para de deixar pistas."
+        }
+      ]
+    },
+    {
+      "key": "suor-de-bairro",
+      "title": "Suor de Bairro",
+      "genre": "Esporte",
+      "manifesto": "O esporte que acontece longe dos estádios, no corpo de quem corre, nada, pedala ou joga sem plateia. Este ensaio procura o esforço como forma de presença: o instante em que alguém está inteiramente onde está. O placar não importa; o fôlego, sim.",
+      "rules": [
+        "Fotografe o antes ou o depois, nunca o lance",
+        "Nada de zoom: entre na quadra, na pista, na água",
+        "Pelo menos uma foto por sessão sem nenhum atleta"
+      ],
+      "slots": [
+        {
+          "title": "Corpo em movimento",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "O esforço desenha linhas que o corpo parado não conhece. Procuro o instante em que o gesto ainda não terminou."
+        },
+        {
+          "title": "Quem corre antes do sol",
+          "location": "Vice Beach",
+          "game_time": "05:50",
+          "weather": "",
+          "phrase": "Correr no escuro é um acordo íntimo com o próprio cansaço. A orla ainda dorme e o fôlego é a única companhia."
+        },
+        {
+          "title": "Fôlego recuperado",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Mãos nos joelhos, cabeça baixa. Depois do esforço, o corpo pede silêncio, e o silêncio também faz parte do jogo."
+        },
+        {
+          "title": "A quadra sem ninguém",
+          "location": "Hamlet",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Linhas pintadas esperando jogadores. Uma quadra vazia é um jogo que ainda não aconteceu, ou que já acabou."
+        },
+        {
+          "title": "Água como pista",
+          "location": "Key Lento",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Remo, nado ou motor: na água, todo esforço deixa um rastro que se apaga em poucos segundos."
+        },
+        {
+          "title": "O suor brilhando",
+          "location": "",
+          "game_time": "14:30",
+          "weather": "Calor úmido",
+          "phrase": "No calor pesado, cada movimento custa o dobro. O brilho na pele é o recibo desse preço."
+        },
+        {
+          "title": "Equipamento em repouso",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Bola, prancha, bicicleta encostada. O objeto parado guarda a memória do corpo que o usava."
+        },
+        {
+          "title": "Quem assiste de longe",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Toda partida tem alguém que só olha. Às vezes o rosto de quem assiste conta mais do que o jogo."
+        },
+        {
+          "title": "Duas rodas e uma reta",
+          "location": "Waning Sands",
+          "game_time": "",
+          "weather": "Ensolarado",
+          "phrase": "Uma estrada longa e alguém pedalando sem pressa de chegar. O horizonte é o único adversário."
+        },
+        {
+          "title": "Equilíbrio por um segundo",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Prancha, corrimão, pedra na beira d'água. O equilíbrio dura pouco, e é por isso que vale a foto."
+        },
+        {
+          "title": "Treinar sozinho",
+          "location": "",
+          "game_time": "07:00",
+          "weather": "",
+          "phrase": "Sem time, sem técnico, sem testemunha. A disciplina de quem treina só é a mais silenciosa de todas."
+        },
+        {
+          "title": "O corpo esquece o chão",
+          "location": "Vice Beach",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Por um instante o corpo flutua. Fotografo o meio do salto, quando nada ainda está decidido."
+        },
+        {
+          "title": "Sombras compridas no jogo",
+          "location": "",
+          "game_time": "17:20",
+          "weather": "Pôr do sol",
+          "phrase": "No fim da tarde, os jogadores ganham sombras enormes. O jogo continua, agora com o dobro de participantes."
+        },
+        {
+          "title": "Jogo interrompido pela chuva",
+          "location": "",
+          "game_time": "",
+          "weather": "Chuva",
+          "phrase": "A chuva encerra a partida sem apito. Uns correm para a cobertura, outros ficam, como se nada fosse."
+        },
+        {
+          "title": "Linhas de chegada invisíveis",
+          "location": "Port Gellhorn",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Não há fita nem medalha. Mesmo assim, quem corre sabe exatamente onde fica o seu ponto final."
+        },
+        {
+          "title": "O corpo depois do mar",
+          "location": "Capri",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Sair da água pesado, cansado, satisfeito. O mar devolve o atleta diferente de como o recebeu."
+        },
+        {
+          "title": "Movimento congelado",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "A câmera para o que nunca para. A foto é uma mentira útil sobre um corpo que estava voando."
+        },
+        {
+          "title": "Treino sob as luzes",
+          "location": "Vice City",
+          "game_time": "21:00",
+          "weather": "Noite limpa",
+          "phrase": "Refletores acesos, quadra iluminada como uma ilha. À noite, o esforço parece mais teimoso, mais pessoal."
+        },
+        {
+          "title": "Alongar como ritual",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Antes de tudo, o corpo pede licença. O alongamento é uma reverência discreta ao que está por vir."
+        },
+        {
+          "title": "Vitória sem testemunha",
+          "location": "Gloriana Key",
+          "game_time": "18:40",
+          "weather": "",
+          "phrase": "Ninguém viu, ninguém comemorou. Ainda assim, há uma alegria particular em vencer só para si mesmo."
+        }
+      ]
+    },
+    {
+      "key": "leonida-selvagem",
+      "title": "Leonida Selvagem",
+      "genre": "Vida selvagem",
+      "manifesto": "Leonida pertence primeiro aos bichos, e nós somos visitantes com pressa. Este ensaio investiga a convivência: o olhar que o animal devolve, a distância que ele escolhe, a indiferença que nos coloca no nosso lugar. Fotografar um bicho é aprender a esperar no tempo dele.",
+      "rules": [
+        "O animal decide a distância: nunca persiga",
+        "Espere parado pelo menos um minuto antes de fotografar",
+        "Nunca use o carro para se aproximar"
+      ],
+      "slots": [
+        {
+          "title": "Um bicho que não pediu plateia",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Ele percebe a câmera e decide ignorá-la. A indiferença do animal é a melhor lição de humildade que conheço."
+        },
+        {
+          "title": "Asas contra o céu",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma ave aberta no ar é um desenho que dura um segundo. O céu inteiro serve de moldura."
+        },
+        {
+          "title": "Olhos à flor d'água",
+          "location": "Ambrosia",
+          "game_time": "",
+          "weather": "Calor úmido",
+          "phrase": "Só os olhos aparecem acima da superfície. O resto do corpo é paciência e silêncio submerso."
+        },
+        {
+          "title": "O cão que não segue ninguém",
+          "location": "Hamlet",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Caminha pela rua com o ar de quem tem compromisso. Nunca sei se o perdido é ele ou sou eu."
+        },
+        {
+          "title": "Bando em formação",
+          "location": "Gloriana Key",
+          "game_time": "18:10",
+          "weather": "Pôr do sol",
+          "phrase": "Dezenas de aves decidindo juntas para onde ir. Não há líder visível, apenas um acordo antigo."
+        },
+        {
+          "title": "Pousado no que é nosso",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Ave em poste, telhado, placa ou barco. O bicho usa o que construímos sem pedir licença nem agradecer."
+        },
+        {
+          "title": "Animal e máquina",
+          "location": "Port Gellhorn",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Um bicho ao lado de algo fabricado. A foto mede a distância entre o que nasceu e o que foi feito."
+        },
+        {
+          "title": "A paciência de quem pesca",
+          "location": "Key Lento",
+          "game_time": "07:20",
+          "weather": "",
+          "phrase": "Imóvel na beira d'água, a ave pesca com uma paciência que nenhum humano jamais treinou."
+        },
+        {
+          "title": "Rastro na lama",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "O animal já passou, mas a lama ainda lembra. Às vezes a foto de um bicho não precisa do bicho."
+        },
+        {
+          "title": "Vidas sob a superfície",
+          "location": "",
+          "game_time": "",
+          "weather": "Ensolarado",
+          "phrase": "Sombras rápidas debaixo d'água. O mar está cheio de vidas que nunca sobem para posar."
+        },
+        {
+          "title": "Quando os bichos param",
+          "location": "",
+          "game_time": "13:00",
+          "weather": "Calor úmido",
+          "phrase": "Ao meio-dia os animais se recolhem. O calor ensina que nem todo movimento vale a pena."
+        },
+        {
+          "title": "Encontro de olhares",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Por um segundo, o animal olha de volta. Nesse instante, quem está sendo fotografado sou eu."
+        },
+        {
+          "title": "Silhueta no fim do dia",
+          "location": "Waning Sands",
+          "game_time": "19:00",
+          "weather": "",
+          "phrase": "Contra o céu baixo, só sobra o contorno. A silhueta guarda o essencial e esconde todo o resto."
+        },
+        {
+          "title": "Bicho na chuva",
+          "location": "",
+          "game_time": "",
+          "weather": "Chuva",
+          "phrase": "Alguns fogem da chuva, outros nem notam. A água revela quem pertence de verdade a este lugar."
+        },
+        {
+          "title": "Território marcado",
+          "location": "Watson Bay",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Cada animal tem um pedaço de chão que considera seu. Entrar no quadro é entrar na casa dele."
+        },
+        {
+          "title": "Dois da mesma espécie",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Um par de bichos lado a lado. Não sei o que dizem um ao outro, mas a postura entrega muito."
+        },
+        {
+          "title": "Pequeno demais para notar",
+          "location": "Vice Beach",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Os menores são os mais ignorados. Agachar até a altura deles muda a escala do mundo inteiro."
+        },
+        {
+          "title": "O brejo respirando",
+          "location": "",
+          "game_time": "06:00",
+          "weather": "Neblina",
+          "phrase": "Na névoa da manhã, o brejo parece respirar devagar. Algo se move, mas nunca sei exatamente o quê."
+        },
+        {
+          "title": "Fuga em diagonal",
+          "location": "Capri",
+          "game_time": "",
+          "weather": "",
+          "phrase": "O animal sai do quadro antes que eu esteja pronto. Às vezes a melhor foto é a do espaço que ele deixou."
+        },
+        {
+          "title": "Convivência na cidade",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Aves, cães, bichos de praça: a cidade também é habitat. Eles se adaptaram a nós melhor do que nós a eles."
+        }
+      ]
+    },
+    {
+      "key": "rostos-depois-da-meia-noite",
+      "title": "Rostos Depois da Meia-Noite",
+      "genre": "Retrato noturno",
+      "manifesto": "A madrugada muda o rosto das pessoas: tira a pressa, acrescenta cansaço, revela o que o dia esconde. Este ensaio procura retratos feitos com a luz que sobrou da cidade. Quem está acordado a essa hora sempre carrega um motivo.",
+      "rules": [
+        "Só luz que já existe: poste, letreiro, farol ou tela",
+        "Nenhum retrato antes das 22h",
+        "Enquadre do peito para cima, nunca o corpo inteiro"
+      ],
+      "slots": [
+        {
+          "title": "Um rosto iluminado de baixo",
+          "location": "",
+          "game_time": "00:30",
+          "weather": "",
+          "phrase": "A luz que vem do chão ou da tela muda a pessoa. Fica mais dramática, mais sozinha, mais verdadeira."
+        },
+        {
+          "title": "Quem espera de madrugada",
+          "location": "Vice City",
+          "game_time": "02:10",
+          "weather": "",
+          "phrase": "Esperar a essa hora tem outro peso. O relógio anda devagar para quem ainda tem esperança."
+        },
+        {
+          "title": "Metade na sombra",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Meio rosto aceso, meio rosto escuro. Toda pessoa da madrugada parece dividida entre dois lugares."
+        },
+        {
+          "title": "O cansaço que não se esconde",
+          "location": "",
+          "game_time": "04:00",
+          "weather": "",
+          "phrase": "Às quatro da manhã ninguém mais posa. O cansaço tira as máscaras melhor do que qualquer pergunta."
+        },
+        {
+          "title": "Luz colorida na pele",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Vermelho, azul, verde de letreiro. A cidade pinta o rosto de quem passa sem pedir permissão."
+        },
+        {
+          "title": "Olhar perdido atrás do vidro",
+          "location": "",
+          "game_time": "",
+          "weather": "Chuva",
+          "phrase": "Do lado de dentro do vidro molhado, alguém olha para fora sem ver nada. A chuva desfoca todo o resto."
+        },
+        {
+          "title": "Quem mantém a noite acesa",
+          "location": "Port Gellhorn",
+          "game_time": "03:30",
+          "weather": "",
+          "phrase": "Enquanto a cidade dorme, alguém a mantém funcionando. Esse rosto merece ser lembrado à luz do dia."
+        },
+        {
+          "title": "Silêncio entre duas frases",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Fotografo a pausa no meio da conversa, quando a pessoa pensa antes de responder."
+        },
+        {
+          "title": "Rosto no farol",
+          "location": "Waning Sands",
+          "game_time": "01:00",
+          "weather": "Noite limpa",
+          "phrase": "Os faróis acendem um rosto no meio do nada. Por um segundo, o deserto inteiro tem testemunha."
+        },
+        {
+          "title": "Perfil contra a cidade",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Um perfil recortado contra as luzes distantes. A cidade inteira atrás e nenhuma pressa na frente."
+        },
+        {
+          "title": "Sorriso fora de hora",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Sorrir às três da manhã é um pequeno ato de rebeldia. Guardo esses sorrisos como raridades."
+        },
+        {
+          "title": "Olhos que acabaram de acordar",
+          "location": "",
+          "game_time": "05:10",
+          "weather": "",
+          "phrase": "Quem acorda antes do sol carrega um rosto ainda meio sonho. A madrugada está terminando nele."
+        },
+        {
+          "title": "Dois rostos, uma luz",
+          "location": "Hamlet",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Duas pessoas iluminadas pela mesma fonte. A luz as aproxima mesmo quando não conversam."
+        },
+        {
+          "title": "Retrato no reflexo",
+          "location": "",
+          "game_time": "",
+          "weather": "Garoa",
+          "phrase": "O rosto aparece no vidro, na poça, no metal do carro. Às vezes a pessoa é mais nítida refletida."
+        },
+        {
+          "title": "Quem não quer ser visto",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Capuz, boné, rosto virado. Respeito a recusa e fotografo apenas o que a pessoa deixa mostrar."
+        },
+        {
+          "title": "Rosto na neblina",
+          "location": "Gloriana Key",
+          "game_time": "",
+          "weather": "Neblina",
+          "phrase": "Na névoa, o retrato vira quase lembrança. Os contornos desaparecem e só fica a presença."
+        },
+        {
+          "title": "O último a ir embora",
+          "location": "Watson Bay",
+          "game_time": "02:40",
+          "weather": "",
+          "phrase": "Sempre há alguém que fica até o fim. A cadeira ao lado já está vazia faz tempo."
+        },
+        {
+          "title": "Mãos que falam no escuro",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Quando o rosto se perde na sombra, as mãos assumem a conversa. Elas também são retrato."
+        },
+        {
+          "title": "Insônia compartilhada",
+          "location": "Key Lento",
+          "game_time": "",
+          "weather": "Calor úmido",
+          "phrase": "No calor da noite, ninguém consegue dormir. Os vizinhos se encontram na rua como se fosse dia."
+        },
+        {
+          "title": "O rosto antes do amanhecer",
+          "location": "Vice Beach",
+          "game_time": "05:40",
+          "weather": "",
+          "phrase": "O céu começa a clarear atrás da pessoa. É o último retrato da noite e o primeiro do dia."
+        }
+      ]
+    },
+    {
+      "key": "inventario-do-silencio",
+      "title": "Inventário do Silêncio",
+      "genre": "Arquitetura e lugares vazios",
+      "manifesto": "Um inventário de lugares que continuam de pé depois que as pessoas foram embora. Investigo o vazio não como falta, mas como forma: o espaço que sobra quando a função acaba. Todo lugar silencioso ainda está dizendo alguma coisa.",
+      "rules": [
+        "Nenhuma pessoa no quadro, nunca",
+        "Câmera nivelada: linhas retas, horizonte reto",
+        "Fotografe cada lugar de frente, como um documento"
+      ],
+      "slots": [
+        {
+          "title": "Lâmpada para ninguém",
+          "location": "",
+          "game_time": "22:30",
+          "weather": "",
+          "phrase": "Uma luz acesa num prédio vazio. Talvez espere alguém, talvez só não saiba que tudo acabou."
+        },
+        {
+          "title": "Corredor sem fim",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Um corredor vazio é uma promessa de chegada que nunca se cumpre. A perspectiva puxa o olhar para longe."
+        },
+        {
+          "title": "Estacionamento deserto",
+          "location": "Vice City",
+          "game_time": "06:00",
+          "weather": "",
+          "phrase": "Vagas pintadas para carros que não vieram. Às seis da manhã, o asfalto parece um tabuleiro abandonado."
+        },
+        {
+          "title": "Escada que leva a lugar nenhum",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Degraus que sobem e param. Toda escada interrompida guarda um projeto que ficou pela metade."
+        },
+        {
+          "title": "Placa de algo que fechou",
+          "location": "Ambrosia",
+          "game_time": "",
+          "weather": "",
+          "phrase": "O letreiro continua anunciando o que não existe mais. Uma promessa pendurada na fachada."
+        },
+        {
+          "title": "O que era feito para conter",
+          "location": "",
+          "game_time": "",
+          "weather": "Ensolarado",
+          "phrase": "Piscina seca, caixa d'água, tanque. O vazio fica mais visível no que foi feito para estar cheio."
+        },
+        {
+          "title": "Silêncio de domingo",
+          "location": "",
+          "game_time": "08:00",
+          "weather": "",
+          "phrase": "Ruas, lojas e escritórios fechados. A cidade descansa e deixa à mostra a arquitetura que ninguém olha."
+        },
+        {
+          "title": "Janelas sem cortina",
+          "location": "Port Gellhorn",
+          "game_time": "",
+          "weather": "Nublado",
+          "phrase": "Fachadas de vidro olhando para nada. Sem ninguém dentro, a janela vira um olho cego."
+        },
+        {
+          "title": "Sombra ocupando a sala",
+          "location": "",
+          "game_time": "16:40",
+          "weather": "",
+          "phrase": "Com o sol baixo, a sombra entra nos lugares vazios e se acomoda. É a única moradora que sobrou."
+        },
+        {
+          "title": "O mato reivindicando",
+          "location": "Waning Sands",
+          "game_time": "",
+          "weather": "",
+          "phrase": "A planta atravessa o concreto sem pedir licença. A natureza é paciente e sempre volta para buscar o que é dela."
+        },
+        {
+          "title": "Cadeiras em fila, nenhuma plateia",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Assentos alinhados esperando um espetáculo cancelado. A ordem sem gente é estranha e bonita."
+        },
+        {
+          "title": "Galpão de portas abertas",
+          "location": "Watson Bay",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Um espaço enorme sem nada dentro. O vazio, quando é grande assim, ganha quase peso."
+        },
+        {
+          "title": "Arquitetura na neblina",
+          "location": "",
+          "game_time": "",
+          "weather": "Neblina",
+          "phrase": "Na névoa, o prédio perde os detalhes e vira só volume. O silêncio fica visível."
+        },
+        {
+          "title": "A casa fechada",
+          "location": "Hamlet",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Portas trancadas, janelas cobertas, quintal sem pegadas. Uma casa fechada é um livro que ninguém vai abrir."
+        },
+        {
+          "title": "Geometria do abandono",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Sem gente, sobram linhas, ângulos e repetições. O lugar vazio revela o desenho que o uso escondia."
+        },
+        {
+          "title": "Meio-dia sem sombra",
+          "location": "",
+          "game_time": "12:00",
+          "weather": "Ensolarado",
+          "phrase": "Ao meio-dia a luz achata tudo. O lugar vazio fica exposto, sem nenhum canto onde se esconder."
+        },
+        {
+          "title": "Lugar feito para a alegria",
+          "location": "Capri",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Parquinho, quadra, fliperama fechado. Os lugares feitos para a alegria são os que mais doem vazios."
+        },
+        {
+          "title": "Cais sem barcos",
+          "location": "Key Lento",
+          "game_time": "07:30",
+          "weather": "",
+          "phrase": "Amarras soltas e água parada. Um cais vazio espera o que talvez nunca volte a atracar."
+        },
+        {
+          "title": "Interior visto de fora",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Pela janela, um cômodo arrumado e deserto. Do lado de fora, imagino quem deixou tudo assim."
+        },
+        {
+          "title": "Depois do expediente",
+          "location": "Vice City",
+          "game_time": "20:30",
+          "weather": "",
+          "phrase": "Escritórios apagados, cadeiras empurradas, telas pretas. A cidade do trabalho dorme de olhos abertos."
+        }
+      ]
+    },
+    {
+      "key": "verao-sem-fim",
+      "title": "Verão Sem Fim",
+      "genre": "Lazer de praia e verão",
+      "manifesto": "O verão em Leonida parece não terminar nunca, e este ensaio investiga essa ilusão. Procuro o tempo suspenso das tardes longas, a preguiça como estado de graça, a luz que deixa tudo um pouco mais leve. Cada foto deveria ser lembrada num inverno que ainda não chegou.",
+      "rules": [
+        "Só fotografe com luz do dia, entre 7h e 19h",
+        "Pés na areia ou na água, nunca da calçada",
+        "Horizonte sempre reto, cores sempre fortes"
+      ],
+      "slots": [
+        {
+          "title": "A tarde que não acaba",
+          "location": "",
+          "game_time": "16:00",
+          "weather": "Ensolarado",
+          "phrase": "Às quatro da tarde o tempo parece desistir de andar. Ninguém tem pressa, nem o sol."
+        },
+        {
+          "title": "Pés na areia",
+          "location": "Vice Beach",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Fotografar só os pés já conta a história do dia: descalço, salgado, sem destino marcado."
+        },
+        {
+          "title": "Corpo entregue ao sol",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Deitado sem pensar em nada. O descanso também é uma forma de estar presente."
+        },
+        {
+          "title": "Guarda-sol solitário",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Um único guarda-sol na imensidão da praia. Uma ilha de sombra no meio do excesso de luz."
+        },
+        {
+          "title": "O instante do mergulho",
+          "location": "Capri",
+          "game_time": "",
+          "weather": "",
+          "phrase": "O instante entre o ar e a água. Todo mergulho é um pequeno desaparecimento voluntário."
+        },
+        {
+          "title": "Horizonte dividido ao meio",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Metade céu, metade mar. O verão cabe inteiro numa linha reta bem no meio do quadro."
+        },
+        {
+          "title": "Pele, sal e luz",
+          "location": "Key Lento",
+          "game_time": "11:00",
+          "weather": "Ensolarado",
+          "phrase": "Tudo brilha demais perto do meio-dia. O verão é excesso, e a foto precisa aceitar isso."
+        },
+        {
+          "title": "Cores que só existem no verão",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Toalhas, roupas, barcos, casas pintadas. No verão, as cores parecem mais altas, quase gritadas."
+        },
+        {
+          "title": "Sombra disputada",
+          "location": "Vice Beach",
+          "game_time": "13:30",
+          "weather": "Calor úmido",
+          "phrase": "Debaixo da única árvore, todo mundo se aperta. A sombra no verão vale mais que qualquer vista."
+        },
+        {
+          "title": "A água até a cintura",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Nem dentro, nem fora. Ficar parado com o mar pela cintura é uma forma de meditação de verão."
+        },
+        {
+          "title": "Barco ao longe",
+          "location": "Gloriana Key",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Um ponto pequeno no horizonte azul. Quem está nele também deve estar olhando para cá."
+        },
+        {
+          "title": "O pôr do sol como evento",
+          "location": "",
+          "game_time": "18:45",
+          "weather": "Pôr do sol",
+          "phrase": "Todo mundo para o que está fazendo e olha na mesma direção. Um ritual diário sem sacerdote."
+        },
+        {
+          "title": "O gelo que derrete",
+          "location": "",
+          "game_time": "",
+          "weather": "Calor úmido",
+          "phrase": "Qualquer coisa gelada vira tesouro em minutos. O verão mede o tempo pelo derretimento."
+        },
+        {
+          "title": "Brincar sem idade",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Na praia, adultos esquecem a idade. Jogar, correr e cair na água valem tanto quanto aos dez anos."
+        },
+        {
+          "title": "Vento na beira-mar",
+          "location": "Watson Bay",
+          "game_time": "",
+          "weather": "Vento forte",
+          "phrase": "Cabelos, toalhas e bandeiras viram para o mesmo lado. O vento organiza a praia por alguns segundos."
+        },
+        {
+          "title": "Elogio da preguiça",
+          "location": "",
+          "game_time": "15:00",
+          "weather": "",
+          "phrase": "Fotografar a preguiça é difícil: nada acontece. E é exatamente esse nada que quero guardar."
+        },
+        {
+          "title": "Manhã antes dos banhistas",
+          "location": "Vice Beach",
+          "game_time": "07:10",
+          "weather": "",
+          "phrase": "A praia ainda limpa, a areia lisa, o mar só para mim. O verão começa antes de ser dividido."
+        },
+        {
+          "title": "Água que deixa ver o fundo",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Quando o mar fica transparente, parece que flutuamos no ar. A água some e só fica a luz."
+        },
+        {
+          "title": "Pés para cima na varanda",
+          "location": "Port Gellhorn",
+          "game_time": "17:50",
+          "weather": "",
+          "phrase": "O dia de praia termina na varanda. O corpo cansado e a pele quente ainda guardam o sol."
+        },
+        {
+          "title": "Um último mergulho",
+          "location": "Vice City",
+          "game_time": "18:55",
+          "weather": "",
+          "phrase": "Sempre há quem entre no mar quando todos já estão indo embora. Para essa pessoa, o verão nunca acaba."
+        }
+      ]
+    },
+    {
+      "key": "mil-milhas-de-leonida",
+      "title": "Mil Milhas de Leonida",
+      "genre": "Estrada e Americana",
+      "manifesto": "A estrada é um lugar que existe só enquanto passamos por ele. Este ensaio investiga o deslocamento: o que se vê pela janela, o que fica no retrovisor, as paradas que não estavam no plano. Viajar sem destino é a forma mais honesta de chegar a algum lugar.",
+      "rules": [
+        "Sempre um carro, uma placa ou um pedaço de estrada no quadro",
+        "Fotografe só com o veículo parado",
+        "Diante de uma bifurcação, escolha sempre o caminho menor"
+      ],
+      "slots": [
+        {
+          "title": "Uma reta até o horizonte",
+          "location": "Waning Sands",
+          "game_time": "",
+          "weather": "Ensolarado",
+          "phrase": "A estrada some num ponto onde céu e asfalto se encontram. Dirigir até lá é perseguir uma ideia."
+        },
+        {
+          "title": "Pelo retrovisor",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "O que ficou para trás aparece pequeno e invertido. O retrovisor é a memória portátil de quem viaja."
+        },
+        {
+          "title": "Parada sem motivo",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Parar o carro no acostamento só para olhar. A melhor parada da viagem nunca está no mapa."
+        },
+        {
+          "title": "Luzes que passam",
+          "location": "Vice City",
+          "game_time": "22:00",
+          "weather": "",
+          "phrase": "À noite, a estrada vira um rio de luz. Os carros são apenas pontos vermelhos indo embora."
+        },
+        {
+          "title": "Entre duas margens",
+          "location": "Key Lento",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Atravessar uma ponte é ficar entre dois lugares, sem pertencer a nenhum por alguns minutos."
+        },
+        {
+          "title": "Uma ilha de luz no escuro",
+          "location": "",
+          "game_time": "02:00",
+          "weather": "",
+          "phrase": "Um posto aceso no meio do nada. Todo viajante noturno acaba pedindo abrigo a esse brilho."
+        },
+        {
+          "title": "A estrada pelo para-brisa",
+          "location": "",
+          "game_time": "",
+          "weather": "Chuva",
+          "phrase": "Com chuva, o para-brisa transforma a estrada em pintura. O limpador apaga e redesenha a paisagem."
+        },
+        {
+          "title": "Placa apontando para longe",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Nomes de lugares e números de distância. Toda placa é uma pergunta: vai ou fica?"
+        },
+        {
+          "title": "Poeira levantada",
+          "location": "Waning Sands",
+          "game_time": "",
+          "weather": "Vento forte",
+          "phrase": "O carro passa e o chão inteiro se levanta atrás dele. A poeira é a assinatura de quem não para."
+        },
+        {
+          "title": "Curva escondida",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Não sei o que vem depois da curva. É justamente por isso que continuo dirigindo."
+        },
+        {
+          "title": "O carro como abrigo",
+          "location": "",
+          "game_time": "",
+          "weather": "Tempestade",
+          "phrase": "Lá fora o céu desaba. Dentro do carro, um pequeno mundo seco e silencioso."
+        },
+        {
+          "title": "Amanhecer no acostamento",
+          "location": "Ambrosia",
+          "game_time": "06:10",
+          "weather": "",
+          "phrase": "Dormir no carro e acordar com o sol entrando pelo vidro. A estrada também tem manhãs."
+        },
+        {
+          "title": "Asfalto que finge água",
+          "location": "",
+          "game_time": "",
+          "weather": "Calor úmido",
+          "phrase": "No calor, o asfalto inventa poças lá longe. A estrada mente e a gente acredita."
+        },
+        {
+          "title": "Carros parados no tempo",
+          "location": "Hamlet",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Veículos estacionados que não andam há anos. A estrada continua; eles decidiram ficar."
+        },
+        {
+          "title": "Quando o asfalto acaba",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "No caminho de terra, a viagem fica mais honesta. O carro sacode e a paisagem se aproxima."
+        },
+        {
+          "title": "Faróis na neblina",
+          "location": "Port Gellhorn",
+          "game_time": "05:30",
+          "weather": "Neblina",
+          "phrase": "Dois círculos de luz tentando abrir caminho na névoa. Dirigir assim é confiar no que não se vê."
+        },
+        {
+          "title": "A estrada à beira-mar",
+          "location": "Gloriana Key",
+          "game_time": "",
+          "weather": "",
+          "phrase": "De um lado o asfalto, do outro a água. A viagem fica dividida entre seguir e parar para olhar."
+        },
+        {
+          "title": "O banco do passageiro vazio",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Viajar sozinho é olhar para o lado de vez em quando e não encontrar ninguém. A paisagem ocupa o lugar."
+        },
+        {
+          "title": "O fim do dia no capô",
+          "location": "",
+          "game_time": "19:10",
+          "weather": "Pôr do sol",
+          "phrase": "O céu se reflete no metal do carro. Por alguns minutos, o veículo carrega o fim do dia consigo."
+        },
+        {
+          "title": "Chegar sem destino",
+          "location": "Capri",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Desligo o motor onde a estrada acaba. Não era aqui que eu ia, mas é aqui que estou."
+        }
+      ]
+    },
+    {
+      "key": "neon-e-suor",
+      "title": "Néon e Suor",
+      "genre": "Vida noturna e festas",
+      "manifesto": "A noite é outra cidade, construída de luz artificial, som alto e corpos próximos. Este ensaio investiga a euforia e o seu avesso: a multidão e a solidão dentro dela, o brilho e o cansaço que vem depois. Não busco nitidez; busco a sensação de ter estado lá.",
+      "rules": [
+        "Câmera na altura da cintura, sem caçar o enquadramento perfeito",
+        "Abrace o borrão: movimento vale mais que nitidez",
+        "Saia antes que a noite acabe"
+      ],
+      "slots": [
+        {
+          "title": "Multidão e uma pessoa",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "No meio de muita gente, alguém está sozinho. A festa sempre tem um rosto que não está nela."
+        },
+        {
+          "title": "Neon refletido no asfalto",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "Garoa",
+          "phrase": "Com o chão molhado, os letreiros se duplicam. A noite fica com o dobro de luz e metade da certeza."
+        },
+        {
+          "title": "Juntos e calados",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Lado a lado no balcão, sem trocar uma palavra. A música alta serve de desculpa para o silêncio."
+        },
+        {
+          "title": "Corpos borrados",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Gente dançando vira mancha de cor. A foto tremida diz mais sobre a música do que qualquer imagem nítida."
+        },
+        {
+          "title": "A fila na porta",
+          "location": "Vice Beach",
+          "game_time": "23:00",
+          "weather": "",
+          "phrase": "Esperar para entrar já é parte da noite. A ansiedade da fila é uma festa antes da festa."
+        },
+        {
+          "title": "Luz que pulsa",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "A iluminação liga e desliga no ritmo do som. Cada foto é um quadro diferente da mesma batida."
+        },
+        {
+          "title": "Restos da euforia",
+          "location": "",
+          "game_time": "04:30",
+          "weather": "",
+          "phrase": "Quando as luzes comuns acendem, a magia some. O chão conta tudo o que aconteceu nas últimas horas."
+        },
+        {
+          "title": "Saindo para respirar",
+          "location": "",
+          "game_time": "",
+          "weather": "Calor úmido",
+          "phrase": "Do lado de fora, o ar quente parece fresco. Alguém encosta na parede e fecha os olhos por um instante."
+        },
+        {
+          "title": "Silhueta contra o letreiro",
+          "location": "Gloriana Key",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Um corpo escuro recortado por luz colorida. Na noite, todo mundo vira personagem de si mesmo."
+        },
+        {
+          "title": "Trilhos de luz na rua",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "A noite se move sobre rodas. Faróis, lanternas e reflexos desenham linhas brilhantes no asfalto."
+        },
+        {
+          "title": "Rua cheia à meia-noite",
+          "location": "Vice City",
+          "game_time": "00:00",
+          "weather": "",
+          "phrase": "Meia-noite e a calçada parece meio-dia. A cidade inverte o relógio para quem não quer dormir."
+        },
+        {
+          "title": "O caminho de volta",
+          "location": "",
+          "game_time": "03:40",
+          "weather": "",
+          "phrase": "Celular na mão, olhos cansados, pés doendo. A volta para casa é o epílogo silencioso da noite."
+        },
+        {
+          "title": "Calor de pista",
+          "location": "Watson Bay",
+          "game_time": "",
+          "weather": "",
+          "phrase": "O ar pesado, as luzes quentes, o suor de todos misturado. A pista é um único corpo respirando."
+        },
+        {
+          "title": "Festa vista de fora",
+          "location": "Hamlet",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Do outro lado da rua, só se ouve o grave e se vê a luz na janela. Às vezes é melhor imaginar."
+        },
+        {
+          "title": "Vestidos para virar luz",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Lantejoulas, metal, tecido que reflete. Na noite, as pessoas se vestem para brilhar junto com a cidade."
+        },
+        {
+          "title": "Noite na beira d'água",
+          "location": "Key Lento",
+          "game_time": "01:30",
+          "weather": "Noite limpa",
+          "phrase": "A música chega até o mar e se perde. Na água escura, as luzes da festa tremem como se dançassem."
+        },
+        {
+          "title": "O primeiro a chegar",
+          "location": "",
+          "game_time": "21:30",
+          "weather": "",
+          "phrase": "Pista vazia, música alta para ninguém. Quem chega cedo vê a festa antes dela acontecer."
+        },
+        {
+          "title": "Abraço no meio do barulho",
+          "location": "Port Gellhorn",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Um abraço apertado no meio da confusão. Nenhuma música é mais alta do que esse instante."
+        },
+        {
+          "title": "Amanhecer de quem não dormiu",
+          "location": "Capri",
+          "game_time": "05:50",
+          "weather": "",
+          "phrase": "O céu clareia e a noite ainda não terminou para alguns. O sol chega como visitante inconveniente."
+        },
+        {
+          "title": "Debaixo da luz vermelha",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Sob luz vermelha, tudo parece mais intenso do que é. A cor transforma qualquer esquina em cena de cinema."
+        }
+      ]
+    },
+    {
+      "key": "diario-do-ceu-pesado",
+      "title": "Diário do Céu Pesado",
+      "genre": "Tempestades e clima",
+      "manifesto": "Em Leonida o céu muda de ideia várias vezes por dia, e cada mudança redesenha o estado inteiro. Este diário investiga o tempo como personagem: o peso antes da chuva, a fúria do vento, a calma estranha que vem depois. Fotografar o clima é fotografar aquilo que ninguém controla.",
+      "rules": [
+        "Só saia para fotografar quando o tempo mudar",
+        "Sempre um elemento humano para dar escala ao céu",
+        "Volte ao mesmo lugar para registrar o antes e o depois"
+      ],
+      "slots": [
+        {
+          "title": "O céu em dúvida",
+          "location": "",
+          "game_time": "",
+          "weather": "Nublado",
+          "phrase": "Nem sol, nem chuva. O céu indeciso deixa a cidade inteira suspensa, esperando um veredito."
+        },
+        {
+          "title": "Antes da primeira gota",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "Tempestade",
+          "phrase": "O ar fica pesado e as pessoas apertam o passo. Todo mundo sabe o que vem, ninguém sabe quando."
+        },
+        {
+          "title": "Raio no horizonte",
+          "location": "Waning Sands",
+          "game_time": "",
+          "weather": "Tempestade",
+          "phrase": "Uma luz rasga o céu e some. Fotografar um raio é aceitar que quase sempre chegamos tarde."
+        },
+        {
+          "title": "Guarda-chuva como teto",
+          "location": "",
+          "game_time": "",
+          "weather": "Chuva",
+          "phrase": "Debaixo de um guarda-chuva cabe uma pessoa e um pequeno mundo seco. O resto da cidade se dissolve."
+        },
+        {
+          "title": "Vento dobrando as palmeiras",
+          "location": "Vice Beach",
+          "game_time": "",
+          "weather": "Vento forte",
+          "phrase": "As árvores se curvam e voltam, se curvam e voltam. Resistir, aqui, é saber ceder."
+        },
+        {
+          "title": "Neblina engolindo a cidade",
+          "location": "",
+          "game_time": "06:30",
+          "weather": "Neblina",
+          "phrase": "Prédios desaparecem de cima para baixo. A névoa apaga a cidade como quem limpa um quadro."
+        },
+        {
+          "title": "Céu limpo depois da chuva",
+          "location": "",
+          "game_time": "",
+          "weather": "Ensolarado",
+          "phrase": "Tudo brilha mais depois da tempestade. O mundo parece recém-lavado, quase novo demais."
+        },
+        {
+          "title": "Garoa que ninguém leva a sério",
+          "location": "",
+          "game_time": "",
+          "weather": "Garoa",
+          "phrase": "Fina demais para abrir o guarda-chuva, persistente demais para ignorar. A garoa é a chuva mais teimosa."
+        },
+        {
+          "title": "Nuvem pesada sobre o mar",
+          "location": "Gloriana Key",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma massa escura avança sobre a água. O mar fica cinza para combinar com ela."
+        },
+        {
+          "title": "Rua que virou rio",
+          "location": "Port Gellhorn",
+          "game_time": "",
+          "weather": "Chuva",
+          "phrase": "A água toma a rua e inverte as regras. Carros viram barcos, calçadas viram margens."
+        },
+        {
+          "title": "A luz que rompe as nuvens",
+          "location": "",
+          "game_time": "17:00",
+          "weather": "",
+          "phrase": "Um feixe de sol atravessa o cinza e acende um único ponto da paisagem. O céu escolhe o que mostrar."
+        },
+        {
+          "title": "Calor antes da tempestade",
+          "location": "Ambrosia",
+          "game_time": "15:30",
+          "weather": "Calor úmido",
+          "phrase": "O ar parado, abafado, quase sólido. O corpo sente a chuva horas antes de ela chegar."
+        },
+        {
+          "title": "A noite vira dia",
+          "location": "",
+          "game_time": "23:10",
+          "weather": "",
+          "phrase": "Um relâmpago, e por uma fração de segundo tudo aparece. Some antes que eu consiga entender o que vi."
+        },
+        {
+          "title": "Poças como espelhos",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Depois da chuva, o chão está cheio de pequenos céus. Basta abaixar a câmera para entrar neles."
+        },
+        {
+          "title": "Pôr do sol de tempestade",
+          "location": "Capri",
+          "game_time": "18:30",
+          "weather": "Pôr do sol",
+          "phrase": "Quando a tempestade vai embora no fim da tarde, o céu fica com cores impossíveis. É o pedido de desculpas dele."
+        },
+        {
+          "title": "Ninguém na rua",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "",
+          "phrase": "O mau tempo esvazia a cidade. As ruas desertas ficam com cara de domingo em plena semana."
+        },
+        {
+          "title": "Sombra das nuvens no chão",
+          "location": "Hamlet",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Manchas escuras correm pela paisagem. A sombra de uma nuvem é o céu tocando a terra."
+        },
+        {
+          "title": "O dia seguinte",
+          "location": "",
+          "game_time": "08:00",
+          "weather": "",
+          "phrase": "Galhos caídos, céu azul, silêncio estranho. A calma depois da tempestade parece fingida."
+        },
+        {
+          "title": "Chuva ao longe",
+          "location": "Key Lento",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Lá longe chove, aqui não. Ver a chuva de fora é como assistir a uma conversa sem ouvir."
+        },
+        {
+          "title": "Estrelas depois de tudo",
+          "location": "",
+          "game_time": "02:00",
+          "weather": "Noite limpa",
+          "phrase": "Quando as nuvens vão embora à noite, o céu parece maior. As estrelas voltam como se nada tivesse acontecido."
+        }
+      ]
+    },
+    {
+      "key": "autorretrato-de-sombra",
+      "title": "Autorretrato de Sombra",
+      "genre": "Autorretrato indireto",
+      "manifesto": "Fotografar é estar presente mesmo fora do quadro. Este ensaio procura o fotógrafo pelas bordas: a sombra no chão, o reflexo de passagem, os pés que sustentam o olhar. Nunca o rosto de frente, porque quem olha não precisa se ver para existir.",
+      "rules": [
+        "Nunca mostre o rosto de frente",
+        "Deixe um vestígio seu em cada foto: sombra, reflexo, pés ou mãos",
+        "Prefira reflexos acidentais a espelhos óbvios"
+      ],
+      "slots": [
+        {
+          "title": "Minha sombra no asfalto",
+          "location": "",
+          "game_time": "16:50",
+          "weather": "Pôr do sol",
+          "phrase": "Esticada no chão, ela parece outra pessoa. É o único retrato meu que a luz aceita assinar."
+        },
+        {
+          "title": "Pés no limite da moldura",
+          "location": "Vice Beach",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Meus sapatos na borda da foto lembram que alguém esteve aqui decidindo o que caberia no resto."
+        },
+        {
+          "title": "Silhueta numa janela escura",
+          "location": "Vice City",
+          "game_time": "21:00",
+          "weather": "",
+          "phrase": "O vidro apagado me devolve só o contorno. Sou um recorte entre o interior e a rua."
+        },
+        {
+          "title": "A mão que entra no quadro",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma mão aparece sem pedir licença, apontando ou segurando algo. Ela é minha, mas parece de um desconhecido."
+        },
+        {
+          "title": "Duas sombras, uma é minha",
+          "location": "Vice Beach",
+          "game_time": "",
+          "weather": "Ensolarado",
+          "phrase": "Ao lado de outra sombra qualquer, a minha também vira estranha. Ninguém saberia dizer qual delas segura a câmera."
+        },
+        {
+          "title": "Reflexo deformado no metal",
+          "location": "",
+          "game_time": "14:30",
+          "weather": "Ensolarado",
+          "phrase": "Na lataria curva fico largo, torto, quase cômico. Talvez seja assim que os objetos me enxergam."
+        },
+        {
+          "title": "Eu, pequeno na paisagem",
+          "location": "Waning Sands",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Bem longe, quase um ponto. Entro no quadro só para provar que a paisagem teve uma testemunha."
+        },
+        {
+          "title": "De costas para mim mesmo",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Qualquer foto de costas pode ser um autorretrato. Basta que eu queira estar indo para o mesmo lugar."
+        },
+        {
+          "title": "Contorno contra a luz",
+          "location": "",
+          "game_time": "07:10",
+          "weather": "",
+          "phrase": "Diante do sol baixo viro só borda escura. Sem detalhes, sobra a postura, e a postura também confessa."
+        },
+        {
+          "title": "Rastro dos meus passos",
+          "location": "Key Lento",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Pegadas na areia apontam para onde estou agora. O corpo já saiu do quadro, mas o caminho ficou."
+        },
+        {
+          "title": "A sombra subindo a parede",
+          "location": "",
+          "game_time": "18:10",
+          "weather": "",
+          "phrase": "No muro, minha sombra escala sem esforço. Ela sempre chega antes aonde eu ainda não fui."
+        },
+        {
+          "title": "Meu lugar à mesa vazia",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma cadeira puxada, um copo pela metade, nada mais. Às vezes estar presente é só ter deixado marca."
+        },
+        {
+          "title": "Desfocado no primeiro plano",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Um ombro borrado na frente da cena, fora de foco. Fico como um véu entre o olhar e o mundo."
+        },
+        {
+          "title": "Minha sombra sobre as coisas",
+          "location": "Hamlet",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Ela cobre um degrau, uma flor, uma placa. Fotografar também é escurecer um pouco aquilo que se ama."
+        },
+        {
+          "title": "Reflexo na tela apagada",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma tela desligada vira espelho de baixa definição. Ali apareço cinza, discreto, como quem não queria aparecer."
+        },
+        {
+          "title": "Pés na beira do píer",
+          "location": "Watson Bay",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Olhando para baixo, vejo só meus pés e o vazio adiante. Coragem e medo cabem no mesmo enquadramento."
+        },
+        {
+          "title": "Um vulto incerto que sou eu",
+          "location": "",
+          "game_time": "06:00",
+          "weather": "Neblina",
+          "phrase": "Na névoa, até eu me torno incerto. A foto não sabe se estou chegando ou indo embora."
+        },
+        {
+          "title": "Quase sem sombra ao meio-dia",
+          "location": "Ambrosia",
+          "game_time": "12:00",
+          "weather": "Calor úmido",
+          "phrase": "Com o sol a pino, minha sombra se encolhe nos pés. É o retrato de alguém sem ter para onde fugir."
+        },
+        {
+          "title": "A câmera vista no reflexo",
+          "location": "Port Gellhorn",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Às vezes o reflexo mostra mais a câmera do que a mim. Talvez ela seja mesmo meu rosto verdadeiro."
+        },
+        {
+          "title": "O último autorretrato do dia",
+          "location": "",
+          "game_time": "19:30",
+          "weather": "",
+          "phrase": "Antes que a luz acabe, procuro qualquer vestígio meu no chão. Um jeito de dizer: eu vi tudo isso."
+        }
+      ]
+    },
+    {
+      "key": "agua-que-lembra",
+      "title": "Água que Lembra",
+      "genre": "Reflexos e água",
+      "manifesto": "A água não guarda nada e mesmo assim devolve tudo. Fotografo a cidade através da superfície que treme: poças, piscinas, vidros molhados, o mar inteiro. O reflexo nunca é cópia, é uma segunda versão do mundo, mais frágil e mais honesta.",
+      "rules": [
+        "Toda foto precisa de água visível, mesmo que pouca",
+        "Pelo menos metade do quadro deve ser reflexo ou superfície",
+        "Espere a água acalmar, ou fotografe justamente o tremor"
+      ],
+      "slots": [
+        {
+          "title": "Cidade de cabeça para baixo",
+          "location": "Vice City",
+          "game_time": "22:00",
+          "weather": "Noite limpa",
+          "phrase": "Os prédios mergulham na água parada e continuam acesos lá embaixo. Uma cidade que ninguém consegue visitar."
+        },
+        {
+          "title": "Uma pedra no espelho",
+          "location": "Gloriana Key",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Basta um toque e a imagem se desfaz em anéis. Fotografo o segundo em que o reflexo esquece o que era."
+        },
+        {
+          "title": "Céu dentro da piscina",
+          "location": "",
+          "game_time": "",
+          "weather": "Ensolarado",
+          "phrase": "No fundo azul, nuvens passam devagar. A piscina finge que é uma janela aberta para cima."
+        },
+        {
+          "title": "Gotas no vidro",
+          "location": "",
+          "game_time": "",
+          "weather": "Garoa",
+          "phrase": "Cada gota no vidro carrega uma cidade minúscula, inteira e invertida. Milhares de mundos escorrendo ao mesmo tempo."
+        },
+        {
+          "title": "O mar que devolve a luz",
+          "location": "Gloriana Key",
+          "game_time": "18:20",
+          "weather": "Pôr do sol",
+          "phrase": "O sol baixo deixa um caminho dourado na água. Nenhum barco consegue percorrê-lo, mas todos parecem tentar."
+        },
+        {
+          "title": "Reflexo partido ao meio",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "A borda de uma poça corta o mundo em dois. De um lado o real, do outro a lembrança dele."
+        },
+        {
+          "title": "Luzes que tremem",
+          "location": "Port Gellhorn",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Os postes refletidos no canal não ficam quietos. A água transforma qualquer luz em respiração."
+        },
+        {
+          "title": "Água parada, tempo parado",
+          "location": "",
+          "game_time": "05:50",
+          "weather": "",
+          "phrase": "Antes do vento acordar, a superfície fica lisa como vidro. Parece que o dia ainda pensa se vai começar."
+        },
+        {
+          "title": "A margem que não termina",
+          "location": "Hamlet",
+          "game_time": "",
+          "weather": "Neblina",
+          "phrase": "Na névoa, a margem e o reflexo se confundem. Não sei mais onde acaba a terra e começa a água."
+        },
+        {
+          "title": "Rastro de um barco",
+          "location": "Vice Beach",
+          "game_time": "10:00",
+          "weather": "",
+          "phrase": "A esteira se abre atrás do casco e demora a fechar. A água lembra por alguns minutos quem passou por ela."
+        },
+        {
+          "title": "A poça que guarda um prédio",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma poça pequena e rasa consegue conter um edifício inteiro. A escala, na água, é só uma opinião."
+        },
+        {
+          "title": "Para-brisa em chuva",
+          "location": "",
+          "game_time": "",
+          "weather": "Chuva",
+          "phrase": "Pelo vidro molhado, o mundo vira pintura escorrendo. Os limpadores apagam e a chuva desenha tudo de novo."
+        },
+        {
+          "title": "Jardim duplicado",
+          "location": "Key Lento",
+          "game_time": "",
+          "weather": "Nublado",
+          "phrase": "A vegetação se repete na água escura. Um jardim em cima e outro embaixo, sem saber qual é o original."
+        },
+        {
+          "title": "Letreiro sem letras",
+          "location": "Vice City",
+          "game_time": "01:00",
+          "weather": "",
+          "phrase": "O néon escorre pela superfície e perde as palavras. Sobra a cor, sem nenhuma mensagem."
+        },
+        {
+          "title": "Miragem de verdade",
+          "location": "Waning Sands",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma poça rara no chão seco devolve o céu inteiro. Na terra sem água, ela parece uma promessa."
+        },
+        {
+          "title": "Mais nítido que o real",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Às vezes a imagem na água fica mais clara que o mundo acima dela. Por um instante, confio no reflexo."
+        },
+        {
+          "title": "Onda desfazendo a imagem",
+          "location": "Vice Beach",
+          "game_time": "",
+          "weather": "Vento forte",
+          "phrase": "O vento risca a superfície e o reflexo vira mosaico. Gosto quando a água se recusa a obedecer."
+        },
+        {
+          "title": "A lua que boia",
+          "location": "",
+          "game_time": "23:30",
+          "weather": "Noite limpa",
+          "phrase": "Uma lua inteira deitada na água, imóvel apesar das ondas. Parece que caiu e decidiu ficar."
+        },
+        {
+          "title": "Janela embaçada",
+          "location": "",
+          "game_time": "",
+          "weather": "Calor úmido",
+          "phrase": "O vapor cobre o vidro e a rua do outro lado vira lembrança. Alguém poderia escrever um nome ali."
+        },
+        {
+          "title": "A correnteza leva a cidade",
+          "location": "Capri",
+          "game_time": "",
+          "weather": "",
+          "phrase": "A água em movimento carrega reflexos que nunca voltam iguais. Cada foto é a última vez daquela imagem."
+        }
+      ]
+    },
+    {
+      "key": "geometria-do-acaso",
+      "title": "Geometria do Acaso",
+      "genre": "Minimalismo urbano",
+      "manifesto": "A cidade é desenhada com régua, mas habitada pelo acaso. Procuro linhas, repetições e vazios que ninguém planejou para serem vistos, e espero que uma figura pequena atravesse a forma grande. É nesse encontro entre ordem e acidente que a imagem respira.",
+      "rules": [
+        "No máximo uma figura humana por quadro",
+        "Forma, linha ou vazio devem ocupar dois terços da foto",
+        "Horizontes e verticais retos: nada de câmera inclinada"
+      ],
+      "slots": [
+        {
+          "title": "Uma figura, um muro enorme",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma pessoa pequena diante de uma parede imensa. A arquitetura vira céu, e o corpo, uma vírgula."
+        },
+        {
+          "title": "Linhas que convergem",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Tudo aponta para o mesmo ponto distante. Sigo as linhas como quem obedece a uma ordem silenciosa."
+        },
+        {
+          "title": "Repetição até o cansaço",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Janelas iguais, colunas iguais, vagas iguais. A repetição só fica bonita quando um único detalhe desobedece."
+        },
+        {
+          "title": "Sombras em listras",
+          "location": "",
+          "game_time": "15:30",
+          "weather": "Ensolarado",
+          "phrase": "Grades e persianas desenham faixas no chão. A luz também sabe fazer arquitetura."
+        },
+        {
+          "title": "O céu como espaço negativo",
+          "location": "Gloriana Key",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Deixo o céu ocupar quase tudo e o prédio só encostar na borda. O vazio pesa mais que o concreto."
+        },
+        {
+          "title": "Um círculo entre ângulos retos",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma forma redonda perdida no meio das esquinas. A cidade raramente se permite uma curva."
+        },
+        {
+          "title": "Diagonal de uma escada",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "A escada corta o quadro em diagonal e dá ritmo à parede. Alguém subindo seria a nota que falta."
+        },
+        {
+          "title": "Listras vistas de cima",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Faixas brancas no asfalto como teclas de um instrumento. Quem atravessa toca uma música que não escuta."
+        },
+        {
+          "title": "Horizonte em linha reta",
+          "location": "Waning Sands",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Terra embaixo, céu em cima, nada mais. Às vezes a composição perfeita é apenas uma linha honesta."
+        },
+        {
+          "title": "Fachadas em planos",
+          "location": "Vice Beach",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Paredes se sobrepõem como folhas de papel recortado. A profundidade some e a cidade vira colagem."
+        },
+        {
+          "title": "Aço cortando o céu",
+          "location": "Port Gellhorn",
+          "game_time": "",
+          "weather": "Nublado",
+          "phrase": "Uma estrutura de metal atravessa o quadro de ponta a ponta. Debaixo dela, tudo parece provisório."
+        },
+        {
+          "title": "Simetria quase perfeita",
+          "location": "",
+          "game_time": "12:00",
+          "weather": "",
+          "phrase": "Busco o centro exato e encontro sempre um pequeno erro. É ele que faz a simetria parecer viva."
+        },
+        {
+          "title": "Postes em procissão",
+          "location": "",
+          "game_time": "20:00",
+          "weather": "",
+          "phrase": "Postes iguais seguindo a rua até sumir. Cada luz repete a anterior, como um eco aceso."
+        },
+        {
+          "title": "Um quadrado aceso entre muitos",
+          "location": "",
+          "game_time": "21:40",
+          "weather": "",
+          "phrase": "Num paredão de vidro escuro, só uma janela acende. Toda a fachada passa a girar em torno dela."
+        },
+        {
+          "title": "Telhados em degraus",
+          "location": "Capri",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Telhados descem em degraus até a água. Visto de longe, o bairro parece o gráfico de alguém pensando."
+        },
+        {
+          "title": "Moldura dentro da moldura",
+          "location": "Watson Bay",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Um portal, um arco, uma janela enquadrando outra cena. A cidade às vezes me entrega a composição pronta."
+        },
+        {
+          "title": "Blocos empilhados",
+          "location": "Ambrosia",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Caixas e contêineres em cores e tamanhos iguais. Uma pessoa entre eles parece peça de um jogo maior."
+        },
+        {
+          "title": "Cais reto contra o mar",
+          "location": "Key Lento",
+          "game_time": "",
+          "weather": "",
+          "phrase": "A borda de concreto encontra a água sem cerimônia. A régua humana tocando o que nunca foi medido."
+        },
+        {
+          "title": "Triângulos de fim de tarde",
+          "location": "",
+          "game_time": "17:00",
+          "weather": "",
+          "phrase": "No fim da tarde, as sombras dos prédios viram triângulos perfeitos. O chão vira um projeto de arquiteto."
+        },
+        {
+          "title": "Vazio no centro",
+          "location": "",
+          "game_time": "",
+          "weather": "Neblina",
+          "phrase": "Deixo o meio da foto propositalmente vazio. A névoa ajuda: apaga o excesso e sobra só a forma."
+        }
+      ]
+    },
+    {
+      "key": "maos-que-trabalham",
+      "title": "Mãos que Trabalham",
+      "genre": "Ofícios e trabalho",
+      "manifesto": "O trabalho escreve no corpo uma caligrafia que nenhum documento registra. Fotografo os ofícios pelos gestos, pelas ferramentas e pelo cansaço, nunca pelo nome de quem paga. Toda cidade se sustenta em mãos que quase ninguém fotografa.",
+      "rules": [
+        "Nenhum logotipo ou marca legível no quadro",
+        "Fotografe o gesto e a ferramenta, não o rosto",
+        "Discrição: nunca interrompa quem está trabalhando"
+      ],
+      "slots": [
+        {
+          "title": "Ferramenta largada no chão",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma ferramenta deixada no meio do serviço. Ela ainda guarda o calor de quem parou para respirar."
+        },
+        {
+          "title": "Uniforme no fim do turno",
+          "location": "",
+          "game_time": "18:00",
+          "weather": "",
+          "phrase": "A roupa de trabalho fica diferente quando o expediente acaba. O corpo dentro dela volta a ser de alguém."
+        },
+        {
+          "title": "O primeiro a abrir as portas",
+          "location": "Vice City",
+          "game_time": "05:30",
+          "weather": "",
+          "phrase": "Antes da cidade acordar, alguém já levanta uma porta de aço. O dia começa nesse barulho."
+        },
+        {
+          "title": "Peso nos ombros",
+          "location": "Port Gellhorn",
+          "game_time": "",
+          "weather": "Calor úmido",
+          "phrase": "Caixas, sacos, ferramentas: o trabalho também se mede pela curva das costas."
+        },
+        {
+          "title": "Pausa de cinco minutos",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Encostado num muro, olhando para longe. A pausa curta é onde o trabalhador volta a ser só pessoa."
+        },
+        {
+          "title": "Redes e cordas",
+          "location": "Key Lento",
+          "game_time": "06:20",
+          "weather": "",
+          "phrase": "Redes estendidas, cordas enroladas, mãos que conhecem a maré. Um ofício mais antigo que a cidade."
+        },
+        {
+          "title": "Suor sob o sol a pino",
+          "location": "",
+          "game_time": "13:00",
+          "weather": "Calor úmido",
+          "phrase": "Trabalhar ao sol do meio-dia é um tipo de resistência que não ganha medalha nem aplauso."
+        },
+        {
+          "title": "Máquinas descansando",
+          "location": "Ambrosia",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Tratores, empilhadeiras e guindastes parados à noite. Até as máquinas parecem cansadas de obedecer."
+        },
+        {
+          "title": "Cozinha vista pela porta",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Vapor, pressa e ordens curtas. Pela fresta dos fundos, aparece o lado da festa que ninguém vê."
+        },
+        {
+          "title": "Quem limpa depois",
+          "location": "Vice Beach",
+          "game_time": "07:00",
+          "weather": "",
+          "phrase": "Depois da noite, alguém recolhe o que sobrou. A cidade limpa é o retrato de um trabalho invisível."
+        },
+        {
+          "title": "Botas gastas",
+          "location": "Ambrosia",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Solas gastas contam quilômetros de turno. O chão lembra cada passo de quem não pode parar."
+        },
+        {
+          "title": "Trabalho em altura",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "Vento forte",
+          "phrase": "Lá em cima, contra o céu, alguém equilibra a própria vida e o serviço do dia."
+        },
+        {
+          "title": "Lanterna de quem conserta",
+          "location": "",
+          "game_time": "22:30",
+          "weather": "",
+          "phrase": "Um feixe de luz apontado para dentro de um motor ou de uma parede. Consertar é conversar com o escuro."
+        },
+        {
+          "title": "Terra nas unhas",
+          "location": "Hamlet",
+          "game_time": "",
+          "weather": "",
+          "phrase": "A terra fica nas mãos mesmo depois de lavar. Há ofícios que a gente carrega para casa."
+        },
+        {
+          "title": "Balcão dos dois lados",
+          "location": "",
+          "game_time": "12:40",
+          "weather": "",
+          "phrase": "De um lado quem pede, do outro quem serve. O balcão é uma fronteira gasta pelos cotovelos."
+        },
+        {
+          "title": "Expediente da madrugada",
+          "location": "",
+          "game_time": "03:00",
+          "weather": "",
+          "phrase": "Enquanto a cidade dorme, alguém vigia, entrega, conserta. A madrugada tem seu próprio relógio de ponto."
+        },
+        {
+          "title": "Carga e descarga",
+          "location": "Port Gellhorn",
+          "game_time": "",
+          "weather": "",
+          "phrase": "O vaivém entre caminhão e depósito vira coreografia. Ninguém ensaiou, e mesmo assim todos acertam o passo."
+        },
+        {
+          "title": "Serviço que a chuva não para",
+          "location": "",
+          "game_time": "",
+          "weather": "Chuva",
+          "phrase": "A chuva não suspende o serviço. Capas encharcadas seguem trabalhando como se o céu fosse só mais um chefe."
+        },
+        {
+          "title": "Bancada à beira da estrada",
+          "location": "Waning Sands",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma bancada improvisada, um conserto rápido, um aceno. Na estrada, trabalhar é também esperar quem passa."
+        },
+        {
+          "title": "O passo da volta",
+          "location": "",
+          "game_time": "19:10",
+          "weather": "Pôr do sol",
+          "phrase": "O caminho de volta tem outro ritmo. O trabalho ficou para trás, mas o cansaço vem junto."
+        }
+      ]
+    },
+    {
+      "key": "pequenos-rituais",
+      "title": "Pequenos Rituais",
+      "genre": "Fé e cotidiano",
+      "manifesto": "Toda pessoa carrega pequenos rituais que a protegem do acaso. Velas acesas, cruzes à beira da estrada, um gesto repetido antes de sair: não fotografo crenças, fotografo o cuidado com que alguém pede que o dia dê certo. Aqui, o sagrado tem tamanho de bolso.",
+      "rules": [
+        "Respeito acima de tudo: nunca ridicularize uma crença",
+        "Sem flash perto de altares, velas ou de quem reza",
+        "Fotografe objetos e gestos, nunca o rosto de quem pede"
+      ],
+      "slots": [
+        {
+          "title": "Uma vela no escuro",
+          "location": "",
+          "game_time": "21:00",
+          "weather": "",
+          "phrase": "Uma chama pequena contra a noite inteira. Não sei por quem foi acesa, mas sei que alguém esperava resposta."
+        },
+        {
+          "title": "Cruz na beira da estrada",
+          "location": "Waning Sands",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma marca discreta onde alguém não seguiu viagem. Flores secas lembram que a saudade também cria rituais."
+        },
+        {
+          "title": "Flores deixadas para alguém",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Um ramo deixado num muro, num portão, numa pedra. Um presente que não espera agradecimento."
+        },
+        {
+          "title": "Amuleto pendurado",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Algo pendurado no retrovisor ou na porta balança com o vento. Proteção pequena para um mundo grande."
+        },
+        {
+          "title": "O gesto antes de sair",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Tocar a porta, olhar para trás, conferir o bolso. Todo mundo tem um gesto que segura o dia."
+        },
+        {
+          "title": "Moedas no fundo",
+          "location": "Capri",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Moedas no fundo de uma fonte ou de uma poça. Cada uma é um desejo que preferiu não ser contado."
+        },
+        {
+          "title": "Altar improvisado",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Fotos, velas e objetos arrumados num canto qualquer. Todo lugar vira sagrado quando alguém decide cuidar dele."
+        },
+        {
+          "title": "Oferenda ao mar",
+          "location": "Vice Beach",
+          "game_time": "06:00",
+          "weather": "",
+          "phrase": "Algo deixado na areia, de frente para a água. O mar recebe pedidos há mais tempo do que qualquer cidade existe."
+        },
+        {
+          "title": "Templo vazio de tarde",
+          "location": "",
+          "game_time": "15:00",
+          "weather": "",
+          "phrase": "Bancos vazios e luz entrando de lado. O silêncio de um lugar de fé continua rezando sozinho."
+        },
+        {
+          "title": "Sorte guardada no bolso",
+          "location": "",
+          "game_time": "",
+          "weather": "Tempestade",
+          "phrase": "Um objeto pequeno que alguém carrega há anos. Não vale nada, e por isso vale tudo."
+        },
+        {
+          "title": "Pedido feito para cima",
+          "location": "",
+          "game_time": "",
+          "weather": "Nublado",
+          "phrase": "Alguém levanta os olhos sem procurar avião nem chuva. Há perguntas que só se fazem ao céu."
+        },
+        {
+          "title": "O mesmo lugar, a mesma hora",
+          "location": "Hamlet",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Alguém volta ao mesmo canto, no mesmo horário, todos os dias. A repetição também é uma forma de oração."
+        },
+        {
+          "title": "Fitas amarradas",
+          "location": "Key Lento",
+          "game_time": "",
+          "weather": "Vento forte",
+          "phrase": "Fitas presas numa grade ou num galho, tremendo ao vento. Cada nó guarda um pedido ainda não atendido."
+        },
+        {
+          "title": "Ritual da primeira luz",
+          "location": "",
+          "game_time": "05:45",
+          "weather": "",
+          "phrase": "Há quem espere o sol nascer como quem espera uma bênção. Fotografo a espera, não o sol."
+        },
+        {
+          "title": "Superstição de calçada",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Desviar de uma escada, pular uma rachadura, trocar de lado da rua. Pequenas regras que ninguém escreveu."
+        },
+        {
+          "title": "Luz deixada na janela",
+          "location": "Capri",
+          "game_time": "20:30",
+          "weather": "",
+          "phrase": "Uma luz acesa para alguém encontrar o caminho. Ou só para a casa não parecer tão sozinha."
+        },
+        {
+          "title": "Gasto pelo toque",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Um objeto polido de tanto ser tocado. A fé deixa marca nas coisas como a água deixa nas pedras."
+        },
+        {
+          "title": "Procissão de poucos",
+          "location": "Watson Bay",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Um grupo pequeno caminhando devagar, na mesma direção. Andar acompanhado já é um tipo de reza."
+        },
+        {
+          "title": "Ritual mesmo com chuva",
+          "location": "",
+          "game_time": "",
+          "weather": "Chuva",
+          "phrase": "Debaixo d'água, alguém cumpre o gesto de sempre. Ritual de verdade não depende da previsão do tempo."
+        },
+        {
+          "title": "O pavio recém-apagado",
+          "location": "",
+          "game_time": "23:40",
+          "weather": "",
+          "phrase": "Um fio de fumaça subindo do pavio. O pedido já foi feito; agora é com o escuro."
+        }
+      ]
+    },
+    {
+      "key": "partidas-e-chegadas",
+      "title": "Partidas e Chegadas",
+      "genre": "Trânsito e despedida",
+      "manifesto": "Todo lugar de partida é também um lugar de chegada, depende só de quem olha. Fotografo portões, malas e abraços como quem fotografa uma pergunta suspensa. Entre ir e voltar existe um intervalo em que todos somos estrangeiros.",
+      "rules": [
+        "Só lugares de passagem: aeroporto, porto, rodoviária, saída de estrada",
+        "Prefira gestos e bagagens a rostos",
+        "Fique do lado de quem fica: nada de fotos de dentro do veículo"
+      ],
+      "slots": [
+        {
+          "title": "Mala esperando dono",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma mala de pé ao lado de alguém distraído. Ela já está viajando, mesmo parada."
+        },
+        {
+          "title": "Abraço no portão",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "O abraço mais longo acontece logo antes da partida. Ninguém sabe se é despedida ou promessa."
+        },
+        {
+          "title": "Avião sobre os telhados",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Lá em cima, centenas de pessoas indo embora. Aqui embaixo, ninguém levanta a cabeça."
+        },
+        {
+          "title": "O barco que se afasta",
+          "location": "Port Gellhorn",
+          "game_time": "",
+          "weather": "",
+          "phrase": "A distância cresce devagar, metro por metro. No mar, a partida dura mais do que em qualquer lugar."
+        },
+        {
+          "title": "Painel de horários",
+          "location": "",
+          "game_time": "04:40",
+          "weather": "",
+          "phrase": "Destinos piscando em letras luminosas. Uma lista de vidas possíveis que eu nunca vou viver."
+        },
+        {
+          "title": "Quem acena por último",
+          "location": "Port Gellhorn",
+          "game_time": "",
+          "weather": "Vento forte",
+          "phrase": "Alguém continua acenando depois que o outro já não pode ver. O gesto é para quem fica."
+        },
+        {
+          "title": "Chegada ao amanhecer",
+          "location": "",
+          "game_time": "06:10",
+          "weather": "",
+          "phrase": "Chegar com o dia nascendo é ganhar uma cidade nova antes que ela se arrume."
+        },
+        {
+          "title": "Rodoviária de madrugada",
+          "location": "",
+          "game_time": "02:30",
+          "weather": "",
+          "phrase": "Bancos duros, luz branca, gente cochilando sentada. A madrugada nas rodoviárias tem sotaque de muitos lugares."
+        },
+        {
+          "title": "Do lado de cá do portão",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma grade separa quem vai de quem fica. Para quem está deste lado, a viagem acaba antes de começar."
+        },
+        {
+          "title": "Decolagem no fim do dia",
+          "location": "",
+          "game_time": "18:40",
+          "weather": "Pôr do sol",
+          "phrase": "Um avião subindo contra o céu alaranjado. Partir no fim da tarde parece levar a luz junto."
+        },
+        {
+          "title": "Cais de chegada",
+          "location": "Gloriana Key",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Cordas jogadas, um passo do barco para a terra firme. Chegar é reaprender a andar no chão."
+        },
+        {
+          "title": "Boas-vindas para qualquer um",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma placa recebe todo mundo com a mesma frase. Hospitalidade escrita para desconhecidos."
+        },
+        {
+          "title": "Esperando no desembarque",
+          "location": "",
+          "game_time": "16:20",
+          "weather": "",
+          "phrase": "Olhos fixos numa porta automática. Cada pessoa que sai é quase a pessoa esperada."
+        },
+        {
+          "title": "O último letreiro da cidade",
+          "location": "Ambrosia",
+          "game_time": "",
+          "weather": "",
+          "phrase": "A partida de verdade começa quando a última placa conhecida fica para trás e ninguém mais sabe seu nome."
+        },
+        {
+          "title": "Uma época dentro do porta-malas",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Bagagens arrumadas com cuidado, como quem empacota uma fase inteira da vida."
+        },
+        {
+          "title": "Entre dois lugares",
+          "location": "Key Lento",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Atravessar uma ponte é estar entre dois lugares sem pertencer a nenhum. O mar, dos dois lados, assiste."
+        },
+        {
+          "title": "Ir embora com chuva",
+          "location": "",
+          "game_time": "",
+          "weather": "Chuva",
+          "phrase": "Partir com chuva parece mais definitivo. A cidade chora ou apenas lava os vestígios?"
+        },
+        {
+          "title": "Luzes guiando quem chega",
+          "location": "",
+          "game_time": "22:15",
+          "weather": "Noite limpa",
+          "phrase": "Fileiras de luz no chão orientando quem ainda está no ar. Um caminho desenhado para o escuro."
+        },
+        {
+          "title": "Sentado sobre a bagagem",
+          "location": "Watson Bay",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Quando a espera demora, a mala vira cadeira. A paciência dos viajantes tem formato de bagagem."
+        },
+        {
+          "title": "Voltar e não reconhecer",
+          "location": "Capri",
+          "game_time": "",
+          "weather": "Neblina",
+          "phrase": "Na volta, o lugar parece igual e diferente ao mesmo tempo. Quem mudou foi quem partiu."
+        }
+      ]
+    },
+    {
+      "key": "ser-visto",
+      "title": "Ser Visto",
+      "genre": "Vigilância e olhar",
+      "manifesto": "Ninguém atravessa a cidade sem ser olhado: por lentes, janelas, desconhecidos e por mim. Este ensaio fotografa os olhos que vigiam e devolve a pergunta para a câmera. Quem fotografa também está sempre sendo visto.",
+      "rules": [
+        "Só o olhar: nada de perseguição ou violência",
+        "Cada foto precisa conter algo que observa: lente, janela, olhar ou luz",
+        "Se alguém demonstrar incômodo, abaixe a câmera e siga em frente"
+      ],
+      "slots": [
+        {
+          "title": "A lente no alto do poste",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma câmera pequena observa a rua sem piscar. Fotografo quem me fotografa, e ficamos quites."
+        },
+        {
+          "title": "Fachada de muitos olhos",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Prédios cheios de janelas parecem rostos com olhos demais. Alguma delas sempre está acordada."
+        },
+        {
+          "title": "Olhar de volta",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Quando alguém percebe a câmera e encara, a foto muda de dono. Agora sou eu o observado."
+        },
+        {
+          "title": "Holofote varrendo o escuro",
+          "location": "Vice City",
+          "game_time": "23:00",
+          "weather": "",
+          "phrase": "Um facho de luz percorre o céu ou o chão. Ser iluminado também é ser encontrado."
+        },
+        {
+          "title": "Binóculos no mirante",
+          "location": "Gloriana Key",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Aparelhos virados para o horizonte, esperando moedas e curiosos. Uma vigilância feita para o lazer."
+        },
+        {
+          "title": "Cortina entreaberta",
+          "location": "",
+          "game_time": "20:00",
+          "weather": "",
+          "phrase": "Uma fresta na cortina, uma silhueta atrás. Quem espia não quer ser notado, e mesmo assim se denuncia."
+        },
+        {
+          "title": "Espelho convexo na esquina",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "O espelho redondo deforma a rua para que ninguém seja surpreendido. Um olho de vidro a serviço do medo."
+        },
+        {
+          "title": "Torre de vigia vazia",
+          "location": "Vice Beach",
+          "game_time": "",
+          "weather": "",
+          "phrase": "A cadeira alta do salva-vidas sem ninguém. Mesmo vazia, ela continua parecendo atenta."
+        },
+        {
+          "title": "Aviso de que há câmeras",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma placa avisa que estou sendo filmado. O olhar invisível precisa se anunciar para funcionar."
+        },
+        {
+          "title": "Um ponto barulhento no céu",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Lá de cima, alguém enxerga tudo. Aqui embaixo, todos fingem não perceber o zumbido."
+        },
+        {
+          "title": "Estátua que vigia a praça",
+          "location": "Capri",
+          "game_time": "",
+          "weather": "Ensolarado",
+          "phrase": "Olhos de pedra fixos no mesmo ponto há décadas. Ninguém observou esta praça por mais tempo."
+        },
+        {
+          "title": "Farol girando na noite",
+          "location": "Key Lento",
+          "game_time": "",
+          "weather": "Noite limpa",
+          "phrase": "A luz do farol gira e toca tudo por um segundo. Um vigia paciente que nunca descansa."
+        },
+        {
+          "title": "Olhos impressos na avenida",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Rostos gigantes em cartazes encaram o trânsito o dia inteiro. Olham para todos e não veem ninguém."
+        },
+        {
+          "title": "Alguém debruçado na sacada",
+          "location": "Capri",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Apoiado no parapeito, alguém assiste à rua como quem assiste a um filme sem fim."
+        },
+        {
+          "title": "Meu reflexo numa lente",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Na cúpula escura de uma câmera fixa, encontro meu reflexo pequeno. Ser visto e se ver acontecem juntos."
+        },
+        {
+          "title": "Luz que acende ao passar",
+          "location": "",
+          "game_time": "02:00",
+          "weather": "",
+          "phrase": "Um sensor percebe meu passo e acende a lâmpada. A casa me nota antes de qualquer pessoa."
+        },
+        {
+          "title": "Varandas atentas",
+          "location": "Hamlet",
+          "game_time": "",
+          "weather": "",
+          "phrase": "No interior, todo mundo sabe quem passou. A vigilância aqui tem cara de curiosidade e cadeira na varanda."
+        },
+        {
+          "title": "Olhar através da cerca",
+          "location": "",
+          "game_time": "",
+          "weather": "Garoa",
+          "phrase": "Entre as grades de uma cerca, um olho espia o outro lado. A barreira não impede a curiosidade."
+        },
+        {
+          "title": "Sem ninguém olhando",
+          "location": "Waning Sands",
+          "game_time": "",
+          "weather": "",
+          "phrase": "No meio do nada, sem lente nem janela. Estranho como a liberdade, aqui, parece quase um susto."
+        },
+        {
+          "title": "A cidade vista do alto",
+          "location": "",
+          "game_time": "",
+          "weather": "Neblina",
+          "phrase": "Do alto, as pessoas viram pontos. Entendo um pouco o poder de quem olha sem ser olhado."
+        }
+      ]
+    },
+    {
+      "key": "uma-cor-so",
+      "title": "Uma Cor Só",
+      "genre": "Estudo de cor",
+      "manifesto": "Cada cor carrega um estado de espírito antes de carregar um objeto. Neste ensaio, cada foto obedece a uma única cor dominante, e todo o resto existe apenas para servi-la. Não fotografo coisas vermelhas ou azuis: fotografo o que essas cores sentem.",
+      "rules": [
+        "Uma única cor deve dominar a maior parte do quadro",
+        "Sem filtros de cor no modo foto: a cor precisa estar na cena",
+        "Se surgir outra cor forte, recomponha até ela sumir"
+      ],
+      "slots": [
+        {
+          "title": "Vermelho de alerta",
+          "location": "Ambrosia",
+          "game_time": "",
+          "weather": "",
+          "phrase": "O vermelho sempre parece urgente, mesmo parado. Uma porta, um muro, um carro: tudo nele pede atenção."
+        },
+        {
+          "title": "Azul que acalma",
+          "location": "Gloriana Key",
+          "game_time": "",
+          "weather": "Ensolarado",
+          "phrase": "Céu e mar se fundem num azul só. É a cor de quem desistiu de ter pressa."
+        },
+        {
+          "title": "Amarelo de meio-dia",
+          "location": "",
+          "game_time": "12:30",
+          "weather": "",
+          "phrase": "Um amarelo forte, quase barulhento. Parece que a luz decidiu pintar tudo do mesmo jeito."
+        },
+        {
+          "title": "Verde que volta",
+          "location": "Hamlet",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Folhas, mato, musgo, uma parede tomada. O verde é a cor que retorna quando a gente se distrai."
+        },
+        {
+          "title": "Rosa ao entardecer",
+          "location": "Vice Beach",
+          "game_time": "18:30",
+          "weather": "Pôr do sol",
+          "phrase": "Por alguns minutos, a cidade inteira fica rosa. Uma ternura breve que ninguém consegue segurar."
+        },
+        {
+          "title": "Cinza que escuta",
+          "location": "",
+          "game_time": "",
+          "weather": "Nublado",
+          "phrase": "O cinza não é ausência de cor, é uma cor que ouve. Tudo fica mais baixo, mais íntimo."
+        },
+        {
+          "title": "Laranja de poste",
+          "location": "",
+          "game_time": "22:00",
+          "weather": "",
+          "phrase": "A luz dos postes pinta a rua de laranja. É uma cor de vigília, de quem fica acordado."
+        },
+        {
+          "title": "Branco que ofusca",
+          "location": "Capri",
+          "game_time": "13:30",
+          "weather": "Ensolarado",
+          "phrase": "Paredes brancas sob o sol quase apagam a foto. O excesso de luz também é um tipo de silêncio."
+        },
+        {
+          "title": "Preto que engole",
+          "location": "",
+          "game_time": "22:50",
+          "weather": "",
+          "phrase": "Deixo a sombra tomar quase tudo, e só um detalhe sobrevive. No preto, o que aparece vira segredo."
+        },
+        {
+          "title": "Turquesa de piscina",
+          "location": "Vice Beach",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Um azul esverdeado, artificial e feliz. A cor de um descanso que alguém planejou com cuidado."
+        },
+        {
+          "title": "Ferrugem e tempo",
+          "location": "Port Gellhorn",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Marrom alaranjado, metal cedendo devagar. A ferrugem é a cor que o tempo escolhe quando ninguém cuida."
+        },
+        {
+          "title": "Violeta de néon",
+          "location": "Vice City",
+          "game_time": "00:30",
+          "weather": "",
+          "phrase": "Uma luz roxa que não existe de dia. A cor da noite fingindo ser outra coisa."
+        },
+        {
+          "title": "Ocre do deserto",
+          "location": "Waning Sands",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Terra, poeira e rocha num mesmo tom quente. O ocre faz o mundo parecer muito velho e muito calmo."
+        },
+        {
+          "title": "A hora azul",
+          "location": "",
+          "game_time": "19:20",
+          "weather": "",
+          "phrase": "Logo depois do sol, tudo fica azul profundo antes de escurecer. A pausa entre dois turnos do céu."
+        },
+        {
+          "title": "Branco de névoa",
+          "location": "",
+          "game_time": "06:30",
+          "weather": "Neblina",
+          "phrase": "A neblina transforma qualquer paisagem num branco leitoso. Um mundo sem contornos, apenas tons."
+        },
+        {
+          "title": "Dourado que dura pouco",
+          "location": "",
+          "game_time": "17:50",
+          "weather": "",
+          "phrase": "Uma luz dourada que transforma ferro em joia. Sei que vai acabar, por isso corro."
+        },
+        {
+          "title": "Vermelho de freio",
+          "location": "",
+          "game_time": "",
+          "weather": "Chuva",
+          "phrase": "Lanternas vermelhas multiplicadas no asfalto molhado. Uma cor de parada, de espera, de fila."
+        },
+        {
+          "title": "Azul frio de madrugada",
+          "location": "",
+          "game_time": "03:10",
+          "weather": "",
+          "phrase": "Um brilho gelado vindo de uma janela ou de um painel. A cor de quem ainda está acordado sozinho."
+        },
+        {
+          "title": "Amarelo desbotado",
+          "location": "Ambrosia",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma pintura antiga perdendo a força. O amarelo cansado parece lembrar uma alegria que já passou."
+        },
+        {
+          "title": "Uma cor no meio do cinza",
+          "location": "Watson Bay",
+          "game_time": "",
+          "weather": "Garoa",
+          "phrase": "Num dia apagado, um único objeto colorido brilha. Às vezes basta uma cor para salvar a tarde."
+        }
+      ]
+    },
+    {
+      "key": "o-que-as-maos-dizem",
+      "title": "O que as Mãos Dizem",
+      "genre": "Gesto e emoção",
+      "manifesto": "As mãos falam o que o rosto prefere esconder. Neste ensaio fotografo gestos sem rosto: toques, recusas, hesitações, carinhos de passagem. Não importa o que as mãos fazem, importa o que elas sentem.",
+      "rules": [
+        "Nenhum rosto inteiro no quadro: só mãos, braços e gestos",
+        "Nada de mãos trabalhando: procure emoção, não ofício",
+        "Gestos íntimos se fotografam de longe, com respeito"
+      ],
+      "slots": [
+        {
+          "title": "Dedos entrelaçados",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Duas mãos entrelaçadas dizem tudo sem precisar de quem as segura. A promessa cabe entre os dedos."
+        },
+        {
+          "title": "Um aceno de longe",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma mão levantada à distância, sem saber se foi vista. Todo aceno carrega um pouco de esperança."
+        },
+        {
+          "title": "A palma que recusa",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma palma aberta para a frente, firme. Às vezes o gesto mais forte é dizer não sem dizer nada."
+        },
+        {
+          "title": "Dedos inquietos",
+          "location": "",
+          "game_time": "",
+          "weather": "Tempestade",
+          "phrase": "Unhas, anéis, um tamborilar sobre a mesa. A ansiedade sempre escapa primeiro pelos dedos."
+        },
+        {
+          "title": "Mão no ombro",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Um toque breve no ombro de alguém. Consolo, aviso ou só presença: o gesto não explica."
+        },
+        {
+          "title": "Braços cruzados",
+          "location": "Watson Bay",
+          "game_time": "",
+          "weather": "Nublado",
+          "phrase": "Um corpo fechado em si mesmo, se protegendo de algo que não aparece na foto."
+        },
+        {
+          "title": "Mão estendida no ar",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma mão oferecida, esperando outra. A foto fica suspensa antes da resposta."
+        },
+        {
+          "title": "Apontando para longe",
+          "location": "Gloriana Key",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Um dedo indica algo fora do quadro. Fico com vontade de virar a câmera e nunca viro."
+        },
+        {
+          "title": "Mãos cobrindo o rosto",
+          "location": "",
+          "game_time": "",
+          "weather": "Chuva",
+          "phrase": "Cobrir o rosto é esconder, mas também é pedir tempo. A chuva disfarça o resto."
+        },
+        {
+          "title": "Mãos nos bolsos",
+          "location": "",
+          "game_time": "",
+          "weather": "Vento forte",
+          "phrase": "Mãos escondidas contra o vento ou contra o mundo. Guardar as mãos também é guardar segredos."
+        },
+        {
+          "title": "Primeiro aperto de mãos",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Duas mãos que se apertam pela primeira vez. Um contrato silencioso de confiança mínima."
+        },
+        {
+          "title": "Mão para fora da janela",
+          "location": "Waning Sands",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma mão surfando o vento do lado de fora do carro. Liberdade do tamanho exato de um braço."
+        },
+        {
+          "title": "Dedos que se soltam",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Mãos que se separam devagar, como quem ainda não aceitou. O afastamento começa pelas pontas."
+        },
+        {
+          "title": "Uma mão guiando outra menor",
+          "location": "Hamlet",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma mão grande conduzindo uma pequena. Proteção é um gesto que se aprende antes de saber falar."
+        },
+        {
+          "title": "Palma contra o vidro",
+          "location": "",
+          "game_time": "",
+          "weather": "Garoa",
+          "phrase": "Uma mão encostada na janela, do lado de dentro. O vidro deixa ver, mas não deixa tocar."
+        },
+        {
+          "title": "Pedido de silêncio",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Um dedo erguido diante dos lábios, pedindo calma. O segredo agora é dividido comigo também."
+        },
+        {
+          "title": "Punhos erguidos de alegria",
+          "location": "Vice Beach",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Braços levantados contra o céu, punhos fechados de felicidade. A alegria também precisa de espaço."
+        },
+        {
+          "title": "Mão sobre o peito",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Um gesto antigo, repetido por tanta gente diferente. Sinceridade, juramento ou apenas saudade."
+        },
+        {
+          "title": "Mãos sob a luz do poste",
+          "location": "",
+          "game_time": "23:20",
+          "weather": "",
+          "phrase": "No escuro, só as mãos aparecem iluminadas. Falam mais alto porque são tudo o que resta visível."
+        },
+        {
+          "title": "Mãos em repouso",
+          "location": "",
+          "game_time": "17:20",
+          "weather": "",
+          "phrase": "Mãos paradas no colo, finalmente sem tarefa. O gesto de quem não precisa provar mais nada."
+        }
+      ]
+    },
+    {
+      "key": "fotograma",
+      "title": "Fotograma",
+      "genre": "Cinema imaginário",
+      "manifesto": "Cada foto deste ensaio é um quadro arrancado de um filme que nunca foi rodado. Não preciso saber o enredo, só sentir que algo aconteceu antes e algo vai acontecer depois. O fotograma é uma promessa de história, e a promessa basta.",
+      "rules": [
+        "Use proporção larga, cinematográfica, sempre que o modo foto permitir",
+        "Cada foto precisa sugerir um antes e um depois",
+        "Dê um nome de cena a cada foto antes de salvar"
+      ],
+      "slots": [
+        {
+          "title": "Cena de abertura",
+          "location": "",
+          "game_time": "07:00",
+          "weather": "",
+          "phrase": "O plano que apresenta o lugar antes de qualquer personagem. O mundo existe antes de a história começar."
+        },
+        {
+          "title": "Alguém chega à cidade",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Um vulto desce, olha em volta, ajeita a bolsa. Toda trama começa com alguém que ainda não sabe nada."
+        },
+        {
+          "title": "Olhar para fora do quadro",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "A pessoa olha para algo que a câmera não mostra. O mistério está exatamente onde não estou apontando."
+        },
+        {
+          "title": "Suspense no corredor",
+          "location": "",
+          "game_time": "01:30",
+          "weather": "",
+          "phrase": "Uma porta no fim, luz fraca, nenhum som. Todo corredor de cinema promete uma revelação."
+        },
+        {
+          "title": "Motor ligado, farol baixo",
+          "location": "",
+          "game_time": "02:00",
+          "weather": "",
+          "phrase": "Um carro parado com o motor ligado na madrugada. Alguém espera alguém, e nós esperamos junto."
+        },
+        {
+          "title": "Plano geral de solidão",
+          "location": "Waning Sands",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma figura minúscula no meio da imensidão. O cinema sabe que a distância também é emoção."
+        },
+        {
+          "title": "Contraluz dramático",
+          "location": "",
+          "game_time": "",
+          "weather": "Pôr do sol",
+          "phrase": "Um personagem recortado contra o sol que se põe. Não vemos o rosto, mas entendemos o peso."
+        },
+        {
+          "title": "A conversa que não ouvimos",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Duas pessoas falando, e nós sem escutar nada. O diálogo mais importante é sempre o que fica mudo."
+        },
+        {
+          "title": "Chuva de cinema",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "Tempestade",
+          "phrase": "Chuva pesada, luzes borradas, alguém atravessando sem pressa. Parece cenário, mas é só a cidade sendo ela mesma."
+        },
+        {
+          "title": "Silêncio antes da virada",
+          "location": "",
+          "game_time": "",
+          "weather": "Calor úmido",
+          "phrase": "O momento parado em que nada acontece e tudo está prestes a mudar. A tensão mora nos intervalos."
+        },
+        {
+          "title": "Plano de detalhe",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma xícara, uma chave, um bilhete em close. No cinema, o objeto certo conta o que ninguém disse."
+        },
+        {
+          "title": "Estrada para os créditos",
+          "location": "Key Lento",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Um carro seguindo pela ponte sobre o mar até sumir. Os créditos poderiam começar a subir agora."
+        },
+        {
+          "title": "Noir de esquina",
+          "location": "",
+          "game_time": "23:45",
+          "weather": "Garoa",
+          "phrase": "Luz de poste, chão molhado, uma figura de casaco. A cidade faz cinema noir sem que ninguém peça."
+        },
+        {
+          "title": "Personagem secundário",
+          "location": "Vice City",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Alguém no fundo da cena vivendo a própria história. Em outro filme, essa pessoa seria a protagonista."
+        },
+        {
+          "title": "Quarto de beira de estrada",
+          "location": "Ambrosia",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Uma porta numerada, uma luz acesa, uma cortina fechada. Toda história de estrada passa por um lugar assim."
+        },
+        {
+          "title": "Ponto de vista de alguém",
+          "location": "",
+          "game_time": "",
+          "weather": "",
+          "phrase": "Enquadro como se fossem os olhos de um personagem escondido. O espectador vira cúmplice sem querer."
+        },
+        {
+          "title": "Neblina de lembrança",
+          "location": "Watson Bay",
+          "game_time": "",
+          "weather": "Neblina",
+          "phrase": "A névoa suaviza tudo como uma memória voltando. Talvez esta cena aconteça no passado."
+        },
+        {
+          "title": "Encontro marcado",
+          "location": "Capri",
+          "game_time": "20:10",
+          "weather": "",
+          "phrase": "Alguém olha o relógio, depois a rua. O encontro pode acontecer ou não, e a foto não conta."
+        },
+        {
+          "title": "A última cena",
+          "location": "Vice Beach",
+          "game_time": "19:00",
+          "weather": "",
+          "phrase": "Alguém caminha em direção ao mar enquanto a luz acaba. O filme termina sem dizer o que vem depois."
+        },
+        {
+          "title": "Final em aberto",
+          "location": "Waning Sands",
+          "game_time": "",
+          "weather": "Vento forte",
+          "phrase": "Uma estrada vazia, uma figura parada, nenhuma explicação. A história continua, só que fora da tela."
+        }
+      ]
+    }
+  ]
+}

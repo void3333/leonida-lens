@@ -1,0 +1,2 @@
+# Opcional, mas recomendado: miniaturas, prévias e o gerador do mapa oficial.
+Pillow>=11

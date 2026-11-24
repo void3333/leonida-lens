@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="theme-color" content="#0E0E0D"/>
+  <meta name="description" content="Acervo fotográfico particular para sua vida em Leonida."/>
+  <title>Leonida Field Notes — Estúdio</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230E0E0D'/%3E%3Crect x='7' y='7' width='18' height='18' fill='none' stroke='%23ECE8DF' stroke-width='2'/%3E%3Crect x='7' y='7' width='6' height='6' fill='%23D2603F'/%3E%3C/svg%3E"/>
+  <link rel="stylesheet" href="/vendor/leaflet/leaflet.css?v=2.4.1"/>
+  <link rel="stylesheet" href="/vendor/archive.css?v=2.4.1"/>
+  <link rel="stylesheet" href="/style.css"/>
+  <link rel="stylesheet" href="/vendor/studio-mono.css?v=2.4.1"/>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark"><span class="lfn-label">LFN</span><span class="brand-title lfn-serif">Leonida</span></div>
+        <div class="brand-subtitle">FIELD NOTES / 001</div>
+      </div>
+      <div class="sidebar-index">
+        <div class="lfn-label rail-label">ÍNDICE</div>
+        <nav aria-label="Navegação principal" id="nav">
+          <button class="nav-item active" data-view="photos"><span class="nav-num">01</span><span class="nav-label">Acervo</span><span class="nav-counter" id="nav-photo-count">0</span></button>
+          <button class="nav-item" data-view="essays"><span class="nav-num">02</span><span class="nav-label">Ensaios</span><span class="nav-counter" id="nav-essay-count"></span></button>
+          <button class="nav-item" data-view="journal"><span class="nav-num">03</span><span class="nav-label">Caderno de campo</span><span class="nav-counter" id="nav-journal-count"></span></button>
+          <button class="nav-item" data-view="sync"><span class="nav-num">04</span><span class="nav-label">Procedência</span><span class="nav-counter"></span></button>
+          <button class="nav-item" data-view="studio"><span class="nav-num">05</span><span class="nav-label">Meu estúdio</span><span class="nav-counter"></span></button>
+          <button class="nav-item" data-view="preview"><span class="nav-num">06</span><span class="nav-label">Prévia da galeria</span><span class="nav-counter"></span></button>
+          <hr class="lfn-hr nav-hr"/>
+          <a class="nav-item nav-gallery" href="/galeria/" title="Abrir a Galeria"><span class="nav-num">↗</span><span class="nav-label">Galeria</span><span class="nav-counter"></span></a>
+        </nav>
+      </div>
+      <div id="pauta" class="pauta"></div>
+      <div class="sidebar-bottom">
+        <div class="mini-sync"><span class="sync-dot lfn-dot" id="sidebar-sync-dot"></span><div class="mini-sync-text"><div id="sidebar-sync-title">Biblioteca local</div><small id="sidebar-sync-desc" class="lfn-truncate">Sem pasta configurada</small></div></div>
+        <button id="open-quick-import" class="side-import lfn-btn lfn-btn--primary lfn-btn--block" type="button">Importar fotografias</button>
+        <div class="sidebar-foot lfn-label">LOCAL · NADA SAI DESTE PC</div>
+      </div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div class="breadcrumbs lfn-crumbs"><span>FUNDO LEONIDA</span><span id="breadcrumb-series">SÉRIE GERAL</span><span id="breadcrumb-page">ACERVO</span></div>
+        <div class="topbar-right"><span class="deploy-status" id="deploy-status" aria-live="polite"></span><button id="btn-sync-all" class="deploy-btn" type="button" title="Busca fotos novas (nuvem PlayStation e pasta) e atualiza a galeria online"><span class="deploy-ico" aria-hidden="true"></span><span class="deploy-label">Sincronizar e publicar</span></button><span class="topbar-divider"></span><span class="topbar-lock" data-icon="lock"></span><span class="private-label">ESTÚDIO PRIVADO</span><span class="topbar-divider"></span><div class="avatar">LF</div></div>
+      </header>
+      <div id="content" class="content" aria-live="polite"></div>
+    </main>
+  </div>
+  <input id="restoreInput" type="file" accept=".zip,application/zip" hidden/>
+  <input id="fileInput" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" multiple hidden/>
+  <dialog id="photoDialog" class="photo-dialog"><div id="photoDialogBody"></div></dialog>
+  <dialog id="formDialog" class="form-dialog"><div id="formDialogBody"></div></dialog>
+  <div id="toast" class="toast lfn-toast" role="status" aria-live="polite"></div>
+  <script src="/vendor/leaflet/leaflet.js?v=2.4.1" defer></script>
+  <script src="/map/config.js" defer></script>
+  <script src="/vendor/leonida-map.js?v=2.5.0" defer></script>
+  <script src="/app.js" defer></script>
+</body>
+</html>

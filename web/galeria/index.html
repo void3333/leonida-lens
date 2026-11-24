@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <meta name="theme-color" content="#000000"/>
+  <meta name="color-scheme" content="dark"/>
+  <title>Projeção — Leonida</title>
+  <meta name="description" content="Fotografias de Leonida em projeção."/>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23FFC857'/%3E%3Cstop offset='.5' stop-color='%23FF3D8B'/%3E%3Cstop offset='1' stop-color='%239B5CF6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='7' fill='%2307050C'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='url(%23g)' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='16' r='3' fill='url(%23g)'/%3E%3C/svg%3E"/>
+  <link rel="preload" href="/api/catalog" as="fetch" crossorigin/>
+  <link rel="preload" href="/vendor/fonts/ibm-plex-mono-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin/>
+  <link rel="preload" href="/vendor/fonts/ibm-plex-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin/>
+  <link rel="stylesheet" href="/vendor/photoswipe.css?v=2.4.1"/>
+  <link rel="stylesheet" href="/vendor/leaflet/leaflet.css?v=2.4.1"/>
+  <link rel="stylesheet" href="/vendor/leaflet-plugins/markercluster.css?v=1.5.3"/>
+  <link rel="stylesheet" href="/vendor/photoswipe-dynamic-caption.css?v=1.2.7"/>
+  <link rel="stylesheet" href="/galeria/style.css"/>
+  <link rel="stylesheet" href="/galeria/guess.css"/>
+  <link rel="stylesheet" href="/galeria/fog.css"/>
+  <link rel="stylesheet" href="/vendor/gallery-mono.css?v=2.8.0"/>
+  <link rel="stylesheet" href="/vendor/gallery-mobile.css?v=1.1.0"/>
+</head>
+<body class="is-booting">
+  <a class="skip" href="#stage">Pular para a projeção</a>
+
+  <!-- PALCO: a fotografia em tela cheia -->
+  <section id="stage" class="stage" aria-label="Projeção" tabindex="-1">
+    <div class="ambient" aria-hidden="true"><img alt="" id="ambient-a"/><img alt="" id="ambient-b"/></div>
+    <div class="shots" id="shots"></div>
+    <div class="veil" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+    <button class="zone zone-prev" id="zone-prev" aria-label="Foto anterior"><span class="zone-arrow" aria-hidden="true">←</span></button>
+    <button class="zone zone-open" id="zone-open" aria-label="Ampliar em qualidade máxima"></button>
+    <button class="zone zone-next" id="zone-next" aria-label="Próxima foto"><span class="zone-arrow" aria-hidden="true">→</span></button>
+  </section>
+
+  <!-- INTERFACE da projeção -->
+  <header class="topbar ui" id="topbar">
+    <a class="brand" href="#/" aria-label="Início">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-text"><b id="brand-name">Leonida Field Notes</b><small id="brand-sub">Projeção</small></span>
+    </a>
+    <nav class="nav" aria-label="Principal">
+      <a class="nav-link" href="#/" data-view="proj">Projeção</a>
+      <a class="nav-link" href="#/ensaios" data-view="essays">Ensaios</a>
+      <a class="nav-link" href="#/jornada" data-view="journey">Jornada</a>
+      <a class="nav-link" href="#/mapa" data-view="map">Mapa</a>
+      <a class="nav-link" href="#/indice" data-view="index">Índice</a>
+      <!-- <a class="nav-link" href="#/jogo" data-view="game">Jogo</a>  (em construção) -->
+      <a class="nav-link nav-studio" href="/" title="Importar e editar fotos">Estúdio ↗</a>
+    </nav>
+    <div class="top-tools">
+      <div class="sound">
+        <button class="tool tool-icon" id="btn-sound" aria-pressed="false" aria-label="Trilha contemplativa" title="Trilha contemplativa (S)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Z"/><path class="snd-wave" d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/><path class="snd-off" d="m16 9 5 6M21 9l-5 6"/></svg></button>
+        <div class="sound-pop"><label for="sound-vol">Volume</label><input id="sound-vol" type="range" min="0" max="100" step="1" value="55"/></div>
+      </div>
+      <button class="tool" id="btn-play" aria-pressed="false" title="Reproduzir (Espaço)"><span class="ico-play" aria-hidden="true"></span><span class="tool-label">Reproduzir</span></button>
+      <button class="tool tool-icon" id="btn-fs" title="Tela cheia (F)" aria-label="Tela cheia"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+    </div>
+  </header>
+
+  <section class="caption ui" id="caption" aria-live="polite"></section>
+  <div class="ghost-num ui" id="ghost-num" aria-hidden="true"></div>
+  <a class="fieldcard ui" id="fieldcard" href="#/mapa" aria-label="Ver no mapa onde a foto foi feita">
+    <div class="fc-head"><span class="fc-kicker"><i class="fc-ping" aria-hidden="true"></i>Onde foi feita</span><span class="fc-go">Ver no mapa <b aria-hidden="true">→</b></span></div>
+    <div class="fc-map"><div id="fc-map" class="fc-map-canvas"></div><div class="fc-nomap" id="fc-nomap" hidden></div></div>
+    <div class="fc-place" id="fc-place"></div>
+    <dl class="fc-rows" id="fc-rows"></dl>
+    <div class="fc-note" id="fc-note" hidden></div>
+  </a>
+  <div class="setline ui" id="setline"></div>
+  <blockquote class="epigraph" id="epigraph" aria-live="polite"></blockquote>
+
+  <footer class="reel ui" id="reel" aria-label="Faixa de filme">
+    <div class="reel-progress" aria-hidden="true"><i id="reel-bar"></i></div>
+    <div class="reel-track" id="reel-track"></div>
+  </footer>
+
+  <!-- CAMADAS -->
+  <section class="layer layer-essays" id="layer-essays" aria-label="Ensaios" hidden></section>
+  <section class="layer layer-index" id="layer-index" aria-label="Índice" hidden></section>
+  <section class="layer layer-map" id="layer-map" aria-label="Mapa de Leonida" hidden></section>
+  <div class="intertitle" id="intertitle" aria-live="polite" hidden></div>
+  <section class="preroll" id="preroll" role="dialog" aria-modal="true" aria-label="Foto lacrada" hidden></section>
+  <div class="hint" id="hint" hidden></div>
+  <section class="layer layer-journey" id="layer-journey" aria-label="Jornada" hidden></section>
+  <section class="layer layer-game" id="layer-game" aria-label="Onde foi feita? — jogo" hidden></section>
+  <section class="layer layer-essay" id="layer-essay" aria-label="Ensaio" hidden></section>
+  <div class="audio-ask" id="audio-ask" role="dialog" aria-label="Trilha sonora" hidden>
+    <div class="aa-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="aa-text"><b>Trilha contemplativa</b><span>Esta galeria tem uma trilha ambiente suave, gerada ao vivo. Quer ouvir enquanto vê as fotos?</span></div>
+    <div class="aa-actions"><button class="aa-yes" id="audio-yes">Ouvir com som</button><button class="aa-no" id="audio-no">Ver em silêncio</button></div>
+  </div>
+
+  <script src="/vendor/leaflet/leaflet.js?v=2.4.1"></script>
+  <script src="/vendor/leaflet-plugins/leaflet.markercluster.js?v=1.5.3"></script>
+  <script src="/vendor/leaflet-plugins/leaflet-heat.js?v=0.2.0"></script>
+  <script src="/map/config.js"></script>
+  <script src="/vendor/leonida-map.js?v=2.5.0"></script>
+  <script type="module" src="/galeria/app.js"></script>
+</body>
+</html>

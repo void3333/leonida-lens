@@ -1,0 +1,106 @@
+{
+ "_fonte": "Pôster oficial 'Leonida Map' (Rockstar Games, rockstargames.com/VI/media), recortado na moldura.",
+ "_como": "px = pixel na imagem mapa_oficial.jpg; lugar = nome em web/vendor/leonida-places.json",
+ "pontos": [
+  {
+   "lugar": "Port Gellhorn",
+   "px": [
+    1557,
+    2618
+   ]
+  },
+  {
+   "lugar": "Ambrosia",
+   "px": [
+    2996,
+    2613
+   ]
+  },
+  {
+   "lugar": "Waning Sands",
+   "px": [
+    4062,
+    2348
+   ]
+  },
+  {
+   "lugar": "Vice Beach",
+   "px": [
+    4705,
+    3662
+   ]
+  },
+  {
+   "lugar": "Vice City",
+   "px": [
+    3661,
+    3905
+   ]
+  },
+  {
+   "lugar": "Capri",
+   "px": [
+    1461,
+    3961
+   ]
+  },
+  {
+   "lugar": "Hamlet",
+   "px": [
+    3029,
+    5203
+   ]
+  },
+  {
+   "lugar": "Watson Bay",
+   "px": [
+    2290,
+    5355
+   ]
+  },
+  {
+   "lugar": "Key Lento",
+   "px": [
+    3074,
+    6371
+   ]
+  },
+  {
+   "lugar": "Mile Zero Air Station",
+   "px": [
+    1382,
+    6568
+   ]
+  },
+  {
+   "lugar": "VCIA Control Tower",
+   "px": [
+    3086,
+    4311
+   ]
+  },
+  {
+   "lugar": "Gloriana Key",
+   "px": [
+    4254,
+    4723
+   ]
+  },
+  {
+   "lugar": "Tennis Stadium",
+   "px": [
+    4000,
+    4859
+   ]
+  },
+  {
+   "x": 487.4,
+   "y": 423.7,
+   "px": [
+    3588,
+    2918
+   ],
+   "_": "Belville"
+  }
+ ]
+}

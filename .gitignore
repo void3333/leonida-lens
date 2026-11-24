@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Ferramentas locais
+.sandbox/
+.wrangler/
+node_modules/
+
+# Dados pessoais nunca entram no repositório (ficam em ~/LeonidaFieldNotes)
+*.sqlite3
+*.sqlite3-*
+*.dpapi
+private_*
+.env
+
+# Sistema
+Thumbs.db
+desktop.ini
+.DS_Store
