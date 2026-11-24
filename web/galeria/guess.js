@@ -261,12 +261,20 @@ function confirmGuess() {
       G.map.fitBounds(bounds, { padding: pad, maxZoom: 4, animate: false });
       return;
     }
+    // Primeiro o mapa voa; só depois a linha corre. Animar a linha DURANTE o voo fazia o Leaflet projetá-la
+    // em zooms intermediários (aparecia uma "linha maluca" que depois se corrigia).
+    let started = false; const g0 = G;
+    const runLine = () => {
+      if (started || G !== g0) return; started = true;
+      tween(650, (t) => {
+        const e = 1 - Math.pow(1 - t, 3);
+        const ll = L.latLng(from.lat + (truth.lat - from.lat) * e, from.lng + (truth.lng - from.lng) * e);
+        casing.setLatLngs([from, ll]); line.setLatLngs([from, ll]);
+      }, dropTruth, 0);
+    };
+    G.map.once("moveend", runLine);
+    later(runLine, 1200);   // garantia caso o mapa já esteja no lugar e não haja voo
     G.map.flyToBounds(bounds, { padding: pad, maxZoom: 4, duration: .9 });
-    tween(650, (t) => {
-      const e = 1 - Math.pow(1 - t, 3);
-      const ll = L.latLng(from.lat + (truth.lat - from.lat) * e, from.lng + (truth.lng - from.lng) * e);
-      casing.setLatLngs([from, ll]); line.setLatLngs([from, ll]);
-    }, dropTruth, 250);
   };
 
   // dot da rodada
