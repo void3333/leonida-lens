@@ -55,6 +55,7 @@ class BackupManager:
         self.after_restore = after_restore
         self.job_lock = threading.Lock()
         self.state = {"running": False, "last_error": None}
+        self.restore_state = {"running": False}
         self.snapshots.mkdir(parents=True, exist_ok=True)
 
     # ------------------------------------------------------------ snapshots
@@ -161,7 +162,55 @@ class BackupManager:
             self.job_lock.release()
 
     # ------------------------------------------------------------ restore
+    def _progress(self, **kw):
+        self.restore_state.update(kw)
+
+    @staticmethod
+    def _check_manifest(man):
+        if man.get("app") != "Leonida Field Notes" or int(man.get("format", 0)) > FORMAT:
+            raise ValueError("Backup de versão desconhecida ou mais nova que este app.")
+
+    @staticmethod
+    def _check_db(db_file: Path):
+        with closing(sqlite3.connect(str(db_file))) as cx:
+            if cx.execute("PRAGMA integrity_check").fetchone()[0] != "ok":
+                raise ValueError("O banco dentro do backup está corrompido.")
+            cx.execute("SELECT id FROM photos LIMIT 1")
+
+    def _install_db(self, db_tmp: Path):
+        """Swap the live database for the restored one; settings of THIS computer survive."""
+        keep = {k: self.get(k) for k in MACHINE_SETTINGS}
+        with self.lock:
+            with closing(sqlite3.connect(str(db_tmp))) as src, closing(sqlite3.connect(str(self.db_path), timeout=30)) as live:
+                src.backup(live)
+        for k, v in keep.items():
+            if v or k == "onboarded":  # a restore never marks a new PC as "already set up"
+                self.set(k, v or "")
+
+    def _begin_restore(self, source):
+        if not self.job_lock.acquire(blocking=False):
+            raise ValueError("Já existe um backup ou restauração em andamento.")
+        self.restore_state = {"running": True, "source": source, "phase": "Conferindo o backup…",
+                              "done": 0, "total": 0, "error": None, "result": None}
+
+    def _end_restore(self, result=None, error=None):
+        self.restore_state.update(running=False, result=result, error=error,
+                                  phase="Concluído" if result else "Falhou")
+        self.job_lock.release()
+
     def restore_zip(self, zip_path: Path):
+        self._begin_restore("zip")
+        try:
+            result = self._restore_zip(zip_path)
+        except Exception as e:
+            self._end_restore(error=str(e))
+            raise
+        self._end_restore(result)
+        if self.after_restore:
+            self.after_restore()
+        return result
+
+    def _restore_zip(self, zip_path: Path):
         try:
             z = zipfile.ZipFile(zip_path)
         except zipfile.BadZipFile:
@@ -171,39 +220,134 @@ class BackupManager:
             if "library.sqlite3" not in names or "manifest.json" not in names:
                 raise ValueError("Este .zip não é um backup do Leonida Field Notes.")
             man = json.loads(z.read("manifest.json").decode("utf-8"))
-            if man.get("app") != "Leonida Field Notes" or int(man.get("format", 0)) > FORMAT:
-                raise ValueError("Backup de versão desconhecida ou mais nova que este app.")
+            self._check_manifest(man)
             db_tmp = Path(tmp) / "restore.sqlite3"
             with z.open("library.sqlite3") as src, db_tmp.open("wb") as out:
                 shutil.copyfileobj(src, out)
-            with closing(sqlite3.connect(str(db_tmp))) as cx:
-                if cx.execute("PRAGMA integrity_check").fetchone()[0] != "ok":
-                    raise ValueError("O banco dentro do backup está corrompido.")
-                cx.execute("SELECT id FROM photos LIMIT 1")
+            self._check_db(db_tmp)
             safety = self.snapshot("antes-de-restaurar")
+            wanted = sorted(n for n in names if ORIGINAL_RE.fullmatch(n))
+            self._progress(phase="Copiando as fotos…", total=len(wanted), done=0)
             restored = 0
-            for name in names:  # only well-formed original photo names; no path traversal possible
-                m = ORIGINAL_RE.fullmatch(name)
-                if not m:
-                    continue
-                dst = self.originals / m.group(1)
+            for i, name in enumerate(wanted, 1):  # only well-formed original photo names; no path traversal possible
+                dst = self.originals / ORIGINAL_RE.fullmatch(name).group(1)
                 if not dst.exists():
-                    with z.open(name) as src, open(dst.with_suffix(dst.suffix + ".partial"), "wb") as out:
+                    part = dst.with_suffix(dst.suffix + ".partial")
+                    with z.open(name) as src, open(part, "wb") as out:
                         shutil.copyfileobj(src, out)
-                    os.replace(dst.with_suffix(dst.suffix + ".partial"), dst)
+                    os.replace(part, dst)
                     restored += 1
-            # Settings that belong to THIS computer survive the restore.
-            keep = {k: self.get(k) for k in MACHINE_SETTINGS}
-            with self.lock:
-                with closing(sqlite3.connect(str(db_tmp))) as src, closing(sqlite3.connect(str(self.db_path), timeout=30)) as live:
-                    src.backup(live)
-            for k, v in keep.items():
-                if v:
-                    self.set(k, v)
+                self._progress(done=i)
+            self._progress(phase="Instalando o banco de dados…")
+            self._install_db(db_tmp)
+        return {"ok": True, "photos": man.get("photos"), "files_restored": restored,
+                "safety_snapshot": safety.name, "studio_name": man.get("studio_name"),
+                "created_at": man.get("created_at")}
+
+    # ------------------------------------------------------------ restore from a backup folder
+    @staticmethod
+    def resolve_backup_dir(folder: str) -> Path:
+        """Accept the chosen folder itself or its LeonidaFieldNotes-Backup subfolder."""
+        folder = (folder or "").strip().strip('"')
+        if not folder:
+            raise ValueError("Escolha a pasta onde está o backup.")
+        path = Path(os.path.expandvars(folder)).expanduser()
+        for cand in (path / BACKUP_DIRNAME, path):
+            if (cand / "manifest.json").is_file() and (cand / "library.sqlite3").is_file():
+                return cand.resolve()
+        if not path.is_dir():
+            raise ValueError("Essa pasta não existe ou não está acessível (HD/pendrive desconectado?).")
+        raise ValueError(f"Não achei um backup nessa pasta. Escolha a pasta que contém “{BACKUP_DIRNAME}”.")
+
+    @staticmethod
+    def _originals_in(folder: Path):
+        src = folder / "originals"
+        if not src.is_dir():
+            return []
+        return sorted(f for f in src.iterdir() if f.is_file() and ORIGINAL_RE.fullmatch("originals/" + f.name))
+
+    def inspect_folder(self, folder: str):
+        target = self.resolve_backup_dir(folder)
+        man = json.loads((target / "manifest.json").read_text("utf-8"))
+        self._check_manifest(man)
+        return {"ok": True, "folder": str(target), "studio_name": man.get("studio_name"), "photos": man.get("photos"),
+                "essays": man.get("essays"), "created_at": man.get("created_at"), "files": len(self._originals_in(target))}
+
+    def restore_folder(self, folder: str):
+        target = self.resolve_backup_dir(folder)
+        if target == self.data or self.data in target.parents:
+            raise ValueError("Essa é a pasta do próprio app; escolha a pasta do backup.")
+        self._begin_restore("folder")
+        try:
+            result = self._restore_folder(target)
+        except Exception as e:
+            self._end_restore(error=str(e))
+            raise
+        self._end_restore(result)
         if self.after_restore:
             self.after_restore()
+        return result
+
+    def _restore_folder(self, target: Path):
+        man = json.loads((target / "manifest.json").read_text("utf-8"))
+        self._check_manifest(man)
+        with tempfile.TemporaryDirectory() as tmp:
+            db_tmp = Path(tmp) / "restore.sqlite3"
+            sqlite_copy(target / "library.sqlite3", db_tmp)
+            self._check_db(db_tmp)
+            safety = self.snapshot("antes-de-restaurar")
+            wanted = self._originals_in(target)
+            self._progress(phase="Copiando as fotos…", total=len(wanted), done=0)
+            restored = 0
+            for i, f in enumerate(wanted, 1):
+                dst = self.originals / f.name
+                if not dst.exists() or dst.stat().st_size != f.stat().st_size:
+                    part = dst.with_suffix(dst.suffix + ".partial")
+                    shutil.copy2(f, part)
+                    os.replace(part, dst)
+                    restored += 1
+                self._progress(done=i)
+            self._progress(phase="Instalando o banco de dados…")
+            self._install_db(db_tmp)
+        # The same folder keeps receiving the automatic backups on this PC (unless one was already chosen).
+        if not self.get("backup_folder"):
+            try:
+                self.set_folder(str(target.parent))
+            except ValueError:
+                pass
         return {"ok": True, "photos": man.get("photos"), "files_restored": restored,
-                "safety_snapshot": safety.name, "studio_name": man.get("studio_name")}
+                "safety_snapshot": safety.name, "studio_name": man.get("studio_name"),
+                "created_at": man.get("created_at"), "folder": str(target)}
+
+    def find_folders(self, extra=()):
+        """Look for automatic backups in the usual places (OneDrive, Google Drive, Dropbox, other drives)."""
+        home = Path.home()
+        roots = [os.environ.get(k) for k in ("OneDrive", "OneDriveConsumer", "OneDriveCommercial")]
+        roots += list(extra)
+        for pattern in ("OneDrive*", "Google Drive*", "Dropbox*", "*/My Drive", "*/Meu Drive"):
+            roots += [str(p) for p in home.glob(pattern)]
+        roots += [str(home / n) for n in ("Documents", "Desktop")]
+        if os.name == "nt":
+            import string
+            for letter in string.ascii_uppercase[3:]:
+                for sub in ("", "My Drive", "Meu Drive"):
+                    roots.append(f"{letter}:/{sub}")
+        found, seen = [], set()
+        for r in roots:
+            if not r:
+                continue
+            try:
+                cand = Path(r) / BACKUP_DIRNAME
+                if not (cand / "manifest.json").is_file():
+                    continue
+                key = str(cand.resolve()).lower()
+                if key in seen:
+                    continue
+                seen.add(key)
+                found.append(self.inspect_folder(str(cand)))
+            except (OSError, ValueError):
+                continue
+        return {"folders": found}
 
     # ------------------------------------------------------------ status
     def status(self):

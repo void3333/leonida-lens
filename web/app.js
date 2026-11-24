@@ -4,7 +4,7 @@ const app = {
   pageTab: {}, inspTab: 'campo',
   view: "photos", filter: "all", query: "", photos: [], essays: [], entries: [],
   status: {watch_folder:"", total_photos:0}, activePhoto: null, activeEssay: null,
-  journalId: null, busy: false, ideaIndex: 0, previousTotal: null, psn: {connected:false,experimental:true}, pickMap: null, places: null, profile: {}, backup: {}
+  journalId: null, busy: false, ideaIndex: 0, previousTotal: null, psn: {connected:false,experimental:true}, pickMap: null, places: null, profile: {}, backup: {}, theme: null
 };
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
@@ -113,7 +113,8 @@ async function api(path,opts={}){
 }
 async function loadAll(showErrors=true){
   try{
-    const [p,e,j,s,psn,prof,bk,site]=await Promise.all([api('/api/photos'),api('/api/essays'),api('/api/journal'),api('/api/status'),api('/api/psn/status'),api('/api/profile'),api('/api/backup/status'),api('/api/site/status').catch(()=>({}))]);
+    const [p,e,j,s,psn,prof,bk,site,th]=await Promise.all([api('/api/photos'),api('/api/essays'),api('/api/journal'),api('/api/status'),api('/api/psn/status'),api('/api/profile'),api('/api/backup/status'),api('/api/site/status').catch(()=>({})),api('/api/theme').catch(()=>null)]);
+    if(th){app.theme=th;applyStudioTheme();}
     app.photos=p.photos;app.essays=e.essays;app.entries=j.entries;app.status=s;app.psn=psn;app.profile=prof;app.backup=bk;app.site=site;paintDeploy();
     reindex();applyProfile();
     updateSidebar();render();
@@ -128,7 +129,7 @@ function updateSidebar(){
   $('#sidebar-sync-title').textContent=app.status.error?'Verifique a procedência':app.psn.connected?'PlayStation conectado':has?'Pasta monitorada':'Biblioteca local';
   $('#sidebar-sync-desc').textContent=has?(app.status.scanning?'VERIFICANDO CAPTURAS…':itens(app.photos.length)+' NO ACERVO'):'SEM PASTA CONFIGURADA';
 }
-const VIEW_NAMES={photos:'ACERVO',essays:'ENSAIOS',journal:'CADERNO DE CAMPO',sync:'PROCEDÊNCIA',studio:'MEU ESTÚDIO',preview:'PRÉVIA DA GALERIA'};
+const VIEW_NAMES={photos:'ACERVO',essays:'ENSAIOS',journal:'CADERNO DE CAMPO',sync:'PROCEDÊNCIA',studio:'MEU ESTÚDIO',preview:'PRÉVIA DA GALERIA',guide:'GUIA'};
 function setView(view,refresh=true){
   app.view=view;
   $$('.nav-item').forEach(el=>el.classList.toggle('active',el.dataset.view===view));
@@ -162,6 +163,7 @@ function render(){
   else if(app.view==='journal')target.innerHTML=renderJournal();
   else if(app.view==='studio')target.innerHTML=renderStudio();
   else if(app.view==='preview')target.innerHTML=renderPreview();
+  else if(app.view==='guide')target.innerHTML=renderGuide();
   else target.innerHTML=renderSync();
   iconify(target);
   renderPauta();updateCrumbs();
@@ -217,8 +219,8 @@ function renderPauta(){
 // Abas de página: cada aba cabe na tela, sem rolagem. tabs = [[chave, rótulo, html], ...]
 function pageTabs(group,tabs){
  const on=app.pageTab[group]&&tabs.some(t=>t[0]===app.pageTab[group])?app.pageTab[group]:tabs[0][0];
- return `<div class="ptabs-wrap" data-tab="${on}"><nav class="ptabs" role="tablist">${tabs.map(([k,l])=>`<button type="button" class="lfn-tab" data-ptab="${group}:${k}" data-k="${k}">${l}</button>`).join('')}</nav>
- ${tabs.map(([k,,html])=>`<section class="ptab-pane" data-k="${k}">${html}</section>`).join('')}</div>`;
+ return `<div class="ptabs-wrap" data-tab="${on}" data-group="${group}"><nav class="ptabs" role="tablist">${tabs.map(([k,l])=>`<button type="button" class="lfn-tab${k===on?' is-on':''}" role="tab" aria-selected="${k===on}" data-ptab="${group}:${k}" data-k="${k}">${l}</button>`).join('')}</nav>
+ ${tabs.map(([k,,html])=>`<section class="ptab-pane${k===on?' is-on':''}" data-k="${k}">${html}</section>`).join('')}</div>`;
 }
 function pageHead(title,{label='',dek='',dekSerif=true,sub='',actions=''}={}){
   return `<header class="page-head"><div class="page-head-main">${label?`<div class="lfn-label page-label">${label}</div>`:''}<h1 class="page-title lfn-serif">${title}</h1>${dek?`<p class="page-dek${dekSerif?' is-serif':''}">${dek}</p>`:''}${sub?`<div class="page-sub">${sub}</div>`:''}</div>${actions?`<div class="header-actions">${actions}</div>`:''}</header>`;
@@ -374,7 +376,7 @@ function renderPsnPanel(){
     <button class="lfn-btn lfn-btn--sm" data-action="psn-options" type="button">Salvar opções</button></div>
     ${p.last_error?`<div class="inline-alert is-danger">${escapeHtml(p.last_error)}</div>`:''}`:
     `<div class="row-actions"><a class="lfn-btn lfn-btn--sm" href="https://id.sonyentertainmentnetwork.com/id/management_ca/" target="_blank" rel="noreferrer noopener">Entrar no site da Sony ↗</a>
-    <a class="lfn-btn lfn-btn--sm" href="https://ca.account.sony.com/api/v1/ssocookie" target="_blank" rel="noreferrer noopener">Página de sessão Sony ↗</a></div>
+    <a class="lfn-btn lfn-btn--sm" href="https://ca.account.sony.com/api/v1/ssocookie" target="_blank" rel="noreferrer noopener">Página de sessão Sony ↗</a><button class="lfn-btn lfn-btn--sm" type="button" data-action="open-guide" data-topic="token">Guia: pegar o token</button></div>
     <form id="psn-connect-form" class="psn-form" autocomplete="off"><div class="form-field lfn-field"><label for="psn-session">Valor npsso · token confidencial</label>
     <div class="inline-input"><input id="psn-session" class="lfn-input lfn-input--mono" type="password" name="npsso" required autocomplete="off" spellcheck="false" placeholder="Cole somente o valor npsso, sem aspas"/><button class="lfn-btn lfn-btn--primary" type="submit">Conectar</button></div></div></form>
     <p class="hint">O token concede acesso à sua conta: mantenha-o privado. Se não quiser usar a integração experimental, continue com a importação por USB.</p>`}
@@ -383,7 +385,7 @@ function renderPsnPanel(){
 }
 function renderSync(){
  const s=app.status, has=!!s.watch_folder, last=s.last_scan?new Date(s.last_scan).toLocaleString('pt-BR'):'NUNCA';
- const head=pageHead('Procedência',{dek:'De onde vêm as imagens.',dekSerif:false,actions:`<button class="lfn-btn" data-action="import" type="button">Importação manual</button>`});
+ const head=pageHead('Procedência',{dek:'De onde vêm as imagens.',dekSerif:false,actions:`<button class="lfn-btn" data-action="open-guide" data-topic="fotos" type="button">Guia passo a passo</button><button class="lfn-btn" data-action="import" type="button">Importação manual</button>`});
  const dot=s.error?'lfn-dot--danger':has?'lfn-dot--ok':'';
  const pane1=`<div class="two-col tab-cols"><div class="col">   <div class="lfn-rule"><span>Pasta local</span><span class="lfn-rule-count">${has?'CONECTADA':'NÃO CONFIGURADA'}</span></div>
    <div class="form-field lfn-field"><label for="watch-folder">Pasta observada</label><input id="watch-folder" class="path-input lfn-input lfn-input--mono" placeholder="C:\\Users\\...\\Leonida Inbox" value="${escAttr(s.watch_folder||'')}" spellcheck="false"/></div>
@@ -402,6 +404,7 @@ function renderSync(){
     <li class="step"><span class="step-index">03</span><div><h4>No PC</h4><p>Copie as imagens para uma pasta fixa, como <span class="lfn-mono">Imagens\\Leonida Inbox</span>, e escolha essa pasta aqui.</p></div></li>
     <li class="step"><span class="step-index">04</span><div><h4>Aqui no Field Notes</h4><p>Com o app aberto, a pasta é verificada a cada ~14 segundos e cada arquivo novo ganha uma cópia no acervo privado.</p></div></li>
    </ol>
+   <div class="row-actions"><button class="lfn-btn lfn-btn--sm" data-action="open-guide" data-topic="fotos" type="button">Abrir o guia completo (com “deu errado?”)</button></div>
    ${footnote('Originais em LeonidaFieldNotes/originals · o acervo funciona mesmo com a pasta observada desconectada · <a class="lfn-link" href="https://www.playstation.com/pt-br/support/games/ps5-media-gallery-view-screenshots/" target="_blank" rel="noreferrer">Galeria de mídia e USB ↗</a>')}
 </div>`;
  return `<div class="view view-noTool view-tabs">${head}
@@ -420,51 +423,10 @@ function bytesBR(n){n=Number(n||0);if(n<1024**2)return (n/1024).toFixed(0)+' KB'
 function whenBR(iso){return iso?new Date(iso).toLocaleString('pt-BR'):'Nunca';}
 function whenArq(iso){if(!iso)return '—';const d=new Date(iso);if(isNaN(d))return '—';return `${pad2(d.getDate())}.${pad2(d.getMonth()+1)}.${d.getFullYear()} · ${pad2(d.getHours())}:${pad2(d.getMinutes())}`;}
 
-const wizard={step:0,data:{}};
-function openWizard(start=0){wizard.step=start;wizard.data={studio_name:app.profile.studio_name||'',photographer:app.profile.photographer||''};renderWizard();}
-function renderWizard(){
- const d=wizard.data,steps=['ABERTURA DO FUNDO','ENTRADA DE MATERIAL','PROTEÇÃO DO ACERVO'];
- const bar=`<div class="wiz-steps">${steps.map((t,i)=>`<span class="${i===wizard.step?'active on':i<wizard.step?'done':''}" title="${t}"></span>`).join('')}</div>`;
- const top=`<header class="dlg-head wiz-head"><span class="lfn-label">ETAPA ${wizard.step+1} DE 3 · ${steps[wizard.step]}</span>${bar}</header>`;
- const opt=(go,title,desc,note,attr)=>`<button type="button" class="wiz-option${d.go===go?' selected':''}" ${attr}><i class="wiz-radio"></i><span class="wiz-text"><strong>${title}</strong><span>${desc}</span></span><span class="lfn-label">${note}</span></button>`;
- let body='';
- if(wizard.step===0)body=`<form id="wizard-form" class="dlg-form" data-step="0"><div class="dlg-body lfn-scroll"><h2 class="dialog-title lfn-serif">Vamos montar o seu estúdio de fotografia.</h2>
-  <p class="dialog-desc">Este app é o seu arquivo pessoal de fotógrafo no GTA VI. Tudo fica <strong>somente neste computador</strong>: nenhuma conta, nenhum servidor, nada é enviado para a internet.</p>
-  <div class="form-fields"><div class="form-field lfn-field"><label>Nome do estúdio / agência</label><input class="lfn-input" name="studio_name" required minlength="2" maxlength="60" value="${escAttr(d.studio_name)}" placeholder="Ex.: Vice Lens Photography" autofocus/></div>
-  <div class="form-field lfn-field"><label>Assinatura no RP · opcional</label><input class="lfn-input" name="photographer" maxlength="60" value="${escAttr(d.photographer)}" placeholder="Ex.: Lucia Caminos"/></div></div></div>
-  <div class="form-footer"><span></span><button class="lfn-btn lfn-btn--primary" type="submit">Continuar →</button></div></form>`;
- if(wizard.step===1)body=`<div class="dlg-form"><div class="dlg-body lfn-scroll"><h2 class="dialog-title lfn-serif">Como as fotos chegam aqui?</h2>
-  <p class="dialog-desc">No PS5, tire as fotos com o botão <strong>Criar</strong> do controle. Depois escolha um dos caminhos (dá para mudar quando quiser):</p>
-  <div class="wiz-options">
-   ${opt('psn','Nuvem PlayStation','Conecte sua conta Sony com o seu próprio token npsso. O app baixa as capturas sozinho.','EXPERIMENTAL','data-wizard-go="psn"')}
-   ${opt('folder','Pasta ou pendrive','Copie as fotos do PS5 para um pendrive e escolha a pasta. O app vigia a pasta e importa as novas.','RECOMENDADO','data-wizard-go="folder"')}
-   ${opt('drag','Arrastar arquivos','Arraste fotos JPG/PNG para a janela do app a qualquer momento.','MANUAL','data-wizard-go="drag"')}
-  </div></div>
-  <div class="form-footer"><button class="lfn-btn lfn-btn--ghost" type="button" data-wizard-back>Voltar</button><button class="lfn-btn" type="button" data-wizard-go="later">Decido depois</button></div></div>`;
- if(wizard.step===2)body=`<div class="dlg-form"><div class="dlg-body lfn-scroll"><h2 class="dialog-title lfn-serif">Seus dados, protegidos.</h2>
-  <p class="dialog-desc">O app já faz <strong>cópias automáticas do banco</strong> a cada 6 horas. Para não perder nada nem se o PC der problema, escolha uma pasta de backup fora do computador (HD externo, pendrive ou OneDrive). O app copia as fotos e o banco para lá a cada 30 minutos.</p>
-  <div class="wiz-options">${opt('__backup','Escolher pasta de backup',app.backup?.backup_folder?`Atual: <span class="lfn-mono">${escapeHtml(app.backup.backup_folder)}</span>`:'Recomendado. Você também pode fazer isso depois em Meu estúdio.',app.backup?.backup_folder?'DEFINIDA':'RECOMENDADO','data-action="pick-backup-folder"').replace('wiz-option"',app.backup?.backup_folder?'wiz-option selected"':'wiz-option"')}</div>
-  <p class="hint">Você também pode baixar um <strong>backup completo (.zip)</strong> quando quiser, em <strong>Meu estúdio</strong>.</p></div>
-  <div class="form-footer"><button class="lfn-btn lfn-btn--ghost" type="button" data-wizard-back>Voltar</button><button class="lfn-btn lfn-btn--primary" type="button" data-wizard-finish>Abrir o acervo</button></div></div>`;
- dialogShow('#formDialog',`<div class="form-wrap wizard">${top}${body}</div>`);
- iconify($('#formDialog'));
-}
-async function wizardNext(form){
- const fd=new FormData(form);wizard.data.studio_name=String(fd.get('studio_name')||'').trim();wizard.data.photographer=String(fd.get('photographer')||'').trim();
- app.profile=await api('/api/profile',{method:'POST',body:{studio_name:wizard.data.studio_name,photographer:wizard.data.photographer}});
- applyProfile();wizard.step=1;renderWizard();
-}
-async function wizardFinish(){
- app.profile=await api('/api/profile',{method:'POST',body:{onboarded:true}});
- $('#formDialog').close();applyProfile();
- const go=wizard.data.go;
- if(go==='psn'||go==='folder')setView('sync');else setView('photos');
- toast(`Estúdio ${app.profile.studio_name} pronto!`);
-}
 function renderStudio(){
  const b=app.backup||{},p=app.profile||{};
  const lastCopy=b.last_folder_backup||b.last_snapshot;
- const head=pageHead(escapeHtml(p.studio_name||'Seu estúdio'),{label:'FICHA DO FUNDO',actions:`<button class="lfn-btn" data-action="open-wizard" type="button">Primeiros passos</button>`});
+ const head=pageHead(escapeHtml(p.studio_name||'Seu estúdio'),{label:'FICHA DO FUNDO',actions:`<button class="lfn-btn" data-action="open-guide" type="button">Guia</button><button class="lfn-btn" data-action="open-wizard" type="button">Primeiros passos</button>`});
  const pane1=`<div class="two-col tab-cols"><div class="col">   <div class="lfn-rule"><span>Identidade</span></div>
    <form id="profile-form" class="profile-form"><div class="form-row-2"><div class="form-field lfn-field"><label>Nome do estúdio</label><input class="lfn-input" name="studio_name" required minlength="2" maxlength="60" value="${escAttr(p.studio_name||'')}"/></div>
    <div class="form-field lfn-field"><label>Assinatura</label><input class="lfn-input" name="photographer" maxlength="60" value="${escAttr(p.photographer||'')}"/></div></div>
@@ -480,11 +442,11 @@ function renderStudio(){
    <div class="backup-block"><div><h4>Backup automático em pasta</h4><p>${b.backup_folder?`Copiando para <span class="lfn-mono">${escapeHtml(b.backup_folder)}</span> a cada 30 min. Último: <span class="lfn-mono">${escapeHtml(whenArq(b.last_folder_backup))}</span>.`:'Escolha um HD externo, pendrive ou pasta do OneDrive/Google Drive.'}</p>
     ${b.last_error?`<div class="inline-alert is-danger">${escapeHtml(b.last_error)}</div>`:''}</div>
     <div class="row-actions"><button class="lfn-btn lfn-btn--sm" data-action="pick-backup-folder" type="button">${b.backup_folder?'Trocar pasta':'Escolher pasta'}</button>${b.backup_folder?`<button class="lfn-btn lfn-btn--sm" data-action="backup-now" type="button" ${b.running?'disabled':''}>${b.running?'Copiando…':'Fazer backup agora'}</button>`:''}</div></div>
-   <div class="backup-block"><div><h4>Restaurar backup</h4><p>Traz de volta fotos e dados de um .zip; antes, o estado atual é guardado. Use também para mudar de computador.</p></div>
-    <div class="row-actions"><button class="lfn-btn lfn-btn--sm" data-action="restore-backup" type="button">Escolher arquivo .zip</button></div></div>
+   <div class="backup-block"><div><h4>Restaurar backup</h4><p>Traz de volta fotos e dados de um .zip ou da pasta do backup automático; antes, o estado atual é guardado. Use também para mudar de computador.</p></div>
+    <div class="row-actions"><button class="lfn-btn lfn-btn--sm" data-action="restore-backup" type="button">Escolher arquivo .zip</button><button class="lfn-btn lfn-btn--sm" data-wz-open-restore type="button">Restaurar de uma pasta</button></div></div>
 </div>`;
  return `<div class="view view-noTool view-tabs">${head}
- ${pageTabs('studio',[['id','Identidade e dados',pane1],['site','Galeria online',pane2],['backup','Backup',pane3]])}
+ ${pageTabs('studio',[['id','Identidade e dados',pane1],['look','Aparência',renderLookPane()],['site','Galeria online',pane2],['backup','Backup',pane3]])}
  </div>`;
 }
 /* ---------------------------------------------------------------- Sincronizar e publicar (botão fixo no topo) */
@@ -538,7 +500,8 @@ function renderSiteBlock(){
  const body=!s.enabled||!s.url&&!connected
   ?`<p>Publique a Galeria para outras pessoas visitarem (sem login, só visualização). Cada foto nova que entrar no Estúdio aparece no site sozinha. Hospedagem grátis na Cloudflare.</p>
     <div class="row-actions"><button class="lfn-btn lfn-btn--primary lfn-btn--sm" data-action="site-login" type="button" ${s.login_open?'disabled':''}>${s.login_open?'Aguardando você no navegador…':'Conectar Cloudflare e publicar'}</button></div>
-    <p class="lfn-label" style="margin-top:10px">UMA VEZ SÓ: ENTRE NA CLOUDFLARE (OU CRIE A CONTA GRÁTIS) E CLIQUE EM ALLOW</p>`
+    <p class="lfn-label" style="margin-top:10px">UMA VEZ SÓ: ENTRE NA CLOUDFLARE (OU CRIE A CONTA GRÁTIS) E CLIQUE EM ALLOW</p>
+    <p>Plano gratuito: não pede cartão de crédito e não tem cobrança automática (se um limite for atingido, a Cloudflare só pausa novos envios). Cada pessoa usa a própria conta, então cada galeria é separada. <button class="lfn-linkbtn" type="button" data-action="open-guide" data-topic="site">ver o guia</button></p>`
   :`<dl class="lfn-meta">${metaRow('Endereço',s.url?`<a href="${escAttr(s.url)}" target="_blank" rel="noopener" class="lfn-mono">${escapeHtml(s.url.replace('https://',''))}</a>`:'—')}${metaRow('Publicadas',`${s.published_count||0} · ${hidden} oculta(s)`)}${metaRow('Última atualização',escapeHtml(whenArq(s.last_deploy)))}${metaRow('Sincronização',s.enabled?'AUTOMÁTICA':'PAUSADA')}</dl>
     ${s.last_error?`<div class="inline-alert is-danger">${escapeHtml(s.last_error)}</div>`:''}
     <div class="row-actions">${s.url?`<a class="lfn-btn lfn-btn--primary lfn-btn--sm" href="${escAttr(s.url)}" target="_blank" rel="noopener">Abrir site ↗</a>`:''}<button class="lfn-btn lfn-btn--sm" data-action="site-publish" type="button" ${s.deploying?'disabled':''}>${s.deploying?'Enviando…':'Atualizar agora'}</button><button class="lfn-btn lfn-btn--sm" data-action="site-toggle" type="button">${s.enabled?'Pausar':'Retomar'}</button>${connected?'':`<button class="lfn-btn lfn-btn--sm" data-action="site-login" type="button">Reconectar</button>`}</div>
@@ -548,15 +511,16 @@ function renderSiteBlock(){
 async function pickBackupFolder(){
  try{const r=await api('/api/pick-folder',{method:'POST',body:{purpose:'backup'}});
   if(r.cancelled)return;toast('Pasta de backup definida. Primeira cópia em andamento…');await refreshBackup();
-  if($('#formDialog').open&&$('.wizard'))renderWizard();else render();
+  if(wizardOpen())renderWizard();else render();
  }catch(err){toast(err.message,true);}
 }
 async function restoreBackup(file){
  if(!file)return;
+ if(wizardOpen()){wizardRestoreZip(file);return;}
  if(!confirm(`Restaurar "${file.name}"?\n\nOs dados atuais serão substituídos pelos do backup (uma cópia de segurança do estado atual é guardada antes).`))return;
  toast('Restaurando backup… não feche o app.');
- try{const r=await fetch('/api/backup/restore',{method:'POST',body:file,headers:{'Content-Type':'application/zip'}});const data=await r.json();if(!r.ok||data.error)throw new Error(data.error||'Falha');
-  toast(`Backup restaurado: ${data.photos} fotos.`);await loadAll();await refreshBackup();app.profile=await api('/api/profile');applyProfile();render();
+ try{const data=await uploadRestore(file);
+  toast(`Backup restaurado: ${data.photos} fotos.`);await afterRestore();render();
  }catch(err){toast('Não foi possível restaurar: '+err.message,true);}
 }
 
@@ -797,16 +761,14 @@ function bindEvents(){
   const nav=e.target.closest('[data-view]');if(nav){setView(nav.dataset.view);return;}
   const photo=e.target.closest('[data-photo]');if(photo){openPhoto(photo.dataset.photo);return;}
   const itab=e.target.closest('[data-insp-tab]');if(itab){app.inspTab=itab.dataset.inspTab;const f=itab.closest('form');f.dataset.tab=app.inspTab;if(app.inspTab==='campo')setTimeout(()=>app.pickMap?.invalidateSize(),30);return;}
-  const ptab=e.target.closest('[data-ptab]');if(ptab){const [g,k]=ptab.dataset.ptab.split(':');app.pageTab[g]=k;ptab.closest('.ptabs-wrap').dataset.tab=k;return;}
+  const ptab=e.target.closest('[data-ptab]');if(ptab){const [g,k]=ptab.dataset.ptab.split(':');app.pageTab[g]=k;showPageTab(ptab.closest('.ptabs-wrap'),k);return;}
   const pnav=e.target.closest('[data-photo-nav]');if(pnav){goPhoto(pnav.dataset.photoNav);return;}
   const wx=e.target.closest('[data-weather]');if(wx){const form=wx.closest('form');if(form){form.weather.value=form.weather.value===wx.dataset.weather?'':wx.dataset.weather;form.dataset.dirty='1';syncWeatherChips(form);}return;}
   const essay=e.target.closest('[data-essay]');if(essay){app.activeEssay=essay.dataset.essay;app.filter='all';app.query='';setView('photos');return;}
   const journal=e.target.closest('[data-journal]');if(journal){openJournalForm(journal.dataset.journal);return;}
   const filter=e.target.closest('[data-filter]');if(filter){app.filter=filter.dataset.filter;$$('[data-filter]').forEach(x=>x.classList.toggle('active',x.dataset.filter===app.filter));renderPhotoArea();return;}
   const rate=e.target.closest('[data-rate]');if(rate){const rating=Number(rate.dataset.rate);$('#photo-rating').value=rating;$$('[data-rate]').forEach(x=>x.classList.toggle('selected',Number(x.dataset.rate)<=rating));return;}
-  const wgo=e.target.closest('[data-wizard-go]');if(wgo){wizard.data.go=wgo.dataset.wizardGo;wizard.step=2;await refreshBackup();renderWizard();return;}
-  if(e.target.closest('[data-wizard-back]')){wizard.step=Math.max(0,wizard.step-1);renderWizard();return;}
-  if(e.target.closest('[data-wizard-finish]')){try{await wizardFinish();}catch(err){toast(err.message,true);}return;}
+  if(await onboardingClick(e))return;
   const action=e.target.closest('[data-action]');if(!action)return;
   switch(action.dataset.action){
    case 'import':$('#fileInput').click();break;
@@ -814,6 +776,7 @@ function bindEvents(){
    case 'map-color':{const on=!mapColorOn();setMapColorPref(on);action.textContent=on?'P&B':'COR';action.setAttribute('aria-pressed',String(on));break;}
    case 'field-repeat':{const form=action.closest('form');const ph=app.photos.find(p=>p.id===form?.dataset.id);const src=ph&&repeatSource(ph);if(src){fillField(form,src);toast('Local, ponto, hora e clima copiados. Ajuste o que mudou.');}break;}
    case 'open-wizard':openWizard(0);break;
+   case 'open-guide':openGuide(action.dataset.topic,action.dataset.sub);break;
    case 'essay-seed':{const r=await essayCall('/api/essays/seed');if(r)toast(r.created?`${r.created} ensaio(s)-pauta criados. Escolha as fotos de cada pauta.`:'Os ensaios-pauta já existem.');break;}
    case 'essay-open':app.essayOpen=action.dataset.id;render();break;
    case 'essay-publish':{const e=app.essays.find(x=>x.id===action.dataset.id);if(e){const r=await essayCall(`/api/essays/${e.id}`,'PATCH',{published:!e.published});if(r)toast(e.published?'Ensaio tirado do site.':'Ensaio publicado. Use “Sincronizar e publicar” para mandar ao site.');}break;}
@@ -855,7 +818,7 @@ function bindEvents(){
   if(e.target.id==='psn-connect-form'){e.preventDefault();await connectPsn(e.target);return;}
   if(e.target.id==='slot-form'){e.preventDefault();const fd=new FormData(e.target);const r=await essayCall(`/api/slots/${e.target.dataset.id}`,'PATCH',Object.fromEntries(fd.entries()));if(r){$('#formDialog').close();toast('Pauta salva.');}return;}
   if(e.target.id==='essay-edit-form'){e.preventDefault();const fd=new FormData(e.target);const r=await essayCall(`/api/essays/${e.target.dataset.id}`,'PATCH',Object.fromEntries(fd.entries()));if(r){$('#formDialog').close();toast('Ensaio salvo.');}return;}
-  if(e.target.id==='wizard-form'){e.preventDefault();try{await wizardNext(e.target);}catch(err){toast(err.message,true);}return;}
+  if(await onboardingSubmit(e))return;
   if(e.target.id==='profile-form'){e.preventDefault();const fd=new FormData(e.target);try{app.profile=await api('/api/profile',{method:'POST',body:{studio_name:fd.get('studio_name'),photographer:fd.get('photographer')}});applyProfile();toast('Ficha do fundo atualizada.');render();}catch(err){toast(err.message,true);}return;}
   if(!['photo-edit-form','essay-form','journal-form'].includes(e.target.id))return;
   e.preventDefault();const form=e.target;const button=form.querySelector('button[type=submit]');if(button)button.disabled=true;

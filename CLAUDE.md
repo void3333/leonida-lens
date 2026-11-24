@@ -6,7 +6,13 @@ Responder ao usuário em **português do Brasil**.
 ## Duas partes
 - **Estúdio** (local, só PC, desktop): `app.py` — servidor HTTP da biblioteca padrão + SQLite em
   `~/LeonidaFieldNotes` (`LEONIDA_DATA_DIR` sobrescreve). Abre como janela de app do Chromium (`desktop.py`).
-  Front-end: `web/index.html`, `web/app.js`, `web/style.css` (+ `web/vendor/studio-mono.css`). Visual preto e branco "CODE".
+  Front-end: `web/index.html`, `web/app.js`, `web/onboarding.js` (assistente de primeiros passos em tela cheia, Guia do
+  fotógrafo e aba Aparência), `web/style.css` (+ `web/vendor/studio-mono.css`). Visual padrão preto e branco "CODE".
+- **Temas**: `web/vendor/lfn-themes.js` (Estúdio e galeria). O tema "codigo" não escreve variáveis = visual original;
+  os outros sobrescrevem variáveis de cor (`--bg`, `--ink*`, `--hi`, `--accent`, `--accent-2`, `--bg-rgb`…). Nada de
+  `#fff`/`#000` literal novo em `studio-mono.css`/`gallery-mono.css`: use as variáveis. Na galeria, o que fica sobre a
+  foto/mapa é sempre escuro (regra "sala de projeção" no topo de `gallery-mono.css`). Configurações `theme_*`/`accent_*`;
+  o tema da galeria vai no catálogo (`/api/catalog` e `catalog.json`).
 - **Galeria pública** (estática, Cloudflare Pages): `web/galeria/` — `app.js` é ES module; módulos extras em
   `web/galeria/*.js|css` (servidos e publicados automaticamente). Precisa funcionar **no computador e no celular**
   (`web/vendor/gallery-mobile.css`). `publisher.py` gera `~/LeonidaFieldNotes/site` e publica com wrangler.

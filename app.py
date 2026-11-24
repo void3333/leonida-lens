@@ -700,6 +700,43 @@ def profile():
             "onboarded": setting("onboarded") == "1"}
 
 
+# Aparência: temas prontos (definidos em web/vendor/lfn-themes.js) + cor de destaque opcional.
+# Estúdio e galeria podem ter temas diferentes; o tema da galeria viaja no catálogo (e no catalog.json publicado).
+THEMES = ("codigo", "vice", "por-do-sol", "noite-azul", "papel", "verde")
+HEX_COLOR = re.compile(r"#[0-9a-fA-F]{6}")
+
+
+def theme_of(target):
+    preset = setting("theme_" + target) or "codigo"
+    accent = setting("accent_" + target)
+    return {"preset": preset if preset in THEMES else "codigo",
+            "accent": accent.lower() if HEX_COLOR.fullmatch(accent or "") else ""}
+
+
+def theme_settings():
+    return {"studio": theme_of("studio"), "gallery": theme_of("gallery"), "presets": list(THEMES)}
+
+
+def save_theme(payload):
+    for target in ("studio", "gallery"):
+        part = payload.get(target)
+        if part is None:
+            continue
+        if not isinstance(part, dict):
+            raise ValueError("Tema inválido.")
+        if "preset" in part:
+            preset = str(part.get("preset") or "codigo")
+            if preset not in THEMES:
+                raise ValueError("Tema desconhecido: " + preset)
+            set_setting("theme_" + target, preset)
+        if "accent" in part:
+            accent = str(part.get("accent") or "").strip()
+            if accent and not HEX_COLOR.fullmatch(accent):
+                raise ValueError("Cor de destaque inválida (use #RRGGBB).")
+            set_setting("accent_" + target, accent.lower())
+    return theme_settings()
+
+
 def public_slots(visible_ids):
     """Pautas por ensaio para a Galeria: as vazias aparecem como "imagem latente" até receber a foto."""
     out = {}
@@ -749,7 +786,7 @@ def gallery_catalog(public_only=False):
             photos[-1]["essay_id"] = None
     slots = public_slots({ph["id"] for ph in photos})
     essays = [essay_public_fields(e, slots) for e in essays_rows if e["id"] in live]
-    return {"generated_at": iso_now(), "profile": profile(), "photos": photos, "essays": essays}
+    return {"generated_at": iso_now(), "profile": profile(), "theme": theme_of("gallery"), "photos": photos, "essays": essays}
 
 
 def accession_numbers(photos):
@@ -809,6 +846,7 @@ def public_build():
     prof = profile()
     catalog = {"generated_at": iso_now(), "public": True,
                "profile": {"studio_name": prof["studio_name"]},  # sem nome de personagem no site
+               "theme": theme_of("gallery"),
                "photos": photos, "essays": essays}
     return catalog, files
 
@@ -918,6 +956,12 @@ class Handler(BaseHTTPRequestHandler):
             return self.send_json(PSN_BRIDGE.state())
         if path == "/api/profile":
             return self.send_json(profile())
+        if path == "/api/theme":
+            return self.send_json(theme_settings())
+        if path == "/api/backup/restore-status":
+            return self.send_json(BACKUP.restore_state)
+        if path == "/api/backup/find-folders":
+            return self.send_json(BACKUP.find_folders())
         if path == "/api/sync-all":
             return self.send_json(SYNC_ALL)
         if path == "/api/site/status":
@@ -989,7 +1033,8 @@ class Handler(BaseHTTPRequestHandler):
             return self.export_json()
         if path in ("/", "/index.html"):
             return self.send_file(WEB / "index.html", "text/html; charset=utf-8")
-        allowed = {"/style.css": "text/css; charset=utf-8", "/app.js": "application/javascript; charset=utf-8"}
+        allowed = {"/style.css": "text/css; charset=utf-8", "/app.js": "application/javascript; charset=utf-8",
+                   "/onboarding.js": "application/javascript; charset=utf-8"}
         if path in allowed:
             return self.send_file(WEB / path.lstrip("/"), allowed[path])
         if path.startswith("/vendor/"):
@@ -1036,6 +1081,8 @@ class Handler(BaseHTTPRequestHandler):
                 if payload.get("onboarded"):
                     set_setting("onboarded", "1")
                 return self.send_json(profile())
+            if path == "/api/theme":
+                return self.send_json(save_theme(payload))
             if path == "/api/sync-all":
                 return self.send_json(start_sync_all())
             if path == "/api/essays/refresh-templates":
@@ -1078,6 +1125,10 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json({"ok": True, "backup_folder": folder})
             if path == "/api/backup/run":
                 return self.send_json(BACKUP.mirror())
+            if path == "/api/backup/inspect-folder":
+                return self.send_json(BACKUP.inspect_folder(str(payload.get("folder", ""))))
+            if path == "/api/backup/restore-folder":
+                return self.send_json(BACKUP.restore_folder(str(payload.get("folder", ""))))
             if path == "/api/backup/snapshot":
                 return self.send_json({"ok": True, "file": BACKUP.snapshot("manual").name})
             if path == "/api/psn/connect":
@@ -1099,7 +1150,7 @@ class Handler(BaseHTTPRequestHandler):
                 SCAN_EVENT.set()
                 return self.send_json({"ok": True, "message": "Verificação solicitada."})
             if path == "/api/pick-folder":
-                return self.pick_folder(payload.get("purpose") == "backup")
+                return self.pick_folder(str(payload.get("purpose") or ""))
             if path == "/api/essays":
                 title = str(payload.get("title", "")).strip()[:110]
                 if not title:
@@ -1291,19 +1342,26 @@ class Handler(BaseHTTPRequestHandler):
         except (ValueError, OSError) as e:
             self.fail(str(e))
 
-    def pick_folder(self, for_backup=False):
+    def pick_folder(self, purpose=""):
         try:
             import tkinter as tk
             from tkinter import filedialog
             window = tk.Tk()
             window.withdraw()
             window.attributes("-topmost", True)
-            title = "Escolha onde guardar os backups (HD externo, pendrive, OneDrive…)" if for_backup else "Escolha a pasta de capturas do PS5"
+            title = {"backup": "Escolha onde guardar os backups (HD externo, pendrive, OneDrive…)",
+                     "restore": "Escolha a pasta do backup automático (a que contém LeonidaFieldNotes-Backup)"
+                     }.get(purpose, "Escolha a pasta de capturas do PS5")
             path = filedialog.askdirectory(title=title, mustexist=True)
             window.destroy()
             if not path:
                 return self.send_json({"ok": False, "cancelled": True})
-            if for_backup:
+            if purpose == "restore":  # só escolhe e confere; restaurar é outro passo
+                try:
+                    return self.send_json({"ok": True, **BACKUP.inspect_folder(path)})
+                except ValueError as e:
+                    return self.send_json({"ok": False, "folder": path, "error": str(e)})
+            if purpose == "backup":
                 folder = BACKUP.set_folder(path)
                 threading.Thread(target=BACKUP.mirror, daemon=True).start()
                 return self.send_json({"ok": True, "backup_folder": folder})

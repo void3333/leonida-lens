@@ -57,6 +57,15 @@ const essayPhotos = (id) => S.photos.filter((p) => p.essay_id === id).sort((a, b
 const journeyPhotos = () => [...S.photos].sort((a, b) => cmp(tombo(a), tombo(b)));   // desde o início
 const allPhotos = () => [...S.photos].sort((a, b) => cmp(tombo(b), tombo(a)));   // mais recente primeiro
 
+/* tema escolhido no Estúdio (Meu estúdio → Aparência); ?tema=…&destaque=… só para prévias */
+function applyTheme(theme) {
+  const T = window.LFNThemes; if (!T) return;
+  const q = new URLSearchParams(location.search);
+  const preset = q.get("tema") || theme?.preset || "codigo";
+  const accent = q.has("destaque") ? (q.get("destaque") ? "#" + q.get("destaque").replace(/^#/, "") : "") : (theme?.accent || "");
+  T.apply(preset, accent);
+  if (!q.get("tema")) T.remember("gallery", preset, accent);
+}
 async function load() {
   try {
     const visitor = new URLSearchParams(location.search).get("publico") === "1";
@@ -64,6 +73,7 @@ async function load() {
     if (!r.ok) throw new Error(String(r.status));
     const c = await r.json();
     S.photos = c.photos || []; S.essays = c.essays || []; S.profile = c.profile || {};
+    applyTheme(c.theme);
   } catch { S.photos = []; S.essays = []; }
   S.byId = new Map(S.photos.map((p) => [p.id, p]));
   S.essayById = new Map(S.essays.map((e) => [e.id, e]));
