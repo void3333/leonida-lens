@@ -777,10 +777,9 @@ function renderMapLayer(focusId, fresh) {
     if (S.cluster) map.addLayer(S.cluster);
     // Mapa de calor: onde mais se fotografa (Leaflet.heat). Alterna com os pinos.
     S.heat = L.heatLayer && mapped.length > 1 ? L.heatLayer(mapped.map((p) => [...window.LeonidaMap.toLatLng(p.map_x, p.map_y), 1]),
-      { radius: 40, blur: 28, maxZoom: 3, minOpacity: .35,
-        // mapa claro (oficial) → manchas escuras; mapa escuro → manchas claras
-        gradient: MONO_UI ? (MAP_LIGHT() ? { .2: "#8a8a8a", .5: "#4a4a4a", .8: "#1a1a1a", 1: "#000" } : { .25: "#3a3a3a", .55: "#9a9a9a", .85: "#e8e8e8", 1: "#fff" })
-          : { .3: "#2a1b5e", .6: "#c2389b", .85: "#ff9e4a", 1: "#fff6c8" } }) : null;
+      { radius: 40, blur: 28, maxZoom: 1, max: 2.5, minOpacity: .4,   // cores fortes já na visão geral; só os lugares mais fotografados chegam ao branco
+        // paleta de câmera térmica: a única cor do mapa (o resto é preto e branco), para o calor saltar aos olhos
+        gradient: { .15: "#1b1464", .35: "#5b2a9e", .55: "#d6336c", .75: "#ff7a1a", .9: "#ffd43b", 1: "#fffbe6" } }) : null;
     setMapMode(S.mapMode || "pins");
     loadMod("fog").then((m) => { if (S.map === map && m.addFog) S.fog = m.addFog(map, mapped, modCtx()); });
     if (mapped.length > 1) map.fitBounds(L.latLngBounds(mapped.map((p) => window.LeonidaMap.toLatLng(p.map_x, p.map_y))).pad(.5), { maxZoom: 3.25 });
