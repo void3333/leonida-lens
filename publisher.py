@@ -16,6 +16,7 @@ import subprocess
 import sys
 import threading
 import time
+import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -53,7 +54,8 @@ def now_iso():
 
 
 def slug(text, fallback="leonida"):
-    s = re.sub(r"[^a-z0-9]+", "-", str(text or "").lower()).strip("-")
+    s = unicodedata.normalize("NFKD", str(text or "")).encode("ascii", "ignore").decode()  # "Ação" -> "Acao"
+    s = re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")
     return (s or fallback)[:40].strip("-")
 
 
@@ -112,10 +114,15 @@ class SitePublisher:
             self._login_proc.wait()
             self.state["login_open"] = False
             if self.check_login():
+                self.state["last_error"] = None
                 self.set("site_enabled", "1")
                 self.kick.set()
+            else:
+                self.state["last_error"] = ("A Cloudflare não confirmou o acesso. Se acabou de criar a conta, confirme o "
+                                            "e-mail que a Cloudflare mandou e clique em Conectar de novo.")
         threading.Thread(target=wait, daemon=True).start()
-        return {"ok": True, "message": "A Cloudflare abriu no navegador: entre (ou crie a conta grátis) e clique em Allow."}
+        return {"ok": True, "message": "Preparando a ferramenta da Cloudflare (na 1ª vez pode levar alguns minutos). "
+                                       "A página vai abrir sozinha no navegador: entre na sua conta e clique em Allow."}
 
     def _ensure_project(self):
         name = self.get("site_project")

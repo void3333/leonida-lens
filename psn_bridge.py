@@ -40,7 +40,24 @@ MAX_SIZE = 80 * 1024 * 1024
 
 
 class PSNError(Exception):
-    pass
+    def __init__(self, message, status=None):
+        super().__init__(message)
+        self.status = status
+
+
+SESSION_ENDED = ("A sessão PlayStation expirou ou foi encerrada no site da Sony. Pegue um token npsso novo "
+                 "(Guia → Token npsso) e clique em Conectar.")
+NPSSO_REFUSED = ("A Sony não aceitou esse token: ele expirou ou você saiu da conta no site. Entre de novo no site "
+                 "da Sony, abra a Página de sessão Sony ↗ e copie o valor novo.")
+
+
+def clean_npsso(text):
+    """Accepts the bare value, the value with quotes/spaces, or the whole {"npsso":"..."} page text."""
+    s = str(text or "").strip()
+    m = re.search(r'"npsso"\s*:\s*"([A-Za-z0-9_-]+)"', s)
+    if m:
+        s = m.group(1)
+    return s.strip(" '\"\t\r\n")
 
 
 def is_trusted_https(url):
@@ -78,7 +95,7 @@ def http_json(url, data=None, headers=None, no_redirect=False):
     except urllib.error.HTTPError as e:
         if no_redirect and e.code in (301, 302, 303, 307, 308):
             return e.code, e.headers, {}
-        raise PSNError(f"Sony retornou HTTP {e.code}.") from None
+        raise PSNError(f"Sony retornou HTTP {e.code}.", e.code) from None
     except urllib.error.URLError:
         raise PSNError("Não foi possível alcançar os servidores da Sony.") from None
     except (ValueError, json.JSONDecodeError):
@@ -168,8 +185,10 @@ class PSNBridge:
                 "only_gta": self.only_gta, "experimental": True}
 
     def connect(self, npsso):
-        if not isinstance(npsso, str) or not re.fullmatch(r"[A-Za-z0-9_-]{24,256}", npsso.strip()):
-            raise PSNError("Token Sony inválido. Copie somente o valor de npsso.")
+        npsso = clean_npsso(npsso) if isinstance(npsso, str) else ""
+        if not re.fullmatch(r"[A-Za-z0-9_-]{24,256}", npsso):
+            raise PSNError("Isso não parece um token npsso. Abra a Página de sessão Sony ↗ (já logado no site da "
+                           "Sony) e copie o texto que aparece lá; pode colar a linha inteira.")
         with self.lock:
             url = AUTH_BASE + "/authorize?" + urllib.parse.urlencode({
                 "access_type": "offline", "client_id": CLIENT_ID,
@@ -177,14 +196,14 @@ class PSNBridge:
             })
             status, headers, _ = http_json(url, headers={"Cookie": "npsso="+npsso.strip()}, no_redirect=True)
             if status != 302:
-                raise PSNError("A Sony não aceitou a sessão de login.")
+                raise PSNError(NPSSO_REFUSED)
             location = headers.get("Location", "")
             parsed = urllib.parse.urlsplit(location)
             if parsed.scheme != "com.scee.psxandroid.scecompcall":
-                raise PSNError("Redirecionamento de autenticação inesperado.")
+                raise PSNError(NPSSO_REFUSED)
             code = urllib.parse.parse_qs(parsed.query).get("code", [None])[0]
-            if not code:
-                raise PSNError("Não foi retornado um código de autorização.")
+            if not code:   # e.g. error=login_required: npsso expired or the user signed out on the site
+                raise PSNError(NPSSO_REFUSED)
             tokens = self._token_request({"code":code, "grant_type":"authorization_code", "redirect_uri":REDIRECT_URI})
             self.vault.save(tokens)
             self.connected = True
@@ -208,16 +227,19 @@ class PSNBridge:
             raise PSNError("Conecte a conta PlayStation antes de sincronizar.")
         if time.time() > t.get("refresh_expires_at", 0):
             self.vault.clear()
-            raise PSNError("A sessão PlayStation expirou. Conecte novamente.")
+            raise PSNError(SESSION_ENDED)
         if time.time() > t.get("expires_at",0):
             try:
                 fresh = self._token_request({"token_format":"jwt", "refresh_token":t["refresh_token"],
                      "grant_type":"refresh_token", "scope": SCOPES})
                 self.vault.save(fresh)
                 return fresh["access_token"]
-            except PSNError:
-                # Preserve session on network failure. The user can retry.
-                raise
+            except PSNError as e:
+                if e.status in (400, 401, 403):   # Sony refused the refresh token: session is gone
+                    self.vault.clear()
+                    self.connected = False
+                    raise PSNError(SESSION_ENDED, e.status) from None
+                raise   # network failure: keep the session, the user can retry
         return t["access_token"]
 
     def disconnect(self):
@@ -300,7 +322,14 @@ class PSNBridge:
                 if cursor:
                     query["cursorMark"] = cursor
                 url = MEDIA_BASE + "?" + urllib.parse.urlencode(query)
-                _, headers, data = http_json(url, headers={"Authorization":"Bearer "+bearer})
+                try:
+                    _, headers, data = http_json(url, headers={"Authorization":"Bearer "+bearer})
+                except PSNError as e:
+                    if e.status in (401, 403):
+                        self.vault.clear()
+                        self.connected = False
+                        raise PSNError(SESSION_ENDED, e.status) from None
+                    raise
                 if not isinstance(data,dict) or not isinstance(data.get("ugcDocument"),list):
                     raise PSNError("Formato de galeria PSN diferente do esperado. Pode ter mudado.")
                 cookies = self._cookies(headers)

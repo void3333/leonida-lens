@@ -214,7 +214,7 @@ function currentIdea(){return ideas[app.ideaIndex % ideas.length];}
 function renderPauta(){
   const el=$('#pauta');if(!el)return;
   const [t,d]=currentIdea();
-  el.innerHTML=`<div class="lfn-label">PAUTA · ${pad2(app.ideaIndex % ideas.length + 1)}/${pad2(ideas.length)}</div><div class="pauta-title lfn-serif">${escapeHtml(t)}</div><p class="pauta-text">${escapeHtml(d)}</p><button class="lfn-link" type="button" data-action="new-idea">OUTRA IDEIA ↻</button>`;
+  el.innerHTML=`<div class="lfn-label">IDEIA DO DIA · ${pad2(app.ideaIndex % ideas.length + 1)}/${pad2(ideas.length)}</div><div class="pauta-title lfn-serif">${escapeHtml(t)}</div><p class="pauta-text">${escapeHtml(d)}</p><button class="lfn-link" type="button" data-action="new-idea">OUTRA IDEIA ↻</button>`;
 }
 // Abas de página: cada aba cabe na tela, sem rolagem. tabs = [[chave, rótulo, html], ...]
 function pageTabs(group,tabs){
@@ -236,9 +236,9 @@ function renderPhotos(){
   ? pageHead(escapeHtml(activeEssay.title),{label:serieOf(activeEssay.id),sub:`${itens(n)} · ${dateRange(scope)}`,actions:`<button class="lfn-link" data-action="all-photos" type="button">← TODO O ACERVO</button><button class="lfn-btn" data-action="import" type="button">Adicionar fotos</button>`})
   : pageHead('Acervo',{sub:`${itens(n)} · ${dateRange(scope)}`,actions:`<button class="lfn-btn" data-action="import" type="button">Adicionar fotos</button>`});
  return `<div class="view view-photos">${head}
- <div class="lfn-extent extent"><div><b>${n}</b><span>${n===1?'Item':'Itens'}</span></div><div><b>${fav}</b><span>Favoritas</span></div><div><b>${withEssay}</b><span>Em série</span></div><div><b>${geo}</b><span>Georreferenciadas</span></div><div><b>${app.entries.length}</b><span>Registros de campo</span></div><div class="extent-last"><span>Última entrada</span><b class="is-mono">${dateArq(lastImp)}</b></div></div>
- <div class="toolbar"><div class="filters">${tab('all','Todas')}${tab('favorites','Favoritas')}${tab('nofield','Sem ficha de campo')}${tab('unreviewed','Sem curadoria')}${tab('mapped','No mapa')}</div><span class="toolbar-spacer"></span><span id="photo-count-label" class="toolbar-count lfn-mono">${itens(getVisiblePhotos().length)}</span><label class="searchbox"><input id="photo-search" class="lfn-input lfn-input--line" autocomplete="off" placeholder="Buscar por título, local ou tombo…" aria-label="Buscar no acervo"/></label></div>
- <div class="work lfn-scroll"><div id="photo-area"></div>${footnote('Imagens guardadas numa biblioteca local · a PSN só é consultada se você conectar o Cloud Bridge experimental · <button class="lfn-link linkbutton" data-action="go-sync" type="button">Ver procedência →</button>')}</div></div>`;
+ <div class="lfn-extent extent"><div><b>${n}</b><span>${n===1?'Item':'Itens'}</span></div><div><b>${fav}</b><span>Favoritas</span></div><div><b>${withEssay}</b><span>Em ensaio</span></div><div><b>${geo}</b><span>Georreferenciadas</span></div><div><b>${app.entries.length}</b><span>Registros de campo</span></div><div class="extent-last"><span>Última entrada</span><b class="is-mono">${dateArq(lastImp)}</b></div></div>
+ <div class="toolbar"><div class="filters">${tab('all','Todas')}${tab('favorites','Favoritas')}${tab('nofield','Sem ficha de campo')}${tab('unreviewed','Sem título')}${tab('mapped','No mapa')}</div><span class="toolbar-spacer"></span><span id="photo-count-label" class="toolbar-count lfn-mono">${itens(getVisiblePhotos().length)}</span><label class="searchbox"><input id="photo-search" class="lfn-input lfn-input--line" autocomplete="off" placeholder="Buscar por título, local ou tombo…" aria-label="Buscar no acervo"/></label></div>
+ <div class="work lfn-scroll"><div id="photo-area"></div>${footnote('Imagens guardadas numa biblioteca local · a nuvem PlayStation só é consultada se você conectar a conta (opcional) · <button class="lfn-link linkbutton" data-action="go-sync" type="button">Ver procedência →</button>')}</div></div>`;
 }
 /* ---------------------------------------------------------------- ENSAIOS: pautas com 20 vagas */
 function slotMeta(sl){
@@ -255,7 +255,9 @@ function renderEssays(){
  if(!app.essayOpen||!es.some(e=>e.id===app.essayOpen))app.essayOpen=es[0].id;
  const cur=es.find(e=>e.id===app.essayOpen);
  const list=es.map(e=>{
-  const total=e.slots.length||0,filled=e.filled||0,pct=total?Math.round(filled*100/total):0;
+  const inSlots=new Set((e.slots||[]).map(sl=>sl.photo_id).filter(Boolean));
+  const loose=app.photos.filter(p=>p.essay_id===e.id&&!inSlots.has(p.id)).length;
+  const total=(e.slots.length||0)+loose,filled=(e.filled||0)+loose,pct=total?Math.round(filled*100/total):0;
   return `<button class="ess-row${e.id===cur.id?' is-on':''}" data-action="essay-open" data-id="${e.id}" type="button">
    <span class="ess-row-top"><span class="ess-code">${escapeHtml(serieOf(e.id))}</span><span class="ess-state ${e.published?'is-pub':''}">${e.published?'NO SITE':'RASCUNHO'}</span></span>
    <b>${escapeHtml(e.title)}</b><small>${escapeHtml(e.genre||'—')}</small>
@@ -268,6 +270,11 @@ function renderEssays(){
     <span class="slot-n">P${pad2(i+1)}</span></button>
    <div class="slot-body"><b>${escapeHtml(sl.title||'Sem título')}</b><small>${slotMeta(sl)||'LOCAL SECRETO'}</small>${sl.phrase?`<p>“${escapeHtml(sl.phrase)}”</p>`:''}
    <div class="slot-tools"><button data-action="slot-edit" data-id="${sl.id}" type="button">editar pauta</button>${ph?`<button data-action="slot-clear" data-id="${sl.id}" type="button">tirar foto</button><button data-action="slot-open-photo" data-id="${ph.id}" type="button">ficha</button>`:''}</div></div></article>`;}).join('');
+ const slotPhotos=new Set((cur.slots||[]).map(sl=>sl.photo_id).filter(Boolean));
+ const loosePh=app.photos.filter(p=>p.essay_id===cur.id&&!slotPhotos.has(p.id));
+ const looseHtml=loosePh.length?`<div class="ess-progress"><span>Outras fotos deste ensaio · ${loosePh.length}</span><span>ligadas pela ficha (aba Arquivo → Ensaio)</span></div>
+   <div class="slot-grid">${loosePh.map(ph=>`<article class="slot is-filled"><button class="slot-media" data-action="slot-open-photo" data-id="${ph.id}" type="button" title="Abrir ficha"><img src="${ph.thumb_url}" alt="" loading="lazy" decoding="async"/></button>
+    <div class="slot-body"><b>${escapeHtml(ph.title||'Sem título')}</b><small>${escapeHtml(ph.location||'LOCAL SECRETO')}</small></div></article>`).join('')}</div>`:'';
  const rules=(cur.rules||[]).length?`<ul class="ess-rules">${cur.rules.map(r=>`<li>${escapeHtml(r)}</li>`).join('')}</ul>`:'';
  return `<div class="view view-noTool"><div class="ess-layout">
   <aside class="ess-list lfn-scroll"><div class="ess-list-head"><span>ENSAIOS · ${es.length}</span><span><button class="lfn-linkbtn" data-action="new-essay" type="button">+ novo</button> <button class="lfn-linkbtn" data-action="essay-seed" type="button" title="Recria os ensaios-pauta que faltarem">+ pautas</button></span></div>${list}</aside>
@@ -283,6 +290,7 @@ function renderEssays(){
     </div></header>
    <div class="ess-progress"><span>${cur.filled||0} de ${(cur.slots||[]).length} pautas fotografadas</span><span>${cur.published?'Aparece no site quando tiver fotos publicadas':'Rascunho: não aparece no site'}</span></div>
    <div class="slot-grid">${slots}<button class="slot slot-add" data-action="essay-add-slot" data-id="${cur.id}" type="button">+ adicionar pauta</button></div>
+   ${looseHtml}
   </section></div></div>`;
 }
 async function essayCall(path,method='POST',body={}){
@@ -366,20 +374,20 @@ function renderPsnPanel(){
   <div class="inline-alert">Esta integração usa interfaces não documentadas da Sony e pode falhar ou deixar de funcionar. Não é afiliada à PlayStation. Não insira sua senha da PSN aqui. Se a Sony mudar algo, use a pasta/pendrive como alternativa.</div>
   <dl class="lfn-meta">${metaRow('Conta',connected?`<span class="lfn-dot lfn-dot--ok"></span> CONECTADA · ${escapeHtml(p.storage||'PROTEGIDA')}`:'<span class="lfn-dot"></span> NÃO CONECTADA')}${metaRow('Situação',p.syncing?'SINCRONIZANDO…':connected?'PRONTA':'AGUARDANDO TOKEN')}${metaRow('Última leitura',escapeHtml(stamp))}${connected?metaRow('Novas fotos',Number(p.last_added||0))+metaRow('Vistas / ignoradas',`${Number(p.last_found||0)} / ${Number(p.last_skipped||0)}`):''}</dl></div><div class="psn-b">
   <details class="psn-steps"><summary class="lfn-label">COMO CONECTAR · 3 PASSOS</summary>
-   <ol class="step-list"><li><span class="step-index">01</span><p>No PS5, Galeria de mídia → selecione uma foto → Options → Carregar para o PlayStation App. Ative o upload automático para as próximas capturas.</p></li>
-   <li><span class="step-index">02</span><p>No PC, entre na sua conta no site oficial da Sony. Depois acesse a página oficial de sessão e copie <b>somente o valor npsso</b>, nunca a senha.</p></li>
-   <li><span class="step-index">03</span><p>Cole o valor no campo abaixo. Ele é usado uma única vez para trocar por uma sessão OAuth. No Windows, a sessão fica protegida por DPAPI; o valor npsso não é salvo.</p></li></ol></details>
+   <ol class="step-list"><li><span class="step-index">01</span><p>No PS5: Configurações → Capturas e transmissões → Capturas → ligue o <b>envio automático</b> para o PlayStation App (com o app no celular, na mesma conta).</p></li>
+   <li><span class="step-index">02</span><p>No PC, entre na sua conta no site oficial da Sony. Depois acesse a página oficial de sessão e copie o texto que aparece (o valor npsso). Nunca copie nem cole a senha.</p></li>
+   <li><span class="step-index">03</span><p>Cole no campo abaixo e clique em Conectar. O valor é usado uma única vez e não fica salvo; a conexão fica guardada de forma protegida pelo Windows. As fotos começam a chegar sozinhas.</p></li></ol></details>
   ${connected?`<div class="row-actions"><button class="lfn-btn lfn-btn--primary" data-action="psn-sync" type="button" ${p.syncing?'disabled':''}>${p.syncing?'Sincronizando…':'Buscar fotos na nuvem'}</button>
     <button class="lfn-btn lfn-btn--ghost danger-text" data-action="psn-disconnect" type="button">Desconectar e apagar sessão</button></div>
     <div class="psn-options"><label class="check"><input id="psn-only-gta" type="checkbox" ${p.only_gta?'checked':''}/> Importar somente jogos GTA</label>
     <label class="check"><input id="psn-auto" type="checkbox" ${p.auto?'checked':''}/> Nova leitura a cada 15 minutos com o app aberto</label>
-    <button class="lfn-btn lfn-btn--sm" data-action="psn-options" type="button">Salvar opções</button></div>
-    ${p.last_error?`<div class="inline-alert is-danger">${escapeHtml(p.last_error)}</div>`:''}`:
+    <button class="lfn-btn lfn-btn--sm" data-action="psn-options" type="button">Salvar opções</button></div>`:
     `<div class="row-actions"><a class="lfn-btn lfn-btn--sm" href="https://id.sonyentertainmentnetwork.com/id/management_ca/" target="_blank" rel="noreferrer noopener">Entrar no site da Sony ↗</a>
     <a class="lfn-btn lfn-btn--sm" href="https://ca.account.sony.com/api/v1/ssocookie" target="_blank" rel="noreferrer noopener">Página de sessão Sony ↗</a><button class="lfn-btn lfn-btn--sm" type="button" data-action="open-guide" data-topic="token">Guia: pegar o token</button></div>
     <form id="psn-connect-form" class="psn-form" autocomplete="off"><div class="form-field lfn-field"><label for="psn-session">Valor npsso · token confidencial</label>
-    <div class="inline-input"><input id="psn-session" class="lfn-input lfn-input--mono" type="password" name="npsso" required autocomplete="off" spellcheck="false" placeholder="Cole somente o valor npsso, sem aspas"/><button class="lfn-btn lfn-btn--primary" type="submit">Conectar</button></div></div></form>
+    <div class="inline-input"><input id="psn-session" class="lfn-input lfn-input--mono" type="password" name="npsso" required autocomplete="off" spellcheck="false" placeholder="Cole aqui o texto da página de sessão"/><button class="lfn-btn lfn-btn--primary" type="submit">Conectar</button></div></div></form>
     <p class="hint">O token concede acesso à sua conta: mantenha-o privado. Se não quiser usar a integração experimental, continue com a importação por USB.</p>`}
+  ${(app.psnError||p.last_error)?`<div class="inline-alert is-danger">${escapeHtml(app.psnError||p.last_error)}</div>`:''}
   ${footnote('Fontes: <a class="lfn-link" href="https://www.playstation.com/pt-br/support/games/ps5-game-captures-ps-app/" rel="noreferrer" target="_blank">Instruções Sony ↗</a> · <a class="lfn-link" href="https://github.com/CallMeTak/playstation-clip-viewer" rel="noreferrer" target="_blank">PS Clips Viewer ↗</a> · Limite da nuvem: 14 dias')}
  </div></section>`;
 }
@@ -560,7 +568,7 @@ function openPhoto(photoId){
  const list=getVisiblePhotos(),index=list.findIndex(p=>p.id===photoId);
  const prev=index>0?list[index-1]?.id:null,next=index>=0?list[index+1]?.id:null;
  const essaysSorted=[...app.essays].sort((a,b)=>lfnCmp(a.created_at,b.created_at)||lfnCmp(String(a.id),String(b.id)));
- const opts=[`<option value="">Nenhuma série</option>`,...essaysSorted.map(e=>`<option value="${e.id}" ${photo.essay_id===e.id?'selected':''}>${serieOf(e.id)} · ${escapeHtml(e.title)}</option>`)].join('');
+ const opts=[`<option value="">Nenhum ensaio</option>`,...essaysSorted.map(e=>`<option value="${e.id}" ${photo.essay_id===e.id?'selected':''}>${serieOf(e.id)} · ${escapeHtml(e.title)}</option>`)].join('');
  const t=tombo(photo), dims=photo.width&&photo.height?`${photo.width} × ${photo.height}`:'—';
  const rep=repeatSource(photo);
  const ticks=list.length&&index>=0?`<div class="lfn-ruler viewer-ruler"><div class="lfn-ruler-ticks">${list.map((p,i)=>`<i${i===index?' class="on"':''}></i>`).join('')}</div><span class="lfn-ruler-count">${pad2(index+1)} / ${pad2(list.length)}</span></div>`:'<div class="viewer-ruler"></div>';
@@ -587,7 +595,7 @@ function openPhoto(photoId){
  <div class="form-field lfn-field"><label>Frase de campo <button class="lfn-linkbtn" data-action="suggest-into" data-target="notes" type="button">sugerir</button></label><textarea class="lfn-input" name="notes" maxlength="6000" rows="2" placeholder="vazio = frase automática no site">${escapeHtml(photo.notes||'')}</textarea></div></section>
  <section class="insp-group insp-pane" data-pane="arquivo"><div class="lfn-rule"><span>Identificação</span></div>
  <div class="form-field lfn-field"><label>Título <button class="lfn-linkbtn" data-action="suggest-into" data-target="title" type="button">sugerir</button></label><input class="lfn-input" name="title" maxlength="140" value="${escAttr(photo.title||'')}" placeholder="vazio = título automático"/></div>
- <div class="form-field lfn-field"><label>Série (ensaio)</label><select class="lfn-input" name="essay_id">${opts}</select></div>
+ <div class="form-field lfn-field"><label>Ensaio</label><select class="lfn-input" name="essay_id">${opts}</select></div>
  <div class="lfn-rule"><span>Avaliação</span></div>
  <div class="rating-line"><div class="star-row" id="star-row">${[1,2,3,4,5].map(i=>`<button type="button" class="star-btn ${photo.rating>=i?'selected':''}" data-rate="${i}" aria-label="${i} estrelas">★</button>`).join('')}</div><input id="photo-rating" name="rating" type="hidden" value="${photo.rating||0}"/>
  <label class="fav-toggle"><input name="favorite" type="checkbox" ${photo.favorite?'checked':''}/><span>Selecionada (favorita)</span></label>
@@ -665,7 +673,7 @@ function initPickMap(photo){
 }
 function openEssayForm(){
  reindex();
- dialogShow('#formDialog',`<div class="form-wrap"><header class="dlg-head"><span class="lfn-label">NOVA SÉRIE · ${app.serieNext}</span><button class="lfn-btn lfn-btn--ghost close-btn" data-action="close-form" type="button" aria-label="Fechar">${svg('close',16)}</button></header>
+ dialogShow('#formDialog',`<div class="form-wrap"><header class="dlg-head"><span class="lfn-label">NOVO ENSAIO · ${app.serieNext}</span><button class="lfn-btn lfn-btn--ghost close-btn" data-action="close-form" type="button" aria-label="Fechar">${svg('close',16)}</button></header>
  <form id="essay-form" class="dlg-form"><div class="dlg-body lfn-scroll"><h2 class="dialog-title lfn-serif">Novo ensaio</h2><p class="dialog-desc">Uma ideia aberta, não uma obrigação. Você poderá atribuir fotografias depois.</p>
  <div class="form-fields"><div class="form-field lfn-field"><label>Título da série</label><input class="lfn-input" name="title" maxlength="110" required placeholder="Ex.: Vidas à margem da avenida" autofocus/></div><div class="form-field lfn-field"><label>Qual é a sua curiosidade?</label><textarea class="lfn-input" name="description" maxlength="1500" placeholder="Algo que você percebeu e gostaria de explorar…"></textarea></div></div></div>
  <div class="form-footer"><button class="lfn-btn lfn-btn--ghost" data-action="close-form" type="button">Cancelar</button><button class="lfn-btn lfn-btn--primary" type="submit">Abrir série</button></div></form></div>`);
@@ -715,10 +723,19 @@ async function goPhoto(id){
  }
  openPhoto(id);
 }
+// Fechar pelo X ou com Esc também guarda o que foi digitado (como as setas fazem).
+async function closePhotoSaving(){
+ const form=document.getElementById('photo-edit-form');
+ if(form&&form.dataset.dirty){
+  try{await savePhotoForm(form);toast(`Ficha ${app.acc.get(form.dataset.id)||''} salva`);refreshAfterSave();}
+  catch(err){toast(err.message,true);return;}
+ }
+ $('#photoDialog').close();
+}
 async function createEssay(form){
  const fd=new FormData(form);const result=await api('/api/essays',{method:'POST',body:{title:fd.get('title'),description:fd.get('description')}});
  app.essays=(await api('/api/essays')).essays;reindex();$('#formDialog').close();
- const code=result?.essay?.id?serieOf(result.essay.id):'Série';
+ const code=result?.essay?.id?serieOf(result.essay.id):'Ensaio';
  toast(`${code} aberta. Abra uma ficha para incluir fotos.`);setView('essays');
 }
 async function saveJournal(form){
@@ -805,7 +822,7 @@ function bindEvents(){
    case 'new-essay':openEssayForm();break;
    case 'new-journal':openJournalForm();break;
    case 'close-form':$('#formDialog').close();break;
-   case 'close-photo':$('#photoDialog').close();break;
+   case 'close-photo':await closePhotoSaving();break;
    case 'pick-folder':await chooseFolder();break;
    case 'save-folder':await saveFolder();break;
    case 'scan':await scanNow();break;
@@ -830,6 +847,7 @@ function bindEvents(){
  $('#open-quick-import').addEventListener('click',()=>$('#fileInput').click());
  $('#btn-sync-all').addEventListener('click',syncAll);
  $('#photoDialog').addEventListener('close',()=>{if(app.pickMap){app.pickMap.remove();app.pickMap=null;}});
+ $('#photoDialog').addEventListener('cancel',e=>{const f=document.getElementById('photo-edit-form');if(f&&f.dataset.dirty){e.preventDefault();closePhotoSaving();}});
  document.addEventListener('keydown',e=>{
   if($('#photoDialog').open && !['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)){
    const list=getVisiblePhotos(),i=list.findIndex(p=>p.id===app.activePhoto);
@@ -855,8 +873,8 @@ async function connectPsn(form){
  const field=form.querySelector('#psn-session');const npsso=(field?.value||'').trim();
  if(field)field.value='';
  const button=form.querySelector('button[type=submit]');if(button)button.disabled=true;
- try{const result=await api('/api/psn/connect',{method:'POST',body:{npsso}});app.psn=result;toast('Conexão criada. Agora clique em Buscar fotos.');render();}
- catch(err){toast('Falha Sony: '+err.message,true);if(button)button.disabled=false;}
+ try{const result=await api('/api/psn/connect',{method:'POST',body:{npsso}});app.psn=result;app.psnError='';toast('Conta Sony conectada. Buscando suas fotos…');render();}
+ catch(err){app.psnError=err.message;toast('Falha Sony: '+err.message,true);if(button)button.disabled=false;render();}
 }
 function keepScroll(fn){
  const regions=[...document.querySelectorAll('#content .lfn-scroll')].map(el=>el.scrollTop);

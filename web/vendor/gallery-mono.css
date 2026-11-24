@@ -353,3 +353,6 @@ body.has-preroll .ui, body.has-preroll .layer, body.has-preroll .epigraph { visi
 .epigraph.is-thought .epi-text { color: rgba(255, 255, 255, .86); }
 .epi-sig { margin-top: 9px; font-size: 10px; color: rgba(255, 255, 255, .58); }
 @media (max-height: 820px) { .epigraph { top: 118px; } }
+
+/* Galeria sem nenhuma foto publicada: só o "Em breve" (desktop e celular). */
+.no-photos .nav, .no-photos #fieldcard, .no-photos #epigraph, .no-photos #m-sheet, .no-photos #hint { display: none !important; }

@@ -59,11 +59,18 @@ galeria **só de visualização** no seu próprio site gratuito.
 
 ### 1. Instalar
 
-1. Baixe **`LeonidaLens-Setup-<versão>.exe`** na página de [**Releases**](../../releases/latest).
-2. Dê dois cliques. Se o Windows mostrar **"O Windows protegeu o computador"**, clique em **Mais informações → Executar assim mesmo**
+1. Abra a página de [**Releases**](../../releases/latest), desça até **Assets** e clique em **`LeonidaLens-Setup-<versão>.exe`**.
+   (Não baixe "Source code" — isso é o código, para programadores.)
+2. Se o navegador segurar o download por ser um arquivo "não baixado com frequência":
+   **Edge** → passe o mouse no download → **…** → **Manter** → **Mostrar mais** → **Manter mesmo assim**;
+   **Chrome** → **Manter**.
+3. Dê dois cliques no arquivo baixado. Se o Windows mostrar **"O Windows protegeu o computador"**, clique em **Mais informações → Executar assim mesmo**
    (o aviso aparece porque o instalador não tem assinatura digital paga — é normal em projetos independentes).
-3. Avance as telas. Não precisa de administrador nem de instalar mais nada: Python, Pillow e Node já vão dentro.
-4. No fim, deixe marcado **"Abrir o Leonida Lens"**. O app abre **em tela cheia**, no assistente de primeiros passos.
+4. Avance as telas. Não precisa de administrador nem de instalar mais nada: Python, Pillow e Node já vão dentro.
+5. No fim, deixe marcado **"Abrir o Leonida Lens"**. O app abre **em tela cheia**, no assistente de primeiros passos.
+   Depois, abra pelo atalho **Leonida Lens** no Menu Iniciar ou na Área de Trabalho.
+
+> ⌨️ **Tela cheia:** <kbd>F11</kbd> sai/volta da tela cheia e <kbd>Alt</kbd>+<kbd>F4</kbd> fecha o app.
 
 <img src="docs/img/estudio-assistente.jpg" alt="Assistente de primeiros passos">
 
@@ -85,7 +92,7 @@ galeria **só de visualização** no seu próprio site gratuito.
    com o app aberto — ou na hora, no botão **Sincronizar e publicar**.
 
 > **Sem conta, sem token?** Use pendrive: no PS5, **Galeria de mídia → Copiar para unidade USB**, e no app escolha a pasta
-> (**Procedência → Pasta**) ou simplesmente **arraste** as fotos para a janela.
+> (**Procedência → Pasta e importação**) ou simplesmente **arraste** as fotos para a janela.
 
 ### 4. O token da Sony (npsso) — com calma e com segurança
 
@@ -95,13 +102,20 @@ O Leonida Lens lê suas capturas da nuvem usando um **token** (uma chave tempor�
    **A senha é digitada só no site da Sony.**
 2. Na mesma janela, abra: **https://ca.account.sony.com/api/v1/ssocookie**
 3. Vai aparecer algo assim: `{"npsso":"Ab12Cd34…"}`.
-4. Copie **só o valor entre aspas** (64 caracteres, **sem** as aspas).
-5. No app: cole no campo **Valor npsso** e clique **Conectar**.
+4. Copie esse texto (<kbd>Ctrl</kbd>+<kbd>A</kbd> e <kbd>Ctrl</kbd>+<kbd>C</kbd>). Pode copiar a linha inteira, com chaves e
+   aspas: o app separa o valor sozinho.
+5. No app: **Procedência → PlayStation** (ou a etapa Fotos do assistente), cole no campo **Valor npsso** e clique **Conectar**.
+   A primeira busca de fotos começa sozinha.
+
+> 🔁 **Já tinha conectado antes?** Ao instalar uma versão nova por cima, a conexão continua: um minuto depois de abrir, o app
+> confere a nuvem sozinho. Se a Sony tiver encerrado a sessão, o app avisa em **Procedência → PlayStation** e é só repetir
+> os passos acima com um token novo.
 
 > ⚠️ **NUNCA digite sua senha da PSN no Leonida Lens.** O app nunca pede senha. Se algo pedir, não é o app.
 > ⚠️ **Não mande o token para ninguém e não poste print dele** — ele dá acesso à sua conta enquanto valer.
 > 🔒 No Windows ele fica protegido pelo próprio sistema (DPAPI) e **nunca entra em backups**.
-> ⏳ O token pode expirar com o tempo. Se a conexão cair, é só repetir estes passos.
+> ⏳ O token pode expirar com o tempo (e vence se você sair da conta no site da Sony). Se aparecer "A Sony não aceitou esse
+> token", entre de novo no site da Sony, reabra a página de sessão e copie o valor novo.
 > 🧪 Essa integração usa interfaces **não oficiais** da Sony e pode parar se a Sony mudar algo — o pendrive é o plano B.
 
 ### 5. Galeria online (Cloudflare) — grátis
@@ -109,10 +123,16 @@ O Leonida Lens lê suas capturas da nuvem usando um **token** (uma chave tempor�
 A galeria é um site **só de visualização** (visitantes não fazem login, não comentam, não curtem). Ela fica hospedada na
 **sua própria conta** gratuita da Cloudflare.
 
-1. Em **Meu estúdio → Galeria online** (ou no assistente), clique **Conectar Cloudflare**.
-2. O navegador abre: **crie a conta grátis** ou entre na sua.
-3. Clique em **Allow / Permitir**. Volte ao app — pronto, está conectado.
-4. O app cria o seu site (algo como `lfn-seu-estudio.pages.dev`) e publica sozinho.
+1. **Antes**, crie a conta grátis em **https://dash.cloudflare.com/sign-up** (e-mail e senha, sem cartão) e **confirme o
+   e-mail** que a Cloudflare manda.
+2. Em **Meu estúdio → Galeria online** (ou no assistente), clique **Conectar Cloudflare**. Na 1ª vez o app prepara a ferramenta
+   da Cloudflare: pode levar alguns minutos até o navegador abrir sozinho.
+3. Entre na sua conta e clique em **Allow / Permitir**. Volte ao app — pronto, está conectado.
+4. O app cria o seu site (algo como `lfn-seu-estudio.pages.dev`, a partir do nome do estúdio) e publica sozinho. O endereço
+   aparece em **Meu estúdio → Galeria online** (botão **Abrir site**).
+5. **Na 1ª vez, o endereço novo pode levar até ~5 minutos para abrir.** Se aparecer "não é possível acessar", espere e
+   recarregue — não precisa publicar de novo.
+6. Confira no celular também: mande o endereço para você mesmo e abra no navegador do telefone.
 
 > 💸 **Custo:** o plano gratuito do Cloudflare Pages **não pede cartão de crédito** e **não tem cobrança automática**. Se algum
 > limite do plano grátis for atingido, a Cloudflare **não cobra** — ela só deixa de aceitar novos envios até o próximo ciclo.
@@ -124,7 +144,8 @@ A galeria é um site **só de visualização** (visitantes não fazem login, nã
 
 - **Sincronizar e publicar** (no topo, ou <kbd>Ctrl</kbd>+<kbd>S</kbd>): busca fotos novas (nuvem da Sony + pasta) e atualiza o site.
 - O site também se atualiza **sozinho** quando algo público muda.
-- **O que vai para o site:** fotos com **"Publicar na galeria online"** marcado na ficha e os ensaios publicados.
+- **O que vai para o site:** fotos com **"Publicar na galeria online"** marcado (ficha → aba **Arquivo**) e os ensaios publicados.
+- **Ver como o visitante vê, sem publicar:** menu **06 · Prévia da galeria** → **Como visitante**.
 - **O que nunca vai:** o Estúdio, fichas não publicadas, tokens e backups.
 
 ### 7. Ficha de campo e backup
@@ -149,7 +170,17 @@ A galeria é um site **só de visualização** (visitantes não fazem login, nã
 **Meus dados vão para algum servidor?** Não. Tudo fica em `LeonidaFieldNotes` na sua pasta de usuário. Só as fotos que você marca
 como públicas vão para o **seu** site na Cloudflare.
 
+**Como atualizar?** Baixe o Setup mais novo em [Releases](../../releases/latest) e instale **por cima**. Fotos, fichas, a
+conexão com a Sony e a galeria continuam. A versão instalada aparece no **Guia** (menu 07), com um link para as versões novas.
+
+**Como desinstalar?** Configurações do Windows → **Aplicativos → Aplicativos instalados → Leonida Lens → Desinstalar**.
+
 **Desinstalar apaga minhas fotos?** Não. O desinstalador remove só o programa; a pasta de dados **nunca** é apagada.
+
+**O Windows bloqueou e não tem "Executar assim mesmo"?** É o **Controle Inteligente de Aplicativos** do Windows 11, que bloqueia
+programas sem assinatura digital paga. A única saída é desligá-lo em **Segurança do Windows → Controle de aplicativos e
+navegador** (atenção: depois de desligado ele não religa sem reinstalar o Windows). Se preferir não mexer nisso, rode a partir
+do código (veja "Para desenvolvedores").
 
 **Funciona no Mac/Linux?** O instalador é só para Windows. Em Mac/Linux dá para rodar a partir do código (veja abaixo).
 

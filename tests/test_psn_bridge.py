@@ -78,4 +78,43 @@ class TestPSNBridge(unittest.TestCase):
                     bridge.connect('n'*64)
 
 
+    def test_06_npsso_paste_is_cleaned(self):
+        v = "Ab12_-" * 11
+        for pasted in (v, f' "{v}" ', f'{{"npsso":"{v}"}}', f'  {{ "npsso" : "{v}" }}' + chr(10)):
+            self.assertEqual(psn_bridge.clean_npsso(pasted), v)
+
+    def test_07_expired_npsso_gets_friendly_message(self):
+        with tempfile.TemporaryDirectory() as directory:
+            bridge=psn_bridge.PSNBridge(Path(directory),lambda *a,**k: ('x',True),lambda m:False,lambda *a:None)
+            fake=lambda *a,**k: (302,{"Location":"com.scee.psxandroid.scecompcall://redirect?error=login_required"},{})
+            with patch.object(psn_bridge,"http_json",side_effect=fake):
+                with self.assertRaises(psn_bridge.PSNError) as cm:
+                    bridge.connect("n"*64)
+            self.assertIn("expirou", str(cm.exception))
+
+    def test_08_refused_refresh_clears_session(self):
+        with tempfile.TemporaryDirectory() as directory:
+            bridge=psn_bridge.PSNBridge(Path(directory),lambda *a,**k: ('x',True),lambda m:False,lambda *a:None)
+            def refused(*a,**k):
+                raise psn_bridge.PSNError("Sony retornou HTTP 400.", 400)
+            with patch.object(psn_bridge.sys,"platform","linux"), patch.object(psn_bridge,"http_json",side_effect=refused):
+                bridge.vault.save({"access_token":"x","refresh_token":"y","expires_at":0,"refresh_expires_at":time.time()+3600})
+                with self.assertRaises(psn_bridge.PSNError) as cm:
+                    bridge.sync()
+                self.assertIn("Token npsso", str(cm.exception))
+                self.assertFalse(bridge.state()["connected"])
+                self.assertIn("expirou", bridge.state()["last_error"])
+
+    def test_09_network_failure_keeps_session(self):
+        with tempfile.TemporaryDirectory() as directory:
+            bridge=psn_bridge.PSNBridge(Path(directory),lambda *a,**k: ('x',True),lambda m:False,lambda *a:None)
+            def offline(*a,**k):
+                raise psn_bridge.PSNError("Não foi possível alcançar os servidores da Sony.")
+            with patch.object(psn_bridge.sys,"platform","linux"), patch.object(psn_bridge,"http_json",side_effect=offline):
+                bridge.vault.save({"access_token":"x","refresh_token":"y","expires_at":0,"refresh_expires_at":time.time()+3600})
+                with self.assertRaises(psn_bridge.PSNError):
+                    bridge.sync()
+                self.assertTrue(bridge.state()["connected"])
+
+
 if __name__=='__main__':unittest.main()

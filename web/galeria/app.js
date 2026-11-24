@@ -2,7 +2,9 @@
 import PhotoSwipeLightbox from "/vendor/photoswipe-lightbox.esm.min.js";
 import PhotoSwipeDynamicCaption from "/vendor/photoswipe-dynamic-caption.esm.js";
 
-const PUBLIC = Boolean(window.LFN_PUBLIC);
+// Site publicado (LFN_PUBLIC) ou Prévia "Como visitante" do Estúdio (?publico=1): nada de botões do dono.
+const PUBLIC = Boolean(window.LFN_PUBLIC) || new URLSearchParams(location.search).get("publico") === "1";
+if (PUBLIC) document.querySelectorAll(".nav-studio").forEach((el) => el.remove());
 const REDUCE = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const MOBILE = matchMedia("(max-width: 820px), (pointer: coarse) and (max-height: 500px)");   // mesma regra do gallery-mobile.css
 const isM = () => MOBILE.matches;
@@ -522,7 +524,7 @@ function renderEssaysLayer(fresh) {
   const el = $("#layer-essays");
   const es = essaysOrdered();
   if (!es.length) {
-    el.innerHTML = `<div class="ess-list"><div class="ess-kicker">Ensaios</div><div class="ess-empty">Nenhum ensaio ainda.</div><p style="color:var(--ink-2)">Séries montadas no Estúdio aparecem aqui como capítulos.</p></div><div></div>`;
+    el.innerHTML = `<div class="ess-list"><div class="ess-kicker">Ensaios</div><div class="ess-empty">Nenhum ensaio ainda.</div><p style="color:var(--ink-2)">${PUBLIC ? "Os ensaios do fotógrafo aparecem aqui quando forem publicados." : "Séries montadas no Estúdio aparecem aqui como capítulos."}</p></div><div></div>`;
     return;
   }
   if (!fresh && el.childElementCount) return;
@@ -756,7 +758,7 @@ function renderMapLayer(focusId, fresh) {
         ${window.LeonidaMap?.official ? `<div class="seg" role="group" aria-label="Cor do mapa"><button data-mapcolor="0" aria-pressed="${!S.mapColor}">P&amp;B</button><button data-mapcolor="1" aria-pressed="${S.mapColor}">Cor</button></div>` : ""}
         ${window.LeonidaMap?.hasStyles === false ? "" : `<div class="seg" role="group" aria-label="Estilo do mapa"><button data-mapstyle="night" aria-pressed="${S.mapStyle === "night"}">Noite</button><button data-mapstyle="day" aria-pressed="${S.mapStyle === "day"}">Dia</button></div>`}
         ${mapped.length > 1 && window.L?.heatLayer ? `<div class="seg" role="group" aria-label="Modo do mapa"><button data-mapmode="pins" aria-pressed="${S.mapMode !== "heat"}">Fotos</button><button data-mapmode="heat" aria-pressed="${S.mapMode === "heat"}">Calor</button></div>` : ""}</div></div>
-      ${mapped.length ? "" : `<div class="map-empty"><div><b>Mapa em branco</b>Marque o ponto das fotos no Estúdio para elas aparecerem aqui.</div></div>`}
+      ${mapped.length ? "" : `<div class="map-empty"><div><b>Mapa em branco</b>${PUBLIC ? "O fotógrafo ainda não marcou onde as fotos foram feitas." : "Marque o ponto das fotos no Estúdio para elas aparecerem aqui."}</div></div>`}
       <div id="map-card-slot"></div>`;
     el.classList.toggle("is-day", MAP_LIGHT());
     if (!window.L || !window.LeonidaMap) return;
@@ -1231,6 +1233,7 @@ $("#brand-sub").textContent = "Leonida · projeção";
 if (!S.photos.length) {
   $("#stage").insertAdjacentHTML("beforeend", `<div class="empty-stage"><div><h1>Em breve</h1><p>${PUBLIC ? "As primeiras fotografias de Leonida aparecem aqui assim que forem publicadas." : "Importe capturas no Estúdio para abrir a projeção."}</p></div></div>`);
   $$(".caption, .reel, .ghost-num, .setline, .zone").forEach((el) => { el.hidden = true; });
+  document.body.classList.add("no-photos");   // sem fotos: só o "Em breve" (sem abas, ficha ou dicas por cima)
 }
 route();
 initSound();

@@ -63,7 +63,7 @@ const GUIDE = [
    ['Entre no site da Sony', 'No navegador do PC, entre no site oficial da Sony com sua conta PSN. <b>A senha você digita só lá</b>, no site da Sony.'],
    ['Abra a página de sessão', 'Depois de entrar, abra a página oficial <span class="lfn-mono">ca.account.sony.com/api/v1/ssocookie</span> no mesmo navegador.'],
    ['Ache o valor npsso', 'A página mostra só um texto curto, parecido com o exemplo ao lado.'],
-   ['Copie só o valor', 'Selecione apenas o que está entre as aspas depois de <span class="lfn-mono">npsso</span>: 64 caracteres, sem as aspas. Ctrl+C.'],
+   ['Copie o texto', 'Aperte Ctrl+A e Ctrl+C: pode copiar a linha inteira, com chaves e aspas. O Estúdio separa o valor de <span class="lfn-mono">npsso</span> sozinho.'],
   ], see:NPSSO_SAMPLE,
   tip:'A página mostrou um erro ou veio vazia? Você não está logado nesse navegador. Volte ao passo 1, entre de novo e reabra a página.',
   actions:`${extLink(SONY_LOGIN,'1. Site da Sony')}${extLink(SONY_NPSSO,'2. Página de sessão')}`},
@@ -71,9 +71,9 @@ const GUIDE = [
    ['Abra a aba PlayStation', 'No menu: Procedência → aba <b>PlayStation</b>.'],
    ['Cole o valor', 'Clique no campo “Valor npsso” e aperte Ctrl+V.'],
    ['Clique em Conectar', 'Em poucos segundos a conta aparece como <b>CONECTADA</b>. O valor colado não é salvo: ele é trocado por uma sessão protegida.'],
-   ['Busque as fotos', 'Clique em <b>Buscar fotos na nuvem</b> para a primeira leitura. Depois é automático.'],
+   ['Pronto', 'A primeira busca começa sozinha ao conectar. Depois, com o Estúdio aberto, ele confere a cada 15 minutos. Para buscar na hora: <b>Buscar fotos na nuvem</b>.'],
   ], see:'Conta: ● CONECTADA · PROTEGIDA. Situação: PRONTA.',
-  tip:'Apareceu “token inválido”? Provavelmente foram copiadas as aspas ou um espaço a mais. Reabra a página de sessão e copie só os 64 caracteres.',
+  tip:'A Sony recusou o token? Ele vence se você sair da conta no site ou depois de um tempo. Entre de novo no site da Sony, reabra a página de sessão e copie o valor novo. Pode colar a linha inteira, com chaves e aspas: o Estúdio separa sozinho.',
   actions:'<button class="lfn-btn lfn-btn--sm" type="button" data-goto="sync:psn">Ir para Procedência → PlayStation</button>'},
   {k:'seguranca', label:'Segurança', warn:SAFETY,
    tip:'Acha que alguém viu seu token? Clique em “Desconectar e apagar sessão” em Procedência → PlayStation e depois saia da conta no site da Sony; o token antigo deixa de valer.'},
@@ -87,12 +87,13 @@ const GUIDE = [
   ], see:'Em Meu estúdio → Galeria online: o endereço do site, quantas fotos estão publicadas e a última atualização.',
   tip:'Não quer site? Tudo bem: o Estúdio funciona igual sem ele. Dá para ligar depois.'},
   {k:'conectar', label:'Conectar', steps:[
+   ['Antes: crie a conta (grátis)', 'Em <b>dash.cloudflare.com/sign-up</b> crie uma conta com e-mail e senha e <b>confirme o e-mail</b> que a Cloudflare manda. Não precisa de cartão.'],
    ['Clique em Conectar', 'Meu estúdio → Galeria online → <b>Conectar Cloudflare e publicar</b>.'],
-   ['O navegador abre', 'Na página da Cloudflare, entre na sua conta ou crie uma conta grátis (e-mail e senha).'],
+   ['O navegador abre sozinho', 'Na 1ª vez o Estúdio prepara a ferramenta da Cloudflare antes: pode levar alguns minutos. Quando a página abrir, entre na sua conta.'],
    ['Clique em Allow (Permitir)', 'A Cloudflare pergunta se o Wrangler (a ferramenta oficial dela) pode publicar por você. Clique em <b>Allow</b>.'],
    ['Volte ao Estúdio', 'Ele fica conectado, cria o site e publica. Aparece <b>NO AR</b> com o endereço.'],
   ], see:'No topo do Estúdio: “SITE NO AR · data e hora”. Clicar nele abre a galeria.',
-  tip:'O navegador não abriu, ou você fechou a página sem clicar em Allow? Clique em Conectar de novo. A primeira publicação pode levar alguns minutos.',
+  tip:'O navegador não abriu, ou você fechou a página sem clicar em Allow? Clique em Conectar de novo. A primeira publicação pode levar alguns minutos, e o endereço novo (….pages.dev) pode levar até ~5 minutos para abrir: se aparecer “não é possível acessar”, espere e recarregue, não precisa publicar de novo.',
   actions:'<button class="lfn-btn lfn-btn--sm" type="button" data-goto="studio:site">Ir para Meu estúdio → Galeria online</button>'},
   {k:'custos', label:'Custos', warn:CF_COSTS,
    tip:'Viu um aviso de limite na Cloudflare? Nada é cobrado: espere o próximo ciclo ou publique menos vezes seguidas.'},
@@ -111,22 +112,22 @@ const GUIDE = [
   ], see:'Durante o envio: “ENVIANDO SITE…” no topo. Depois: “SITE NO AR · 24/11 21:30”.',
   tip:'Ficou “SITE COM AVISO”? Passe o mouse sobre o aviso para ler o motivo. Quase sempre é internet ou login da Cloudflare: em Meu estúdio → Galeria online, clique em Reconectar.'},
   {k:'oque', label:'O que aparece', steps:[
-   ['Fotos', 'Toda foto nova vem marcada para publicar. Para esconder uma, abra a ficha e desmarque <b>Publicar na galeria online</b>.'],
+   ['Fotos', 'Toda foto nova vem marcada para publicar. Para esconder uma, abra a ficha → aba <b>Arquivo</b> → desmarque <b>Publicar na galeria online</b>.'],
    ['Ensaios', 'Um ensaio só aparece no site depois que você clica em <b>Publicar</b> nele (menu Ensaios).'],
    ['O que nunca vai para o site', 'O Estúdio, fotos não publicadas, sua assinatura de RP, o token da Sony e os backups.'],
-  ], tip:'Uma foto não apareceu? Veja se “Publicar na galeria online” está marcado na ficha e clique em Sincronizar e publicar.'},
+  ], tip:'Uma foto não apareceu? Veja se “Publicar na galeria online” está marcado na ficha (aba Arquivo) e clique em Sincronizar e publicar.'},
   {k:'compartilhar', label:'Compartilhar', steps:[
    ['Abra o site', 'Clique em “SITE NO AR” no topo ou em Meu estúdio → Galeria online → <b>Abrir site</b>.'],
    ['Copie o endereço', 'Copie o endereço da barra do navegador e mande para quem quiser.'],
    ['Funciona em qualquer tela', 'A galeria funciona no computador e no celular, sem instalar nada.'],
-  ], tip:'Quer ver como o visitante vê, sem publicar? Use a Prévia da galeria (menu 06) no modo “Visitante”.'},
+  ], tip:'Quer ver como o visitante vê, sem publicar? Use a Prévia da galeria (menu 06) e clique em “Como visitante”.'},
  ]},
  {k:'ficha', label:'Ficha e backup', subs:[
   {k:'ficha', label:'Ficha de campo', steps:[
    ['Abra a foto', 'No Acervo, clique numa foto. A ficha abre ao lado da imagem.'],
    ['Marque onde foi', 'Na aba Campo, digite o local e clique no mapa para pôr o pino.'],
    ['Hora e clima', 'Escreva a hora do jogo e escolha o clima. O PS5 não guarda isso: só você sabe.'],
-   ['Título e nota', 'Dê um título e escreva a frase da foto (a nota de campo).'],
+   ['Título e nota', 'Na aba <b>Arquivo</b>, dê um título; a frase da foto (a nota de campo) fica na aba Campo.'],
    ['Atalhos', '<b>↺ Igual à anterior</b> copia local, ponto, hora e clima da última ficha. <b>Ctrl+Enter</b> salva e vai para a próxima foto.'],
   ], tip:'O pino caiu no lugar errado? Clique de novo no mapa ou use “limpar ponto”.'},
   {k:'backup', label:'Backup', steps:[
@@ -153,9 +154,11 @@ function guideSub(s){
   s.actions?`<div class="row-actions g-actions">${s.actions}</div>`:''].join('');
  return `<div class="g-sub${s.steps?'':' is-list'}"><div class="g-main">${steps}${warn}</div><aside class="g-side">${side}</aside></div>`;
 }
+const RELEASES='https://github.com/void3333/leonida-lens/releases/latest';
+fetch('/api/health').then(r=>r.json()).then(h=>{window.LFN_VERSION=h.version||'';}).catch(()=>{});
 function renderGuide(){
  const head=pageHead('Guia do fotógrafo',{label:'PARA QUEM ESTÁ COMEÇANDO',dek:'Do PS5 até a galeria online, em passos curtos. Cada aba tem um “deu errado?”.',dekSerif:false,
-  actions:`<button class="lfn-btn" data-action="open-wizard" type="button">Primeiros passos</button>`});
+  actions:`<a class="lfn-btn" href="${RELEASES}" target="_blank" rel="noreferrer noopener" title="Baixe o instalador mais novo e instale por cima: nada se perde">Leonida Lens ${escapeHtml(window.LFN_VERSION||'')} · versões novas ↗</a><button class="lfn-btn" data-action="open-wizard" type="button">Primeiros passos</button>`});
  const topics=GUIDE.map((t,i)=>[t.k,`${pad2(i+1)} · ${t.label}`,`<div class="g-topic">${pageTabs('g-'+t.k,t.subs.map((s,j)=>[s.k,`${j+1}. ${s.label}`,guideSub(s)]))}</div>`]);
  return `<div class="view view-noTool view-tabs guide-view">${head}${pageTabs('guide',topics)}</div>`;
 }
@@ -266,7 +269,7 @@ function wzWelcome(){
    '<b>Guarda suas fotos do PS5</b> num acervo organizado aqui no PC, cada uma com um número de tombo.',
    '<b>Você preenche a ficha de campo</b>: onde foi, que horas eram no jogo, o clima e uma frase.',
    '<b>Publica uma galeria online</b> (opcional) para outras pessoas verem suas fotos, no computador e no celular.'])}</div>
-   <div class="wz-aside"><span class="lfn-label">COMO ESTE ASSISTENTE FUNCIONA</span><p>São ${wzSteps().length} etapas curtas, uns 5 minutos. Você pode <b>pular</b> qualquer uma e voltar depois em <b>Meu estúdio → Primeiros passos</b>.</p><p>Ficou com dúvida em algum momento? O <b>Guia</b> (menu 07) explica tudo com calma, com uma dica de “deu errado?” em cada parte.</p></div></div>`,
+   <div class="wz-aside"><span class="lfn-label">COMO ESTE ASSISTENTE FUNCIONA</span><p>São ${wzSteps().length} etapas curtas, uns 5 minutos. Você pode <b>pular</b> qualquer uma e voltar depois em <b>Meu estúdio → Primeiros passos</b>.</p><p>Ficou com dúvida em algum momento? O <b>Guia</b> (menu 07) explica tudo com calma, com uma dica de “deu errado?” em cada parte.</p><p>O app abre em tela cheia: <b>F11</b> sai da tela cheia e <b>Alt+F4</b> fecha o app.</p></div></div>`,
   next:'Começar →'};
 }
 function wzMode(){
@@ -336,11 +339,12 @@ function wzPhotos(){
   :`<div class="wz-cols"><div>${wzList([
     'No PS5: Configurações → Capturas e transmissões → Capturas → ligue o <b>envio automático</b> para o PlayStation App (com o app no celular, na mesma conta).',
     `No navegador do PC, <b>entre no site da Sony</b> com sua conta PSN. A senha você digita só lá.`,
-    `Abra a <b>página de sessão</b>. Ela mostra <span class="lfn-mono">{"npsso":"…"}</span>. Copie só os 64 caracteres entre as aspas, sem as aspas.`,
+    `Abra a <b>página de sessão</b>. Ela mostra <span class="lfn-mono">{"npsso":"…"}</span>. Copie esse texto (pode ser a linha inteira) com Ctrl+A e Ctrl+C.`,
     'Cole no campo ao lado e clique em <b>Conectar</b>.'])}
     <div class="row-actions">${extLink(SONY_LOGIN,'Site da Sony')}${extLink(SONY_NPSSO,'Página de sessão')}</div></div>
    <div class="wz-aside"><form id="wz-psn-form" class="psn-form" autocomplete="off"><div class="form-field lfn-field"><label for="wz-npsso">Valor npsso · token confidencial</label>
-    <div class="inline-input"><input id="wz-npsso" class="lfn-input lfn-input--mono" type="password" name="npsso" required autocomplete="off" spellcheck="false" placeholder="Cole só os 64 caracteres, sem aspas"/><button class="lfn-btn lfn-btn--primary" type="submit">Conectar</button></div></div></form>
+    <div class="inline-input"><input id="wz-npsso" class="lfn-input lfn-input--mono" type="password" name="npsso" required autocomplete="off" spellcheck="false" placeholder="Cole aqui o texto da página de sessão"/><button class="lfn-btn lfn-btn--primary" type="submit">Conectar</button></div></div></form>
+    ${wz.psnError?`<div class="inline-alert is-danger">${escapeHtml(wz.psnError)}</div>`:''}
     <ul class="g-warn">${SAFETY.map(w=>`<li>${w}</li>`).join('')}</ul></div></div>`;
  if(m==='folder')body=`<div class="wz-cols"><div>${wzList([
    'No PS5: Galeria de mídia → selecione as fotos → menu (…) → <b>Copiar para unidade USB</b>. O pendrive precisa estar em exFAT ou FAT32.',
@@ -507,8 +511,8 @@ async function onboardingSubmit(e){
  if(e.target.id==='wz-psn-form'){e.preventDefault();
   const field=$('#wz-npsso'),npsso=(field?.value||'').trim();if(field)field.value='';
   const btn=e.target.querySelector('button[type=submit]');if(btn)btn.disabled=true;
-  try{app.psn=await api('/api/psn/connect',{method:'POST',body:{npsso}});toast('Conta Sony conectada.');}
-  catch(err){toast('Falha Sony: '+err.message,true);}
+  try{app.psn=await api('/api/psn/connect',{method:'POST',body:{npsso}});wz.psnError='';toast('Conta Sony conectada. Buscando suas fotos…');}
+  catch(err){wz.psnError=err.message;toast('Falha Sony: '+err.message,true);}
   renderWizard();return true;}
  return false;
 }

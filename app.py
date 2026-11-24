@@ -482,14 +482,15 @@ def start_psn_sync():
 
 
 def psn_auto_watcher():
-    # First auto-check is delayed to avoid surprise network access at startup.
+    # First check a minute after opening (a session saved by an earlier install syncs by itself), then every 15 min.
+    time.sleep(60)
     while True:
-        time.sleep(900)
         if PSN_BRIDGE and PSN_BRIDGE.auto and PSN_BRIDGE.state()["connected"] and not PSN_SYNC_JOB.is_set():
             try:
                 start_psn_sync()
             except PSNError:
                 pass
+        time.sleep(900)
 
 
 def rows(sql, args=()):
@@ -1133,13 +1134,23 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json({"ok": True, "file": BACKUP.snapshot("manual").name})
             if path == "/api/psn/connect":
                 # NPSSO is NEVER logged, persisted, or returned in the response.
-                return self.send_json(PSN_BRIDGE.connect(payload.get("npsso", "")))
+                st = PSN_BRIDGE.connect(payload.get("npsso", ""))
+                st = PSN_BRIDGE.set_options(auto=setting("psn_auto", "1") == "1")
+                try:
+                    start_psn_sync()   # first fetch right away: the user expects photos after connecting
+                except PSNError:
+                    pass
+                return self.send_json(st)
             if path == "/api/psn/sync":
                 start_psn_sync()
                 return self.send_json({"ok":True,"message":"Sincronização iniciada."})
             if path == "/api/psn/disconnect":
                 return self.send_json(PSN_BRIDGE.disconnect())
             if path == "/api/psn/options":
+                if payload.get("auto") is not None:
+                    set_setting("psn_auto", "1" if payload.get("auto") else "0")
+                if payload.get("only_gta") is not None:
+                    set_setting("psn_only_gta", "1" if payload.get("only_gta") else "0")
                 return self.send_json(PSN_BRIDGE.set_options(auto=payload.get("auto"), only_gta=payload.get("only_gta")))
             if path == "/api/settings":
                 folder = validate_watch_folder(str(payload.get("watch_folder", "")))
@@ -1158,7 +1169,7 @@ class Handler(BaseHTTPRequestHandler):
                 brief = str(payload.get("description", "")).strip()[:1500]
                 essay_id = str(uuid.uuid4())
                 with DB_LOCK, db() as cx:
-                    cx.execute("INSERT INTO essays(id,title,description,created_at) VALUES(?,?,?,?)", (essay_id,title,brief,iso_now()))
+                    cx.execute("INSERT INTO essays(id,title,description,created_at,published) VALUES(?,?,?,?,0)", (essay_id,title,brief,iso_now()))
                     cx.commit()
                 return self.send_json({"ok": True, "essay": row_by_id("essays", essay_id)}, 201)
             if path == "/api/journal":
@@ -1403,6 +1414,8 @@ def main():
     global PSN_BRIDGE
     PSN_BRIDGE = PSNBridge(DATA, ingest, seen_psn, remember_psn)
     PSN_BRIDGE.update_capture = psn_capture_update
+    # Options survive restarts and reinstalls; automatic fetch is on unless the user turned it off.
+    PSN_BRIDGE.set_options(auto=setting("psn_auto", "1") == "1", only_gta=setting("psn_only_gta", "1") == "1")
     threading.Thread(target=backfill_media, daemon=True, name="backfill").start()
     threading.Thread(target=map_official.ensure, args=(MAP_OFFICIAL, WEB, ROOT, DATA), daemon=True,
                      name="map-official").start()
