@@ -1099,6 +1099,7 @@ document.addEventListener("keydown", (e) => {
   if (["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)) return;
   const k = e.key;
   if (k === "Escape") { if (S.layer) { e.preventDefault(); location.hash = S.layer === "essay" ? "#/ensaios" : "#/"; } else document.body.classList.remove("is-pure"); return; }
+  if (S.layer === "game") return;   // no jogo, só Esc sai; o módulo cuida de Enter/Espaço
   if (k.toLowerCase() === "g") { location.hash = S.layer === "index" ? "#/" : "#/indice"; return; }
   if (k.toLowerCase() === "m") { const cur = S.list[S.index]; location.hash = S.layer === "map" ? "#/" : (cur && hasPos(cur) ? `#/mapa/${cur.id}` : "#/mapa"); return; }
   if (k.toLowerCase() === "e") { location.hash = S.layer === "essays" ? "#/" : "#/ensaios"; return; }
