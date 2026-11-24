@@ -1,5 +1,7 @@
-/* Mapa com névoa (fog.js). Canvas entre tiles e pinos; controle no canto inferior esquerdo. */
-.fog-canvas { pointer-events: none !important; }
+/* Mapa com névoa (fog.js). Imagens fixas entre tiles e pinos; controle no canto inferior esquerdo. */
+.fog-img { pointer-events: none !important; }
+.fog-near { transition: opacity .45s ease; }
+.fog-near.is-faded { opacity: 0 !important; }   /* o Leaflet põe opacity inline */
 
 /* controle — mesmo idioma do .map-hud (mono, caixa alta espaçada, cantos retos no tema MONO) */
 .leaflet-bottom.leaflet-left .fog-ctl { margin: 0 0 38px calc(var(--pad, 32px) + 34px); }
@@ -18,7 +20,7 @@
 .fog-toggle b::before { content: "◐ "; }
 .fog-ctl.is-off .fog-bar i { opacity: .5; }
 
-@media (prefers-reduced-motion: reduce) { .fog-bar i { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .fog-bar i, .fog-near { transition: none; } }
 
 /* celular: sem controle de zoom; fica acima da barra de navegação e some quando o cartão da foto abre */
 @media (max-width: 820px), (pointer: coarse) and (max-height: 500px) {

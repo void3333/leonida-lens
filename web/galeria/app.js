@@ -743,6 +743,20 @@ function renderMapLayer(focusId, fresh) {
     S.map = map; S.markers = new Map();
     // Pinos próximos viram uma pilha de fotos com contador (Leaflet.markercluster); clicar abre/aproxima.
     const byId = (m) => S.byId.get(m.options.photoId);
+    // A pilha fica sobre uma foto de verdade (a mais próxima do centro do grupo), não na média das fotos —
+    // senão, com a névoa, a pilha podia cair numa área escura sem foto.
+    const MC = L.MarkerCluster?.prototype;
+    if (MC && !MC._lfnSnap) {
+      const orig = MC._recalculateBounds;
+      MC._recalculateBounds = function () {
+        orig.call(this);
+        const c = this._wLatLng; if (!c || !this._childCount) return;
+        let best = null, bd = Infinity;
+        for (const m of this.getAllChildMarkers()) { const d = (m._latlng.lat - c.lat) ** 2 + (m._latlng.lng - c.lng) ** 2; if (d < bd) { bd = d; best = m._latlng; } }
+        if (best) this._latlng = best;
+      };
+      MC._lfnSnap = true;
+    }
     S.cluster = L.markerClusterGroup ? L.markerClusterGroup({
       showCoverageOnHover: false, spiderfyOnMaxZoom: true, maxClusterRadius: 52, spiderfyDistanceMultiplier: 1.6,
       iconCreateFunction: (c) => {

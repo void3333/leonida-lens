@@ -464,7 +464,7 @@ body.has-layer .epigraph, body.is-booting .epigraph { opacity: 0; }
 .setline button { display: inline-block; margin-top: 0; vertical-align: 2px; }
 
 /* ---- mapa: pilhas de fotos (Leaflet.markercluster) e modo calor (Leaflet.heat) */
-.map-stack { position: relative; }
+.map-stack { /* posição absoluta vem do .leaflet-marker-icon — não sobrescrever */ }
 .map-stack .s { position: absolute; inset: 6px; border: 2px solid #fff; background: #111 center/cover no-repeat; box-shadow: 0 6px 18px rgba(0, 0, 0, .55); transition: transform .35s var(--ease); }
 .map-stack .s2 { transform: rotate(-9deg) translate(-3px, 2px); opacity: .55; }
 .map-stack .s1 { transform: rotate(6deg) translate(3px, 1px); opacity: .8; }

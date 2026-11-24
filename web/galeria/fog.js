@@ -1,14 +1,13 @@
 // Mapa com névoa (fog of war): Leonida começa coberta; cada foto marcada revela a área em volta.
 // Contrato (app.js → renderMapLayer): addFog(map, fotosComPino, ctx) → { remove(), percent }.
 //
-// - Camada própria (L.Renderer + canvas) num pane entre os tiles (200) e o overlayPane (400, calor) /
-//   markerPane (600, pinos). pointer-events: none — nunca bloqueia cliques.
+// - Pane próprio entre os tiles (200) e o overlayPane (400, calor) / markerPane (600, pinos);
+//   pointer-events: none — nunca bloqueia cliques. Imagem fixa + polígono vetorial: zoom contínuo, sem redesenho.
 // - Percentual medido só sobre TERRA. Com o pôster oficial (window.LFN_MAP_IMG) a máscara de terra sai dos
 //   tiles de zoom 0 (1 px = 1 unidade de mapa), ver buildMask(). Sem pôster: elipse aproximada da ilha.
 
-const UNIT = 16;          // raio de revelação (unidades de mapa, 0..1024)
+const UNIT = 20;          // raio de revelação (unidades de mapa, 0..1024)
 const CELL = 4;           // resolução da máscara de terra / amostragem (unidades por célula)
-const MIN_PX = 46;        // raio mínimo do buraco na tela (pino tem 23 px de raio)
 const KEY_ON = "lfn.fog";
 const KEY_MASK = "lfn.fogmask.";
 const masks = new Map();  // sig → Promise<mask> (cache em memória por sessão)
@@ -170,104 +169,61 @@ function hole() {
   return (holeSprite = c);
 }
 
-/* ------------------------------------------------------------------ textura (granulação estática) */
-let grainCanvas = null;
-function grain() {
-  if (grainCanvas) return grainCanvas;
-  const s = 128, c = document.createElement("canvas"); c.width = c.height = s;
-  const g = c.getContext("2d"), im = g.createImageData(s, s);
-  for (let i = 0; i < im.data.length; i += 4) {
-    const v = Math.random() < .5 ? 0 : 255;
-    im.data[i] = im.data[i + 1] = im.data[i + 2] = v;
-    im.data[i + 3] = Math.random() * 26;          // granulação bem leve
-  }
-  g.putImageData(im, 0, 0);
-  return (grainCanvas = c);
+/* ------------------------------------------------------------------ camada */
+// Sem redesenho: a névoa é UMA imagem presa às coordenadas do mapa (L.imageOverlay) gerada uma vez,
+// mais um polígono vetorial com furo cobrindo o resto do mundo. O Leaflet escala os dois junto com os
+// tiles (CSS transform) — pan e zoom ficam contínuos, sem "morfar" nem recarregar.
+const PX_PER_UNIT = 2;     // resolução da imagem da névoa (px por unidade de mapa); bordas macias escondem o resto
+const PAD = 60;            // margem da imagem além do pôster (unidades) — maior que o maxBounds do mapa (40)
+const FAR_ZOOM = 1;        // abaixo deste zoom (visão geral) os buracos ficam maiores para aparecer em volta das pilhas
+const FAR_SCALE = 2.2;
+
+function fogImage(pts, rs, b, fill, k = 1) {
+  // b = [x0, y0, x1, y1] em unidades (já com margem)
+  const S = PX_PER_UNIT, W = Math.round((b[2] - b[0]) * S), H = Math.round((b[3] - b[1]) * S);
+  const c = document.createElement("canvas"); c.width = W; c.height = H;
+  const g = c.getContext("2d");
+  g.fillStyle = fill; g.fillRect(0, 0, W, H);
+  g.globalCompositeOperation = "destination-out";
+  const spr = hole();
+  pts.forEach((p, i) => {
+    const R = rs[i] * k * S, x = (p.map_x - b[0]) * S, y = (p.map_y - b[1]) * S;
+    g.drawImage(spr, x - R, y - R, R * 2, R * 2);
+  });
+  return c.toDataURL("image/png");   // quase toda de uma cor só: PNG pequeno e rápido
 }
 
-/* ------------------------------------------------------------------ camada */
 export function addFog(map, photos, ctx = {}) {
   const L = ctx.L || window.L, LM = ctx.LeonidaMap || window.LeonidaMap;
   if (!L || !map || !LM) return { remove() {}, percent: 0 };
   const pts = (photos || []).filter((p) => Number.isFinite(+p.map_x) && Number.isFinite(+p.map_y))
     .map((p) => ({ map_x: +p.map_x, map_y: +p.map_y }));
   const rs = radii(pts);
-  const MONO = ctx.MONO !== false, REDUCE = !!ctx.REDUCE;
-  const mobile = () => (ctx.isMobile ? ctx.isMobile() : matchMedia("(max-width: 820px)").matches);
-  // Opaca: fora das regiões fotografadas o mapa não aparece (o botão "ver mapa inteiro" tira a névoa).
+  const MONO = ctx.MONO !== false;
   const FILL = MONO ? "#0b0b0b" : "#09061a";
   let on = lsGet(KEY_ON) !== "off";
-  let percent = 0, dead = false, grow = REDUCE ? 1 : 0, raf = 0;
+  let percent = 0, dead = false;
 
   if (!map.getPane("lfnFog")) { const p = map.createPane("lfnFog"); p.style.zIndex = 350; p.style.pointerEvents = "none"; }
 
-  const Fog = L.Renderer.extend({
-    options: { pane: "lfnFog", padding: .5 },
-    _initContainer() {
-      const c = this._container = document.createElement("canvas");
-      c.className = "fog-canvas" + (MONO ? " is-mono" : "");
-      c.setAttribute("aria-hidden", "true");
-      this._ctx = c.getContext("2d"); this._pat = null;
-    },
-    _destroyContainer() { this._container.remove(); this._container = null; },
-    _update() {
-      if (this._map._animatingZoom && this._bounds) return;
-      L.Renderer.prototype._update.call(this);
-      const b = this._bounds, size = b.getSize(), c = this._container;
-      // a névoa é macia: não precisa de resolução de tela cheia (menos pixels = desenho bem mais rápido)
-      const s = mobile() ? .5 : Math.min(window.devicePixelRatio || 1, 1.25) * .75;
-      L.DomUtil.setPosition(c, b.min);
-      c.width = Math.round(size.x * s); c.height = Math.round(size.y * s);
-      c.style.width = size.x + "px"; c.style.height = size.y + "px";
-      this._scale = s;
-      this.draw();
-    },
-    _updatePaths() {},
-    draw() {
-      const c = this._container, g = this._ctx, m = this._map, b = this._bounds;
-      if (!c || !b) return;
-      const s = this._scale;
-      g.setTransform(1, 0, 0, 1, 0, 0);
-      g.globalCompositeOperation = "source-over";
-      g.clearRect(0, 0, c.width, c.height);
-      g.setTransform(s, 0, 0, s, 0, 0);
-      const W = c.width / s, H = c.height / s;
-      g.fillStyle = FILL; g.fillRect(0, 0, W, H);
-      // granulação presa ao mapa (não "nada" ao arrastar)
-      const org = m.getPixelOrigin().add(b.min), gs = 128;
-      g.save();
-      g.translate(-(((org.x % gs) + gs) % gs), -(((org.y % gs) + gs) % gs));
-      g.fillStyle = this._pat || (this._pat = g.createPattern(grain(), "repeat"));
-      g.fillRect(0, 0, W + gs, H + gs);
-      g.restore();
-      // buracos com borda macia
-      g.globalCompositeOperation = "destination-out";
-      const k = Math.pow(2, m.getZoom());   // CRS.Simple: px por unidade = 2^zoom
-      const view = L.bounds([-1, -1], [W + 1, H + 1]), spr = hole();
-      pts.forEach((p, i) => {
-        const e = REDUCE ? 1 : Math.max(0, Math.min(1, grow * 1.6 - i * (.6 / Math.max(1, pts.length))));
-        const t = 1 - Math.pow(1 - e, 3);
-        if (t <= 0) return;
-        const R = Math.max(rs[i] * k, MIN_PX) * t;   // no zoom de visão geral o halo ainda aparece em volta do pino
-        const pt = m.latLngToLayerPoint(LM.toLatLng(p.map_x, p.map_y)).subtract(b.min);
-        if (!view.intersects(L.bounds([pt.x - R, pt.y - R], [pt.x + R, pt.y + R]))) return;
-        g.drawImage(spr, pt.x - R, pt.y - R, R * 2, R * 2);
-      });
-      g.globalCompositeOperation = "source-over";
-    },
-  });
-  const layer = new Fog();
-  // Ao arrastar, só redesenha quando a tela sai da margem já desenhada (evita bordas sem névoa).
-  let moveQueued = false;
-  const onMove = () => {
-    if (moveQueued || !map.hasLayer(layer) || !layer._bounds) return;
-    const pb = map.getPixelBounds(), o = map.getPixelOrigin();
-    const vb = L.bounds(pb.min.subtract(o), pb.max.subtract(o));
-    if (layer._bounds.contains(vb)) return;
-    moveQueued = true;
-    requestAnimationFrame(() => { moveQueued = false; if (!dead && map.hasLayer(layer)) layer._update(); });
-  };
-  map.on("move", onMove);
+  // área da imagem: pôster (ou 0..1024 sem pôster) + margem, em unidades
+  const lb = LM.bounds;   // [[-y1, x0], [-y0, x1]]
+  const box = [lb[0][1] - PAD, -lb[1][0] - PAD, lb[1][1] + PAD, -lb[0][0] + PAD];
+  const toLL = (x, y) => LM.toLatLng(x, y);
+  const area = [toLL(box[0], box[3]), toLL(box[2], box[1])];
+  // Duas imagens fixas: "longe" (buracos maiores) embaixo, "perto" por cima. Os buracos de "longe" contêm os
+  // de "perto", então esmaecer só a de cima encolhe os buracos suavemente — sem flash e sem redesenho.
+  const far = L.imageOverlay(fogImage(pts, rs, box, FILL, FAR_SCALE), area, { pane: "lfnFog", interactive: false, className: "fog-img fog-far" });
+  const img = L.imageOverlay(fogImage(pts, rs, box, FILL), area, { pane: "lfnFog", interactive: false, className: "fog-img fog-near" });
+  const syncZoom = () => img.getElement()?.classList.toggle("is-faded", map.getZoom() < FAR_ZOOM);
+  // resto do mundo: polígono com furo (o furo fica 1 unidade para dentro da imagem, sem fresta)
+  const W = 5000, inX0 = box[0] + 1, inY0 = box[1] + 1, inX1 = box[2] - 1, inY1 = box[3] - 1;
+  const outside = L.polygon([
+    [toLL(-W, -W), toLL(W, -W), toLL(W, W), toLL(-W, W)],
+    [toLL(inX0, inY0), toLL(inX1, inY0), toLL(inX1, inY1), toLL(inX0, inY1)],
+  ], { pane: "lfnFog", renderer: L.svg({ pane: "lfnFog", padding: 1 }), stroke: false, fillColor: FILL, fillOpacity: 1, interactive: false, className: "fog-outside" });
+  const layer = L.layerGroup([outside, far, img]);
+  map.on("zoomend", syncZoom);
 
   /* --- controle: "23% de Leonida revelada" + barra + liga/desliga */
   const Ctl = L.Control.extend({
@@ -295,26 +251,14 @@ export function addFog(map, photos, ctx = {}) {
   }
   function setOn(v) {
     on = v; lsSet(KEY_ON, on ? "on" : "off");
-    if (on && !map.hasLayer(layer)) map.addLayer(layer);
+    if (on && !map.hasLayer(layer)) { map.addLayer(layer); syncZoom(); }
     if (!on && map.hasLayer(layer)) map.removeLayer(layer);
     paintCtl();
   }
 
-  // abertura: os buracos se abrem um a um
-  function animate() {
-    const t0 = performance.now(), dur = 1400;
-    const step = (now) => {
-      if (dead) return;
-      grow = Math.min(1, (now - t0) / dur);
-      if (map.hasLayer(layer)) layer.draw();
-      if (grow < 1) raf = requestAnimationFrame(step);
-    };
-    raf = requestAnimationFrame(step);
-  }
-
   ctl.addTo(map);
   if (on) map.addLayer(layer);
-  if (!REDUCE) animate();
+  syncZoom();
   paintCtl();
   getMask().then((mask) => { if (dead) return; percent = revealedPercent(mask, pts, rs); paintCtl(); });
 
@@ -322,7 +266,7 @@ export function addFog(map, photos, ctx = {}) {
     get percent() { return percent; },
     remove() {
       if (dead) return; dead = true;
-      cancelAnimationFrame(raf); map.off("move", onMove);
+      map.off("zoomend", syncZoom);
       try { if (map.hasLayer(layer)) map.removeLayer(layer); } catch { /* mapa já destruído */ }
       try { ctl.remove(); } catch { /* idem */ }
       const pane = map.getPane && map.getPane("lfnFog");
