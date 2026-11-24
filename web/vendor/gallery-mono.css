@@ -95,6 +95,8 @@ html, body { background: #000; letter-spacing: -.005em; }
 .fc-map, .fc-map::after { border-radius: 0 !important; }
 .fc-map-canvas .leaflet-tile-pane, .map-canvas .leaflet-tile-pane { filter: grayscale(1) contrast(1.15) brightness(.72) !important; }
 .layer-map.is-day .map-canvas .leaflet-tile-pane { filter: grayscale(1) contrast(1.05) brightness(1) !important; }
+/* opção "Cor": mapa oficial nas cores originais (o tema P&B é o padrão) */
+body.map-color .layer-map .map-canvas .leaflet-tile-pane, body.map-color .fieldcard .fc-map-canvas .leaflet-tile-pane { filter: none !important; }
 .fc-pin span { background: #fff; border-color: #000; box-shadow: 0 0 0 1px #fff; }
 .fc-pin span::after { border-color: #fff; }
 .fc-place b { font: 500 17px/1.1 var(--mono); letter-spacing: -.01em; text-transform: none; }
@@ -322,3 +324,17 @@ body.has-preroll .ui, body.has-preroll .layer, body.has-preroll .epigraph { visi
 .pr-back:hover, .pr-back:focus-visible { color: #fff; border-color: #fff; }
 .pr-hint { margin-top: 6px; font: 400 10.5px/1 var(--mono); letter-spacing: .1em; color: #555; }
 @media (max-height: 760px) { .pr-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ---- nota de campo na projeção: painel de vidro fosco no canto superior esquerdo.
+   Legível em fotos claras e escuras (fundo escuro translúcido + desfoque), menor e fora do centro da foto. */
+.epigraph { top: 128px; max-width: min(32vw, 470px); padding: 12px 18px 13px 16px;
+  background: rgba(8, 8, 8, .46); -webkit-backdrop-filter: blur(14px) saturate(.85); backdrop-filter: blur(14px) saturate(.85);
+  border: 1px solid rgba(255, 255, 255, .10); border-left: 2px solid #fff; }
+.epi-label { margin-bottom: 9px; font-size: 9.5px; color: rgba(255, 255, 255, .62) !important; }
+.epi-text { color: #fff; text-shadow: 0 1px 2px rgba(0, 0, 0, .55); }
+.epigraph.is-short .epi-text { font-size: clamp(15px, 1.25vw, 21px); line-height: 1.38; }
+.epigraph.is-mid .epi-text { font-size: clamp(13.5px, 1.05vw, 17px); line-height: 1.45; }
+.epigraph.is-long .epi-text { font-size: clamp(12.5px, .9vw, 15px); line-height: 1.52; -webkit-line-clamp: 5; }
+.epigraph.is-thought .epi-text { color: rgba(255, 255, 255, .86); }
+.epi-sig { margin-top: 9px; font-size: 10px; color: rgba(255, 255, 255, .58); }
+@media (max-height: 820px) { .epigraph { top: 118px; } }

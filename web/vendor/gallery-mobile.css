@@ -125,6 +125,8 @@
   .map-hud .seg button { height: 30px; padding: 0 12px; font-size: 12px; }
   .map-hud p { line-height: 1.5; }
   .map-hud .seg { grid-column: 2; grid-row: 1 / span 2; align-self: center; margin: 0 !important; }
+  .map-hud .map-segs { grid-column: 2; grid-row: 1 / span 2; align-self: center; margin: 0; flex-direction: column; align-items: flex-end; gap: 6px; }
+  .map-hud .map-segs .seg { grid-column: auto; grid-row: auto; }
   .map-hud h2 { font-size: 22px !important; }
   .map-hud p { font-size: 10px; margin-top: 6px; }
   .map-hud .seg { margin-top: 10px; }
@@ -205,4 +207,9 @@
   body:not(.has-layer) .nav { display: none; }
   .nav-link { height: 50px; flex-direction: row; gap: 6px; }
   .map-card { left: auto; width: 420px; }
+}
+
+/* nota de campo no celular: fica na folha abaixo da foto — sem o painel de vidro */
+@media (max-width: 820px), (pointer: coarse) and (max-height: 500px) {
+  .m-sheet > .epigraph { background: none; -webkit-backdrop-filter: none; backdrop-filter: none; border: 0; border-left: 2px solid #fff; padding: 2px 0 2px 16px; }
 }

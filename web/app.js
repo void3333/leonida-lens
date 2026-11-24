@@ -560,6 +560,10 @@ async function restoreBackup(file){
  }catch(err){toast('Não foi possível restaurar: '+err.message,true);}
 }
 
+/* ---- mapa colorido ou P&B (mesma preferência da galeria: chave lfn.mapcolor) */
+function mapColorOn(){try{return localStorage.getItem('lfn.mapcolor')==='1';}catch{return false;}}
+function setMapColorPref(on){try{localStorage.setItem('lfn.mapcolor',on?'1':'0');}catch{}document.body.classList.toggle('map-color',on);}
+document.body.classList.toggle('map-color',mapColorOn());
 /* ---- ficha de campo rápida */
 const WEATHER=['Ensolarado','Nublado','Chuva','Tempestade','Neblina','Pôr do sol','Noite limpa'];
 const fieldOf=p=>({location:p.location||'',map_x:p.map_x??null,map_y:p.map_y??null,game_time:p.game_time||'',weather:p.weather||''});
@@ -611,7 +615,7 @@ function openPhoto(photoId){
  ${rep?`<button type="button" class="field-repeat" data-action="field-repeat" title="Copia local, ponto no mapa, hora e clima"><b>↺ Igual à anterior</b><span>${escapeHtml(fieldSummary(rep))}</span></button>`:''}
  <div class="form-field lfn-field"><label>Lugar / bairro</label><input class="lfn-input" name="location" id="pick-location" maxlength="120" value="${escAttr(photo.location||'')}" placeholder="Digite e escolha um lugar de Leonida" list="places-list" autocomplete="off"/></div>
  <div class="form-field lfn-field"><div id="pick-map" class="pick-map lfn-map"></div>
- <div class="pick-row"><span id="pick-status">${photo.map_x!=null?pinText(photo.map_x,photo.map_y):'Nenhum ponto · clique no local da foto'}</span><button type="button" class="lfn-link linkbutton" data-action="clear-pin">LIMPAR PONTO</button></div>
+ <div class="pick-row"><span id="pick-status">${photo.map_x!=null?pinText(photo.map_x,photo.map_y):'Nenhum ponto · clique no local da foto'}</span><span class="pick-actions"><button type="button" class="lfn-link linkbutton" data-action="map-color" aria-pressed="${mapColorOn()}" title="Mapa oficial colorido ou preto e branco">${mapColorOn()?'P&amp;B':'COR'}</button><button type="button" class="lfn-link linkbutton" data-action="clear-pin">LIMPAR PONTO</button></span></div>
  <input type="hidden" name="map_x" value="${photo.map_x??''}"/><input type="hidden" name="map_y" value="${photo.map_y??''}"/></div>
  <div class="form-row-2"><div class="form-field lfn-field"><label>Hora no jogo</label><input class="lfn-input lfn-input--mono" name="game_time" id="pick-time" maxlength="40" value="${escAttr(photo.game_time||'')}" placeholder="1840 → 18:40" inputmode="numeric" autocomplete="off"/></div>
  <div class="form-field lfn-field"><label>Clima</label><input class="lfn-input" name="weather" id="pick-weather" maxlength="60" value="${escAttr(photo.weather||'')}" placeholder="Toque abaixo ou digite" autocomplete="off"/></div></div>
@@ -807,6 +811,7 @@ function bindEvents(){
   switch(action.dataset.action){
    case 'import':$('#fileInput').click();break;
    case 'clear-pin':app.clearPin?.();break;
+   case 'map-color':{const on=!mapColorOn();setMapColorPref(on);action.textContent=on?'P&B':'COR';action.setAttribute('aria-pressed',String(on));break;}
    case 'field-repeat':{const form=action.closest('form');const ph=app.photos.find(p=>p.id===form?.dataset.id);const src=ph&&repeatSource(ph);if(src){fillField(form,src);toast('Local, ponto, hora e clima copiados. Ajuste o que mudou.');}break;}
    case 'open-wizard':openWizard(0);break;
    case 'essay-seed':{const r=await essayCall('/api/essays/seed');if(r)toast(r.created?`${r.created} ensaio(s)-pauta criados. Escolha as fotos de cada pauta.`:'Os ensaios-pauta já existem.');break;}

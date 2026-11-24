@@ -296,6 +296,15 @@ function renderEpigraph(p) {
 /* ---------------------------------------------------------------- ficha de campo: onde, quando, clima */
 let fc = null;   // { map, marker }
 const LEONIDA_VIEW = window.LeonidaMap?.official ? window.LeonidaMap.bounds : [[-820, 200], [-180, 760]];
+// Mapa oficial colorido ou P&B (padrão do tema). Mesma chave do Estúdio: a escolha vale nos dois.
+function setMapColor(on) {
+  S.mapColor = !!on;
+  try { localStorage.setItem("lfn.mapcolor", on ? "1" : "0"); } catch { /* sem armazenamento */ }
+  document.body.classList.toggle("map-color", S.mapColor);
+  $$("[data-mapcolor]").forEach((b) => b.setAttribute("aria-pressed", String((b.dataset.mapcolor === "1") === S.mapColor)));
+}
+try { S.mapColor = localStorage.getItem("lfn.mapcolor") === "1"; } catch { S.mapColor = false; }
+document.body.classList.toggle("map-color", S.mapColor);
 const MAP_LIGHT = () => !!window.LeonidaMap?.official || S.mapStyle === "day";   // mapa oficial é claro
 function initFieldCard() {
   if (fc || !window.L || !window.LeonidaMap) return;
@@ -733,8 +742,10 @@ function renderMapLayer(focusId, fresh) {
   if (fresh || !S.map) {
     el.innerHTML = `<div class="map-canvas" id="map-canvas"></div>
       <div class="map-hud"><h2>Onde foi feita</h2><p>${mapped.length} ${mapped.length === 1 ? "fotografia marcada" : "fotografias marcadas"} em Leonida</p>
+        <div class="map-segs">
+        ${window.LeonidaMap?.official ? `<div class="seg" role="group" aria-label="Cor do mapa"><button data-mapcolor="0" aria-pressed="${!S.mapColor}">P&amp;B</button><button data-mapcolor="1" aria-pressed="${S.mapColor}">Cor</button></div>` : ""}
         ${window.LeonidaMap?.hasStyles === false ? "" : `<div class="seg" role="group" aria-label="Estilo do mapa"><button data-mapstyle="night" aria-pressed="${S.mapStyle === "night"}">Noite</button><button data-mapstyle="day" aria-pressed="${S.mapStyle === "day"}">Dia</button></div>`}
-        ${mapped.length > 1 && window.L?.heatLayer ? `<div class="seg" role="group" aria-label="Modo do mapa"><button data-mapmode="pins" aria-pressed="${S.mapMode !== "heat"}">Fotos</button><button data-mapmode="heat" aria-pressed="${S.mapMode === "heat"}">Calor</button></div>` : ""}</div>
+        ${mapped.length > 1 && window.L?.heatLayer ? `<div class="seg" role="group" aria-label="Modo do mapa"><button data-mapmode="pins" aria-pressed="${S.mapMode !== "heat"}">Fotos</button><button data-mapmode="heat" aria-pressed="${S.mapMode === "heat"}">Calor</button></div>` : ""}</div></div>
       ${mapped.length ? "" : `<div class="map-empty"><div><b>Mapa em branco</b>Marque o ponto das fotos no Estúdio para elas aparecerem aqui.</div></div>`}
       <div id="map-card-slot"></div>`;
     el.classList.toggle("is-day", MAP_LIGHT());
@@ -1075,6 +1086,7 @@ document.addEventListener("click", (e) => {
   }
   const idx = t.closest("[data-idx]"); if (idx) { S.idxFilter = idx.dataset.idx; renderIndexLayer(); return; }
   const mm = t.closest("[data-mapmode]"); if (mm && S.map) { setMapMode(mm.dataset.mapmode); return; }
+  const mc = t.closest("[data-mapcolor]"); if (mc) { setMapColor(mc.dataset.mapcolor === "1"); return; }
   const ms = t.closest("[data-mapstyle]");
   if (ms && S.map) {
     S.mapStyle = S.map.leonidaStyle(ms.dataset.mapstyle);

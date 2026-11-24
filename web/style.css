@@ -446,3 +446,10 @@ dialog::backdrop { background: var(--overlay); }
 .ptab-pane .psn-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--gutter); align-items: start; }
 .psn-grid > div { display: flex; flex-direction: column; gap: var(--s-4); min-width: 0; }
 .psn-grid .psn-steps[open] ~ * { } 
+
+/* opção COR no mapa da ficha (padrão: P&B do tema) */
+body.map-color .lfn-map .leaflet-tile-pane, body.map-color .lfn-map.leaflet-container .leaflet-tile-pane, body.map-color .pick-map .leaflet-tile-pane { filter: none !important; }
+.pick-actions { display: inline-flex; gap: 14px; align-items: center; }
+
+/* emendas de 1px entre tiles em zoom fracionado (visíveis com o mapa colorido) */
+.leaflet-tile-container img.leaflet-tile { width: 256.6px !important; height: 256.6px !important; }

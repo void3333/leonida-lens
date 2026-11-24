@@ -489,3 +489,10 @@ body.has-layer .epigraph, body.is-booting .epigraph { opacity: 0; }
 .pswp--ui-visible .pswp__dynamic-caption { opacity: 1; transition: opacity .3s; }
 .pswp:not(.pswp--ui-visible) .pswp__dynamic-caption { opacity: 0; }
 @media (max-width: 700px) { .zc-t { font-size: 22px; margin: 6px 0 8px; } .zc-note { font-size: 15px; margin-bottom: 10px; } }
+
+.map-segs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.map-segs .seg { margin: 0 !important; }
+.map-segs:empty { display: none; }
+
+/* emendas de 1px entre tiles em zoom fracionado (visíveis com o mapa colorido) */
+.leaflet-tile-container img.leaflet-tile { width: 256.6px !important; height: 256.6px !important; }
