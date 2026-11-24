@@ -43,6 +43,53 @@ class MapError(Exception):
     pass
 
 
+# O pôster oficial não é redistribuído com o projeto: é baixado do site da Rockstar na primeira execução.
+ROCKSTAR_ZIP = "https://media-rockstargames-com.akamaized.net/VI/downloads/artwork_wallpapers/Leonida_Map_Poster_Printable.zip"
+ROCKSTAR_MEMBER = "Leonida_Map_Poster_Printable.jpg"
+POSTER_CROP = {(5775, 7900): (204, 203, 5570, 7695)}   # moldura do pôster v1 (a calibração usa esse recorte)
+
+
+def _frame_box(im):
+    """Acha a moldura escura do pôster (para versões futuras com outro tamanho)."""
+    g = im.convert("L"); W, H = g.size
+    cd = lambda x: sum(g.getpixel((x, y)) < 110 for y in range(H // 4, H * 3 // 4, 25))
+    rd = lambda y: sum(g.getpixel((x, y)) < 110 for x in range(W // 4, W * 3 // 4, 25))
+    nc, nr = len(range(H // 4, H * 3 // 4, 25)), len(range(W // 4, W * 3 // 4, 25))
+    L = next(x for x in range(W // 4) if cd(x) > nc * .8); R = next(x for x in range(W - 1, W * 3 // 4, -1) if cd(x) > nc * .8)
+    T = next(y for y in range(H // 4) if rd(y) > nr * .8); B = next(y for y in range(H - 1, H * 3 // 4, -1) if rd(y) > nr * .8)
+    return (L + 14, T + 14, R - 14, B - 14)
+
+
+def download_official(dest_dir, progress=None):
+    """Baixa o pôster 'Leonida Map' do site oficial, converte para RGB e recorta na moldura → mapa_oficial.jpg."""
+    import io, tempfile, urllib.request, zipfile
+    from PIL import Image, ImageCms
+    Image.MAX_IMAGE_PIXELS = None
+    dest = Path(dest_dir) / "mapa_oficial.jpg"
+    req = urllib.request.Request(ROCKSTAR_ZIP, headers={"User-Agent": "LeonidaFieldNotes"})
+    with tempfile.TemporaryFile() as tmp:
+        with urllib.request.urlopen(req, timeout=60) as r:
+            total, got = int(r.headers.get("Content-Length") or 0), 0
+            while chunk := r.read(1 << 20):
+                tmp.write(chunk); got += len(chunk)
+                if progress and total:
+                    progress(f"baixando o mapa oficial da Rockstar… {got * 100 // total}%")
+        tmp.seek(0)
+        with zipfile.ZipFile(tmp) as z, z.open(ROCKSTAR_MEMBER) as f:
+            im = Image.open(io.BytesIO(f.read()))
+            im.load()
+    icc = im.info.get("icc_profile")
+    if icc:
+        im = ImageCms.profileToProfile(im, ImageCms.ImageCmsProfile(io.BytesIO(icc)), ImageCms.createProfile("sRGB"), outputMode="RGB")
+    else:
+        im = im.convert("RGB")
+    box = POSTER_CROP.get(im.size) or _frame_box(im)
+    part = dest.with_suffix(".part.jpg")
+    im.crop(box).save(part, quality=92, subsampling=0, optimize=True)
+    os.replace(part, dest)
+    return dest
+
+
 def find_source(*folders):
     for folder in folders:
         for name in NAMES:
@@ -189,9 +236,20 @@ def build(src, out_dir, web_dir, calibration_text=None, progress=None):
 def ensure(out_dir, web_dir, *folders, log=print):
     """Builds the tiles when the image or the calibration changed. Safe to call at every startup."""
     src = find_source(*folders)
+    if not src and folders:
+        try:   # primeira execução: baixa o pôster oficial para a pasta de dados (última da lista)
+            STATE.update(building=True, error=None, message="Baixando o mapa oficial da Rockstar…")
+            src = download_official(folders[-1], progress=lambda m: STATE.update(message=m))
+            log("[mapa] Pôster oficial baixado: " + str(src))
+        except Exception as e:
+            STATE.update(building=False, error=str(e), message=None)
+            log("[mapa] Não consegui baixar o mapa oficial (sem internet?): " + str(e) + " — usando o mapa de fãs.")
+            return None
     if not src:
         return None
     cal_path = src.with_name(CALIBRATION)
+    if not cal_path.is_file():
+        cal_path = ROOT / CALIBRATION
     cal_text = cal_path.read_text("utf-8") if cal_path.is_file() else None
     if current_signature(out_dir) == signature(src, cal_text):
         return None
@@ -217,10 +275,9 @@ def ensure(out_dir, web_dir, *folders, log=print):
 
 if __name__ == "__main__":
     data = Path(os.environ.get("LEONIDA_DATA_DIR", str(Path.home() / "LeonidaFieldNotes"))).expanduser()
-    src = find_source(ROOT, data)
-    if not src:
-        sys.exit("Coloque a imagem como mapa_oficial.png (ou .jpg/.webp) na pasta do projeto.")
+    src = find_source(ROOT, data) or download_official(data, progress=print)
     cal = src.with_name(CALIBRATION)
+    cal = cal if cal.is_file() else ROOT / CALIBRATION
     try:
         cfg, worst = build(src, data / "map_official", ROOT / "web", cal.read_text("utf-8") if cal.is_file() else None,
                            progress=print)

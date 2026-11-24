@@ -32,7 +32,7 @@ CACHE = BUILD / "cache"
 STAGE = BUILD / "stage"
 DIST = ROOT / "dist"
 APP_FILES = ["app.py", "backup.py", "desktop.py", "map_official.py", "psn_bridge.py", "publisher.py", "version.py",
-             "mapa_oficial.jpg", "mapa_calibracao.json", "LEIA_PRIMEIRO.md"]
+             "mapa_calibracao.json", "LEIA_PRIMEIRO.md"]   # o pôster da Rockstar é baixado na 1ª execução
 APP_DIRS = ["web"]
 SKIP = shutil.ignore_patterns("__pycache__", "*.pyc", ".DS_Store", "Thumbs.db", "desktop.ini")
 APP_ID = "{{6F1C2B7E-4E0B-4C55-9C1A-6B7A1F3D2E91}"   # never change: upgrades are matched by this id

@@ -27,3 +27,6 @@ desktop.ini
 # Instalador do Windows (tools/build_installer.py)
 .build/
 dist/
+
+# Pôster oficial da Rockstar: baixado do site oficial na 1ª execução (não redistribuímos)
+mapa_oficial.jpg
