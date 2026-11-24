@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the one-file Windows installer:  python tools/build_installer.py  ->  dist/LeonidaFieldNotes-Setup-<v>.exe
+"""Build the one-file Windows installer:  python tools/build_installer.py  ->  dist/LeonidaLens-Setup-<v>.exe
 
 Everything the Studio needs is embedded, so the other PC needs no Python, Node or internet to install:
   runtime/python  official Python embeddable zip (same version as the Python running this script)
@@ -226,7 +226,7 @@ def ensure_iscc():
 
 
 ISS_TEMPLATE = r'''; Gerado por tools/build_installer.py, não editar à mão.
-#define AppName "Leonida Field Notes"
+#define AppName "Leonida Lens"
 #define AppVersion "@VERSION@"
 #define Launcher "{app}\runtime\python\pythonw.exe"
 
@@ -235,7 +235,7 @@ AppId=@APP_ID@
 AppName={#AppName}
 AppVersion={#AppVersion}
 AppVerName={#AppName} {#AppVersion}
-AppPublisher=Leonida Field Notes
+AppPublisher=Leonida Lens
 VersionInfoVersion=@VERSION@
 DefaultDirName={localappdata}\Programs\{#AppName}
 DefaultGroupName={#AppName}
@@ -251,7 +251,7 @@ SetupIconFile=@ICO@
 UninstallDisplayIcon={app}\web\vendor\app.ico
 UninstallDisplayName={#AppName}
 OutputDir=@DIST@
-OutputBaseFilename=LeonidaFieldNotes-Setup-@VERSION@
+OutputBaseFilename=LeonidaLens-Setup-@VERSION@
 Compression=lzma2/ultra64
 SolidCompression=yes
 CloseApplications=force
@@ -263,7 +263,7 @@ Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortugue
 
 [Messages]
 ConfirmUninstall=Remover o %1 deste computador?%n%nSuas fotos, o diário, os backups e as configurações ficam na pasta "LeonidaFieldNotes" dentro da sua pasta de usuário e NÃO serão apagados.
-FinishedLabel=O %1 foi instalado. Use o atalho "Leonida Field Notes" na Área de Trabalho ou no Menu Iniciar.
+FinishedLabel=O %1 foi instalado. Use o atalho "Leonida Lens" na Área de Trabalho ou no Menu Iniciar.
 
 [InstallDelete]
 ; upgrade limpo: runtime e front-end são substituídos inteiros (os dados do usuário ficam fora de {app})
@@ -280,7 +280,7 @@ Name: "{userprograms}\{#AppName}"; Filename: "{#Launcher}"; Parameters: """{app}
 
 [Run]
 ; app.py abre em tela cheia por padrão (janela de app do Edge/Chrome)
-Filename: "{#Launcher}"; Parameters: """{app}\app.py"""; WorkingDir: "{app}"; Description: "Abrir o Leonida Field Notes"; Flags: nowait postinstall skipifsilent
+Filename: "{#Launcher}"; Parameters: """{app}\app.py"""; WorkingDir: "{app}"; Description: "Abrir o Leonida Lens"; Flags: nowait postinstall skipifsilent
 
 [UninstallDelete]
 ; só o que é gerado dentro da pasta do programa; ~/LeonidaFieldNotes (dados do usuário) nunca é tocada
@@ -309,7 +309,7 @@ def main():
         raise SystemExit("O instalador é gerado num Windows x64.")
     version = app_version()
     py_tag = f"cp{sys.version_info.major}{sys.version_info.minor}"
-    log(f"Leonida Field Notes {version} | Python {platform.python_version()} ({py_tag})")
+    log(f"Leonida Lens {version} | Python {platform.python_version()} ({py_tag})")
 
     py_ver, embed = python_embed()
     pil_ver, wheel = pillow_wheel(py_tag)
@@ -326,14 +326,14 @@ def main():
     if args.skip_compile:
         log("stage pronto em", STAGE)
         return
-    iss = BUILD / "LeonidaFieldNotes.iss"
+    iss = BUILD / "LeonidaLens.iss"
     iss.write_text(iss_script(version), "utf-8-sig")  # BOM: ISCC reads the pt-BR text as UTF-8
     DIST.mkdir(exist_ok=True)
     iscc = ensure_iscc()
     log("compilando com", iscc)
     if subprocess.run([iscc, "/Q", str(iss)]).returncode != 0:
         raise SystemExit("ISCC falhou")
-    exe = DIST / f"LeonidaFieldNotes-Setup-{version}.exe"
+    exe = DIST / f"LeonidaLens-Setup-{version}.exe"
     log(f"pronto: {exe} ({exe.stat().st_size / 1e6:.1f} MB)")
 
 

@@ -1,4 +1,4 @@
-# Leonida Field Notes — seu estúdio de fotografia em Leonida
+# Leonida Lens — seu estúdio de fotografia em Leonida
 
 Um app **pessoal** para quem faz RP de fotógrafo no GTA VI (PS5): guarde suas capturas, veja em **qualidade máxima e tela cheia** com zoom, organize em ensaios, anote **onde, quando e com que clima** cada foto foi feita e veja tudo num **mapa de Leonida**.
 
@@ -12,14 +12,14 @@ Um app **pessoal** para quem faz RP de fotógrafo no GTA VI (PS5): guarde suas c
 
 ### Instalar em outro PC (instalador, recomendado)
 
-1. Copie o arquivo **`LeonidaFieldNotes-Setup-<versão>.exe`** para o outro PC (pendrive, nuvem…) e dê dois cliques.
+1. Copie o arquivo **`LeonidaLens-Setup-<versão>.exe`** para o outro PC (pendrive, nuvem…) e dê dois cliques.
    Não precisa de Python, Node.js, internet nem senha de administrador: tudo vai dentro do instalador.
 2. Como o instalador não tem assinatura digital, o Windows pode mostrar **"O Windows protegeu o computador"** (SmartScreen).
    Clique em **Mais informações → Executar assim mesmo**.
-3. Avance as telas. No fim, deixe marcado **"Abrir o Leonida Field Notes"**: o app abre em tela cheia, no assistente de primeiros passos.
+3. Avance as telas. No fim, deixe marcado **"Abrir o Leonida Lens"**: o app abre em tela cheia, no assistente de primeiros passos.
 
-Os atalhos **"Leonida Field Notes"** ficam na Área de Trabalho e no Menu Iniciar. O programa vai para
-`%LOCALAPPDATA%\Programs\Leonida Field Notes`; suas fotos e dados ficam em `LeonidaFieldNotes` na sua pasta de usuário.
+Os atalhos **"Leonida Lens"** ficam na Área de Trabalho e no Menu Iniciar. O programa vai para
+`%LOCALAPPDATA%\Programs\Leonida Lens`; suas fotos e dados ficam em `LeonidaFieldNotes` na sua pasta de usuário.
 Para atualizar, rode o instalador da versão nova por cima (o app aberto é fechado sozinho). **Desinstalar**
 (Configurações → Aplicativos) remove só o programa: a pasta `LeonidaFieldNotes` com seus dados **nunca é apagada**.
 
@@ -29,7 +29,7 @@ Para atualizar, rode o instalador da versão nova por cima (o app aberto é fech
 python tools/build_installer.py
 ```
 
-Gera `dist\LeonidaFieldNotes-Setup-<versão>.exe` (a versão vem de `version.py`). Baixa uma vez, para `.build\cache\`, o
+Gera `dist\LeonidaLens-Setup-<versão>.exe` (a versão vem de `version.py`). Baixa uma vez, para `.build\cache\`, o
 Python embutível oficial (mesma versão do Python que roda o comando), o Pillow e o Node.js LTS, conferindo o SHA-256.
 Se o Inno Setup 6 não estiver instalado, o script o instala sozinho com
 `winget install --id JRSoftware.InnoSetup -e --scope user` (sem administrador).
@@ -38,12 +38,12 @@ Se o Inno Setup 6 não estiver instalado, o script o instala sozinho com
 
 1. **Instale o Python** (gratuito): https://www.python.org/downloads/
    Na primeira tela do instalador, **marque "Add python.exe to PATH"** e clique em *Install Now*.
-2. **Extraia o ZIP inteiro** do Leonida Field Notes numa pasta fixa, por exemplo `Documentos\Leonida Field Notes`.
+2. **Extraia o ZIP inteiro** do Leonida Lens numa pasta fixa, por exemplo `Documentos\Leonida Lens`.
    *Não rode de dentro do ZIP e não apague essa pasta depois.*
 3. Dê **dois cliques em `INICIAR_WINDOWS.bat`**.
    Na primeira vez ele prepara um componente de imagens (leva alguns segundos).
 
-Pronto: o app abre **numa janela própria, em tela cheia**, e cria o atalho **"Leonida Field Notes"** na Área de Trabalho e no Menu Iniciar. Das próximas vezes, é só usar o atalho.
+Pronto: o app abre **numa janela própria, em tela cheia**, e cria o atalho **"Leonida Lens"** na Área de Trabalho e no Menu Iniciar. Das próximas vezes, é só usar o atalho.
 
 > **Dica:** `F11` sai e volta da tela cheia. Fechar a janela (`Alt+F4`) encerra o app.
 > É preciso ter Microsoft Edge, Google Chrome ou Brave instalado; o Windows 11 já vem com o Edge.

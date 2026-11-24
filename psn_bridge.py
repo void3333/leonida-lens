@@ -69,7 +69,7 @@ def http_json(url, data=None, headers=None, no_redirect=False):
     headers = headers or {}
     if data is not None:
         data = urllib.parse.urlencode(data).encode("ascii")
-    req = urllib.request.Request(url, data=data, headers={"User-Agent": "LeonidaFieldNotes/2.0", **headers})
+    req = urllib.request.Request(url, data=data, headers={"User-Agent": "LeonidaLens/2.0", **headers})
     handler = urllib.request.build_opener(NoRedirect()) if no_redirect else urllib.request.build_opener()
     try:
         with handler.open(req, timeout=15) as resp:
@@ -267,7 +267,7 @@ class PSNBridge:
         if not is_trusted_https(url):
             raise PSNError("Download bloqueado: servidor externo não autorizado.")
         opener = urllib.request.build_opener(TrustedMediaRedirect())
-        req = urllib.request.Request(url, headers={"User-Agent":"LeonidaFieldNotes/2.0"})
+        req = urllib.request.Request(url, headers={"User-Agent":"LeonidaLens/2.0"})
         try:
             with opener.open(req, timeout=35) as response:
                 raw = response.read(MAX_SIZE+1)

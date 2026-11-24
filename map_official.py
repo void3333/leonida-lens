@@ -66,7 +66,7 @@ def download_official(dest_dir, progress=None):
     from PIL import Image, ImageCms
     Image.MAX_IMAGE_PIXELS = None
     dest = Path(dest_dir) / "mapa_oficial.jpg"
-    req = urllib.request.Request(ROCKSTAR_ZIP, headers={"User-Agent": "LeonidaFieldNotes"})
+    req = urllib.request.Request(ROCKSTAR_ZIP, headers={"User-Agent": "LeonidaLens"})
     with tempfile.TemporaryFile() as tmp:
         with urllib.request.urlopen(req, timeout=60) as r:
             total, got = int(r.headers.get("Content-Length") or 0), 0

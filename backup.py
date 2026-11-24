@@ -1,4 +1,4 @@
-"""Data safety for Leonida Field Notes: automatic DB snapshots, full ZIP backups,
+"""Data safety for Leonida Lens: automatic DB snapshots, full ZIP backups,
 mirror to a backup folder (external drive / OneDrive) and restore.
 
 Never included in any backup: Sony session tokens (private_psn_tokens.dpapi).
@@ -93,7 +93,7 @@ class BackupManager:
         with closing(sqlite3.connect(str(self.db_path), timeout=30)) as cx:
             count = lambda t: cx.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0]
             info = {"photos": count("photos"), "essays": count("essays"), "journal": count("journal")}
-        return {"app": "Leonida Field Notes", "format": FORMAT, "created_at": now_iso(),
+        return {"app": "Leonida Lens", "format": FORMAT, "created_at": now_iso(),
                 "studio_name": self.get("studio_name"), **info}
 
     # ------------------------------------------------------------ full zip
@@ -104,7 +104,7 @@ class BackupManager:
             sqlite_copy(self.db_path, db_copy)
             with zipfile.ZipFile(fileobj, "w", allowZip64=True) as z:
                 z.writestr("manifest.json", json.dumps(self.manifest(), ensure_ascii=False, indent=2))
-                z.writestr("LEIA-ME.txt", "Backup do Leonida Field Notes.\r\nPara restaurar: abra o app > Meu estúdio > "
+                z.writestr("LEIA-ME.txt", "Backup do Leonida Lens.\r\nPara restaurar: abra o app > Meu estúdio > "
                                           "Restaurar backup e escolha este arquivo .zip.\r\n")
                 z.write(db_copy, "library.sqlite3", compress_type=zipfile.ZIP_DEFLATED)
                 for f in sorted(self.originals.iterdir()):
@@ -167,7 +167,7 @@ class BackupManager:
 
     @staticmethod
     def _check_manifest(man):
-        if man.get("app") != "Leonida Field Notes" or int(man.get("format", 0)) > FORMAT:
+        if man.get("app") not in ("Leonida Lens", "Leonida Field Notes") or int(man.get("format", 0)) > FORMAT:
             raise ValueError("Backup de versão desconhecida ou mais nova que este app.")
 
     @staticmethod
@@ -214,11 +214,11 @@ class BackupManager:
         try:
             z = zipfile.ZipFile(zip_path)
         except zipfile.BadZipFile:
-            raise ValueError("Arquivo inválido: escolha um .zip criado pelo Leonida Field Notes.") from None
+            raise ValueError("Arquivo inválido: escolha um .zip criado pelo Leonida Lens.") from None
         with z, tempfile.TemporaryDirectory() as tmp:
             names = set(z.namelist())
             if "library.sqlite3" not in names or "manifest.json" not in names:
-                raise ValueError("Este .zip não é um backup do Leonida Field Notes.")
+                raise ValueError("Este .zip não é um backup do Leonida Lens.")
             man = json.loads(z.read("manifest.json").decode("utf-8"))
             self._check_manifest(man)
             db_tmp = Path(tmp) / "restore.sqlite3"

@@ -1,9 +1,9 @@
 @echo off
 chcp 65001 >nul
 cd /d "%~dp0"
-title Leonida Field Notes
+title Leonida Lens
 echo.
-echo  LEONIDA FIELD NOTES - seu estudio de fotografia em Leonida
+echo  LEONIDA LENS - seu estudio de fotografia em Leonida
 echo.
 
 where py >nul 2>nul

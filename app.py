@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Leonida Field Notes — local-only gallery companion for PS5 captures.
+"""Leonida Lens — local-only gallery companion for PS5 captures.
 Standard library server; Pillow is optional for efficient thumbnails.
 Optional experimental Sony cloud bridge; PSN login is off by default.
 """
@@ -882,7 +882,7 @@ def cached_tile(path):
     import urllib.error
     try:
         req = urllib.request.Request(f"{TILE_ORIGIN}{style}/{z}/{z},{y},{x}.webp",
-                                     headers={"User-Agent": "LeonidaFieldNotes/2.1"})
+                                     headers={"User-Agent": "LeonidaLens/2.1"})
         with urllib.request.urlopen(req, timeout=15) as resp:
             data = resp.read(4 * 1024 * 1024)
             if resp.status != 200 or not data.startswith(b"RIFF"):
@@ -897,7 +897,7 @@ def cached_tile(path):
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "LeonidaFieldNotes/2.1"
+    server_version = "LeonidaLens/2.1"
 
     def log_message(self, fmt, *args):
         if not self.path.startswith("/api/status"):
@@ -1046,14 +1046,14 @@ class Handler(BaseHTTPRequestHandler):
         return self.fail("Página não encontrada.", 404)
 
     def export_json(self):
-        contents = {"app": "Leonida Field Notes", "version": 1, "exported_at": iso_now(),
+        contents = {"app": "Leonida Lens", "version": 1, "exported_at": iso_now(),
                     "photos": [photo_json(p) for p in rows("SELECT * FROM photos ORDER BY date_taken DESC")],
                     "essays": rows("SELECT * FROM essays"),
                     "journal": rows("SELECT * FROM journal")}
         data = json.dumps(contents, ensure_ascii=False, indent=2).encode("utf-8")
         self.send_response(200)
         self.send_header("Content-Type", "application/json; charset=utf-8")
-        self.send_header("Content-Disposition", 'attachment; filename="leonida-field-notes-export.json"')
+        self.send_header("Content-Disposition", 'attachment; filename="leonida-lens-export.json"')
         self.send_header("Content-Length", str(len(data)))
         self.end_headers()
         self.wfile.write(data)
@@ -1383,7 +1383,7 @@ def already_running(port):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Leonida Field Notes: local PS5 photo journal")
+    parser = argparse.ArgumentParser(description="Leonida Lens: local PS5 photo journal")
     parser.add_argument("--port", type=int, default=8767)
     parser.add_argument("--no-browser", action="store_true", help="não abrir a janela do app")
     parser.add_argument("--browser-tab", action="store_true", help="abrir numa aba do navegador em vez da janela de app")
@@ -1425,14 +1425,15 @@ def main():
         sys.exit(1)
     url = f"http://127.0.0.1:{server.server_address[1]}"
     print("=" * 65)
-    print("LEONIDA FIELD NOTES  •  biblioteca local e privativa")
+    print("LEONIDA LENS  •  biblioteca local e privativa")
     print("Endereço:", url)
     print("Seus arquivos:", DATA)
     print("="*65, flush=True)
-    if sys.platform == "win32" and not args.no_browser and setting("shortcut_created") != "1":
+    # "shortcut_lens": recria uma vez os atalhos com o nome Leonida Lens (e apaga os do nome antigo)
+    if sys.platform == "win32" and not args.no_browser and setting("shortcut_lens") != "1":
         icon = desktop.build_icon(ROOT / "web" / "vendor" / "app.ico")
         if desktop.create_shortcut(ROOT, icon):
-            set_setting("shortcut_created", "1")
+            set_setting("shortcut_lens", "1")
     if not args.no_browser:
         if args.browser_tab:
             threading.Timer(0.6, lambda: webbrowser.open(url)).start()

@@ -10,7 +10,7 @@ import time
 import webbrowser
 from pathlib import Path
 
-APP_NAME = "Leonida Field Notes"
+APP_NAME = "Leonida Lens"
 BROWSERS = ("msedge.exe", "chrome.exe", "brave.exe")
 
 
@@ -100,6 +100,8 @@ $ErrorActionPreference = 'Stop'
 $shell = New-Object -ComObject WScript.Shell
 $places = @([Environment]::GetFolderPath('Desktop'), (Join-Path ([Environment]::GetFolderPath('Programs')) ''))
 foreach ($dir in $places) {
+  $old = Join-Path $dir 'Leonida Field Notes.lnk'   # nome antigo do app
+  if (Test-Path $old) { Remove-Item $old -Force }
   $lnk = $shell.CreateShortcut((Join-Path $dir '%NAME%.lnk'))
   $lnk.TargetPath = '%TARGET%'
   $lnk.Arguments = '"%SCRIPT%"'

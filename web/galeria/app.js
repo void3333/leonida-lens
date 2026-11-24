@@ -1226,7 +1226,7 @@ function showHint() {
 }
 
 await load();
-$("#brand-name").textContent = S.profile.studio_name || "Leonida Field Notes";
+$("#brand-name").textContent = S.profile.studio_name || "Leonida Lens";
 $("#brand-sub").textContent = "Leonida · projeção";
 if (!S.photos.length) {
   $("#stage").insertAdjacentHTML("beforeend", `<div class="empty-stage"><div><h1>Em breve</h1><p>${PUBLIC ? "As primeiras fotografias de Leonida aparecem aqui assim que forem publicadas." : "Importe capturas no Estúdio para abrir a projeção."}</p></div></div>`);

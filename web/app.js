@@ -392,7 +392,7 @@ function renderSync(){
    <div class="row-actions"><button class="lfn-btn lfn-btn--sm" data-action="pick-folder" type="button">Escolher pasta</button><button class="lfn-btn lfn-btn--sm" data-action="save-folder" type="button">Salvar caminho</button></div>
    <dl class="lfn-meta">${metaRow('Situação',`<span class="lfn-dot ${dot}"></span> ${escapeHtml(s.status||'Aguardando')}`,'')}${metaRow('Última verificação',escapeHtml(last))}${metaRow('Arquivos encontrados',s.last_checked||0)}${metaRow('Novas fotos',s.last_added||0)}${metaRow('Total',itens(s.total_photos||0))}${metaRow('Miniaturas',s.thumbnails_enabled?'ATIVAS':'OPCIONAL (PILLOW)')}</dl>
    ${s.error?`<div class="inline-alert is-danger">${escapeHtml(s.error)}</div>`:''}
-   <div class="row-actions"><button class="lfn-btn lfn-btn--primary" data-action="scan" type="button">Verificar agora</button><a class="lfn-btn" href="/api/export" download="leonida-field-notes-export.json">Exportar catálogo</a></div>
+   <div class="row-actions"><button class="lfn-btn lfn-btn--primary" data-action="scan" type="button">Verificar agora</button><a class="lfn-btn" href="/api/export" download="leonida-lens-export.json">Exportar catálogo</a></div>
 </div><div class="col">   <div class="lfn-rule"><span>Importação manual</span></div>
    <div class="manual-row"><p>Selecione arquivos JPG, PNG ou WEBP, ou arraste-os para a janela.</p><button class="lfn-btn lfn-btn--sm" data-action="import" type="button">Importar arquivos</button></div>
 </div></div>`;
@@ -402,7 +402,7 @@ function renderSync(){
     <li class="step"><span class="step-index">01</span><div><h4>No PS5</h4><p>Ative o upload automático de capturas. Ao fotografar no jogo, salve a captura pelo botão Criar do DualSense.</p></div></li>
     <li class="step"><span class="step-index">02</span><div><h4>Alternativa segura: pendrive</h4><p>Na Galeria de mídia, use Copiar para unidade USB. Depois conecte o pendrive no PC e selecione a pasta. Nenhuma conta Sony é necessária.</p></div></li>
     <li class="step"><span class="step-index">03</span><div><h4>No PC</h4><p>Copie as imagens para uma pasta fixa, como <span class="lfn-mono">Imagens\\Leonida Inbox</span>, e escolha essa pasta aqui.</p></div></li>
-    <li class="step"><span class="step-index">04</span><div><h4>Aqui no Field Notes</h4><p>Com o app aberto, a pasta é verificada a cada ~14 segundos e cada arquivo novo ganha uma cópia no acervo privado.</p></div></li>
+    <li class="step"><span class="step-index">04</span><div><h4>Aqui no Leonida Lens</h4><p>Com o app aberto, a pasta é verificada a cada ~14 segundos e cada arquivo novo ganha uma cópia no acervo privado.</p></div></li>
    </ol>
    <div class="row-actions"><button class="lfn-btn lfn-btn--sm" data-action="open-guide" data-topic="fotos" type="button">Abrir o guia completo (com “deu errado?”)</button></div>
    ${footnote('Originais em LeonidaFieldNotes/originals · o acervo funciona mesmo com a pasta observada desconectada · <a class="lfn-link" href="https://www.playstation.com/pt-br/support/games/ps5-media-gallery-view-screenshots/" target="_blank" rel="noreferrer">Galeria de mídia e USB ↗</a>')}
@@ -415,9 +415,9 @@ function renderSync(){
 function initials(name){const w=String(name||'Leonida Field').trim().split(/\s+/);return((w[0]||'L')[0]+((w[1]||w[0]||'F')[0])).toUpperCase();}
 function applyProfile(){
  const name=app.profile.studio_name;
- $('.brand-subtitle').textContent=name?name.toUpperCase():'FIELD NOTES / 001';
+ $('.brand-subtitle').textContent=name?name.toUpperCase():'LEONIDA LENS';
  $('.avatar').textContent=initials(name);
- document.title=(name?name+' — ':'')+'Leonida Field Notes';
+ document.title=(name?name+' — ':'')+'Leonida Lens';
 }
 function bytesBR(n){n=Number(n||0);if(n<1024**2)return (n/1024).toFixed(0)+' KB';if(n<1024**3)return (n/1024**2).toFixed(1)+' MB';return (n/1024**3).toFixed(2)+' GB';}
 function whenBR(iso){return iso?new Date(iso).toLocaleString('pt-BR'):'Nunca';}

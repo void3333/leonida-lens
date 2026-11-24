@@ -1,4 +1,4 @@
-# Leonida Field Notes
+# Leonida Lens
 
 Diário fotográfico pessoal de GTA VI (PS5). O usuário faz roleplay como fotógrafo em Leonida.
 Responder ao usuário em **português do Brasil**.

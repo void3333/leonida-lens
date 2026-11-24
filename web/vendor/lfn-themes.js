@@ -1,4 +1,4 @@
-/* Leonida Field Notes · TEMAS
+/* Leonida Lens · TEMAS
    Temas prontos + cor de destaque, compartilhados pelo Estúdio e pela Galeria.
    "codigo" é o visual original (preto e branco): não escreve nenhuma variável, então fica idêntico ao CSS.
    Os outros temas sobrescrevem as variáveis de cor no <html> (ou num elemento, para prévias).

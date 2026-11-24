@@ -38,7 +38,7 @@ class BuildScript(unittest.TestCase):
         iss = build_installer.iss_script("9.9.9")
         self.assertNotIn("@", iss.replace("@echo", ""))  # every placeholder replaced
         for needle in ("PrivilegesRequired=lowest", r"DefaultDirName={localappdata}\Programs\{#AppName}",
-                       "skipifsilent", "BrazilianPortuguese.isl", "LeonidaFieldNotes-Setup-9.9.9", "NÃO serão apagados"):
+                       "skipifsilent", "BrazilianPortuguese.isl", "LeonidaLens-Setup-9.9.9", "NÃO serão apagados"):
             self.assertIn(needle, iss)
         # the uninstaller only cleans folders inside {app}; never the user's data folder
         for line in iss.splitlines():

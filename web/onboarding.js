@@ -1,5 +1,5 @@
 "use strict";
-/* Leonida Field Notes · Estúdio — primeiros passos, guia e aparência.
+/* Leonida Lens · Estúdio — primeiros passos, guia e aparência.
    - Guia do fotógrafo (menu 07): passo a passo para iniciantes, em abas (sem rolagem).
    - Assistente de primeiro uso em tela cheia: novo estúdio ou continuar o seu (restaurar backup).
    - Aparência: temas prontos + cor de destaque, para o Estúdio e para a galeria online.
@@ -274,7 +274,7 @@ function wzMode(){
  return {title:'É a primeira vez ou você já tem um estúdio?',lead:'Escolha uma opção. Dá para mudar de ideia voltando aqui.',
   body:`<div class="wz-choices is-big">
    ${wzChoice('data-wz-mode="new"',wz.mode==='new','Novo estúdio','É a primeira vez. Vou criar meu estúdio do zero: meu nome, meu tema e, se quiser, minha própria galeria online.','PRIMEIRA VEZ')}
-   ${wzChoice('data-wz-mode="continue"',wz.mode==='continue','Continuar meu estúdio','Já uso o Leonida Field Notes em outro PC. Quero trazer tudo: fotos, fichas, ensaios, tema e o mesmo endereço da galeria.','TROCA DE PC')}
+   ${wzChoice('data-wz-mode="continue"',wz.mode==='continue','Continuar meu estúdio','Já uso o Leonida Lens em outro PC. Quero trazer tudo: fotos, fichas, ensaios, tema e o mesmo endereço da galeria.','TROCA DE PC')}
   </div>
   <div class="wz-aside is-row"><p><b>Outra pessoa vai usar este PC?</b> Ela deve escolher <b>Novo estúdio</b>: terá o próprio nome, o próprio tema e uma galeria separada, na conta Cloudflare dela.</p>${has?`<p class="wz-warn">Este PC já tem ${itens(has).toLowerCase()} no acervo. “Continuar” substitui esse acervo pelo do backup (antes, uma cópia de segurança é guardada).</p>`:''}</div>`,
   next:'Continuar →',disabled:!wz.mode};
@@ -400,7 +400,7 @@ function renderWizard(){
  const rail=steps.map((k,j)=>{const cls=k===wz.step?'is-on':wz.visited.has(k)?'is-done':'';
   return `<li class="${cls}"><button type="button" data-wz-step="${k}" ${wz.visited.has(k)&&wz.restore.state!=='running'?'':'disabled'}><span>${pad2(j+1)}</span>${WZ_TITLES[k]}</button></li>`;}).join('');
  const canClose=app.profile?.onboarded;
- el.innerHTML=`<aside class="wz-rail"><div class="wz-brand"><span class="lfn-label">LFN</span><b class="brand-title">Leonida</b><small>PRIMEIROS PASSOS</small></div>
+ el.innerHTML=`<aside class="wz-rail"><div class="wz-brand"><b class="brand-title">Leonida Lens</b><small>PRIMEIROS PASSOS</small></div>
   <ol class="wz-list">${rail}</ol>
   <div class="wz-railfoot lfn-label">LOCAL · NADA SAI DESTE PC</div></aside>
  <section class="wz-main">

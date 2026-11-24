@@ -352,7 +352,7 @@ function again() {
 
 async function share() {
   const max = MAX * G.round.length;
-  const text = `🎯 Onde foi feita? · ${fmt(G.total)}/${fmt(max)} · ${G.ctx.studio || "Leonida Field Notes"}\n${location.href}`;
+  const text = `🎯 Onde foi feita? · ${fmt(G.total)}/${fmt(max)} · ${G.ctx.studio || "Leonida Lens"}\n${location.href}`;
   let ok = false;
   try { await navigator.clipboard.writeText(text); ok = true; } catch { /* tenta o jeito antigo */ }
   if (!ok) {
