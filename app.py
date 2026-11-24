@@ -29,6 +29,7 @@ from psn_bridge import PSNBridge, PSNError
 from backup import BackupManager
 from publisher import SitePublisher, PublishError
 import map_official
+from version import __version__
 
 ROOT = Path(__file__).resolve().parent
 WEB = ROOT / "web"
@@ -904,7 +905,7 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         path = urlsplit(self.path).path
         if path == "/api/health":
-            return self.send_json({"ok": True, "version": "2.4.0", "data_dir": str(DATA)})
+            return self.send_json({"ok": True, "version": __version__, "data_dir": str(DATA)})
         if path == "/api/status":
             with STATE_LOCK:
                 status = dict(STATE)

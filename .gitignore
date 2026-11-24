@@ -23,3 +23,7 @@ desktop.ini
 
 # Worktrees dos agentes
 .claude/worktrees/
+
+# Instalador do Windows (tools/build_installer.py)
+.build/
+dist/

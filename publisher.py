@@ -30,6 +30,24 @@ class PublishError(Exception):
     pass
 
 
+APP_DIR = Path(__file__).resolve().parent
+
+
+def bundled_node(app_dir: Path | None = None):
+    """<app>/runtime/node (Node.js embedded by the Windows installer), or None."""
+    d = (app_dir or APP_DIR) / "runtime" / "node"
+    return d if (d / "npx.cmd").is_file() else None
+
+
+def node_env(app_dir: Path | None = None, **extra):
+    """Environment for npx: the bundled node dir goes first on PATH (wrangler spawns `node`)."""
+    env = {**os.environ, **extra}
+    node = bundled_node(app_dir)
+    if node:
+        env["PATH"] = str(node) + os.pathsep + env.get("PATH", "")
+    return env
+
+
 def now_iso():
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
@@ -60,6 +78,9 @@ class SitePublisher:
 
     # ------------------------------------------------------------ wrangler
     def _npx(self):
+        node = bundled_node()  # Node.js shipped by the Windows installer comes first
+        if node:
+            return str(node / "npx.cmd")
         exe = shutil.which("npx.cmd") or shutil.which("npx")
         if not exe:
             raise PublishError("Para publicar online é preciso o Node.js (gratuito): https://nodejs.org — instale a versão LTS e reabra o app.")
@@ -69,7 +90,7 @@ class SitePublisher:
         flags = subprocess.CREATE_NO_WINDOW if sys.platform == "win32" else 0
         p = subprocess.run([self._npx(), "--yes", WRANGLER, *args], capture_output=True, text=True, encoding="utf-8",
                            errors="replace", timeout=timeout, creationflags=flags,
-                           env={**os.environ, "WRANGLER_SEND_METRICS": "false", "CI": "1"})
+                           env=node_env(WRANGLER_SEND_METRICS="false", CI="1"))
         return p.returncode, (p.stdout or "") + (p.stderr or "")
 
     def check_login(self):
@@ -83,7 +104,7 @@ class SitePublisher:
         if self._login_proc and self._login_proc.poll() is None:
             return {"ok": True, "message": "A página da Cloudflare já está aberta no navegador."}
         flags = subprocess.CREATE_NO_WINDOW if sys.platform == "win32" else 0
-        self._login_proc = subprocess.Popen([self._npx(), "--yes", WRANGLER, "login"], creationflags=flags,
+        self._login_proc = subprocess.Popen([self._npx(), "--yes", WRANGLER, "login"], creationflags=flags, env=node_env(),
                                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         self.state["login_open"] = True
 

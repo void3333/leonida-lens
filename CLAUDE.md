@@ -31,6 +31,7 @@ python app.py                         # Estúdio real (dados reais!)
 python tools/sandbox.py               # Estúdio com CÓPIA da biblioteca em .sandbox/ (porta 8799) — use para testar
 python tools/sandbox.py --fresh       # recopia a biblioteca
 python tools/run_tests.py             # todos os testes + checagem de sintaxe JS
+python tools/build_installer.py        # instalador Windows de um arquivo -> dist/ (versão em version.py)
 node tools/browser.mjs shot http://127.0.0.1:8799/galeria/#/mapa mapa [--mobile]
 node tools/browser.mjs run  http://127.0.0.1:8799/ passos.json      # roteiro de cliques/teclas/capturas
 ```
